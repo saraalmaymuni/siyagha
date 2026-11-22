@@ -1,0 +1,1232 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Siyagha | صياغة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* VOICE: formal, precise, a reference book a lawyer keeps on the desk
+   IDEA: a bilingual legal dictionary page — Arabic headword facing its English equivalent
+   PICTURE: the live glossary itself; a statement-of-claim builder as a second view
+   COLOUR and TYPE: white page, black ink, navy accent with a pale blue field; IBM Plex Sans + Plex Sans Arabic
+   LAYOUT: title band, search + topic chips, two-column entry grid; claim guide beside the draft builder */
+:root{color-scheme:light dark;
+--bg:light-dark(#ffffff,#0f141c);--ink:light-dark(#111827,#e8edf4);--mut:light-dark(#4f5b6b,#a3b1c4);
+--acc:light-dark(#1f3a5f,#8fb3e0);--field:light-dark(#e8eef6,#172235);--line:light-dark(#d5dde8,#26324a);--card:light-dark(#ffffff,#161e2c)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "IBM Plex Sans Arabic","IBM Plex Sans",system-ui,sans-serif;overflow-x:clip}
+.ar{font-family:"IBM Plex Sans Arabic","IBM Plex Sans",sans-serif;direction:rtl}
+.top{background:var(--field);padding:clamp(24px,4vw,44px) max(5vw,16px) 18px}
+.wrap{max-width:1240px;margin:auto}
+h1{font-size:clamp(30px,4.4vw,48px);line-height:1.05;margin:0;text-wrap:balance}
+h1 .ar{display:block;font-size:.72em;color:var(--acc);margin-top:6px}
+.lede{color:var(--mut);margin:10px 0 18px;max-width:68ch}
+nav{display:flex;gap:2px;flex-wrap:wrap;row-gap:6px}nav a{flex:none}
+nav a{font-size:15px;padding:10px 11px;border-radius:8px 8px 0 0;text-decoration:none;color:var(--ink);font-weight:600;min-height:44px;display:inline-flex;align-items:center}
+nav a.on{background:var(--bg)}
+.band{padding:22px max(5vw,16px) 44px}
+.bar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+#q{flex:1 1 320px;font:16px "IBM Plex Sans","IBM Plex Sans Arabic",sans-serif;padding:12px 16px;border:1.5px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);min-height:48px}
+.count{color:var(--mut);font-size:14px;white-space:nowrap}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.chip{font:500 14px "IBM Plex Sans",sans-serif;min-height:40px;padding:0 14px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.chip.on{background:var(--acc);border-color:var(--acc);color:light-dark(#fff,#0f1716)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,360px),1fr));gap:12px}
+.e{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--card);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px}
+.e .ar{font-size:22px;font-weight:600;line-height:1.4;grid-column:1/-1;color:var(--acc)}
+.e .en{direction:ltr;text-align:right}
+.e .en{unicode-bidi:plaintext}
+.e .en{font-weight:600;font-size:17px}
+.e .tag{font-size:13px;color:var(--mut);white-space:nowrap;align-self:center}
+.e .d{grid-column:1/-1;color:var(--mut);font-size:14.5px;margin:2px 0 0}
+mark{background:light-dark(#fff1a8,#5a4d00);color:inherit;border-radius:2px}
+.empty{padding:40px 0;color:var(--mut)}
+#fc{display:none}
+.opts{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;margin-bottom:14px}
+.seg{display:inline-flex;border:1.5px solid var(--line);border-radius:10px;overflow:hidden}
+.seg button{border:0;border-radius:0}
+button{font:600 15px "IBM Plex Sans",sans-serif;min-height:44px;padding:0 16px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+button.on,button.pri{background:var(--acc);border-color:var(--acc);color:light-dark(#fff,#0f1716)}
+.card{perspective:1400px;height:clamp(260px,42vh,340px);cursor:pointer;margin-bottom:14px}
+.inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.card.flip .inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;border:1.5px solid var(--line);background:var(--card);box-shadow:0 10px 30px light-dark(#1f3a5f22,#0005)}
+.face.back{transform:rotateY(180deg);background:var(--field)}
+.face .w{font-size:clamp(30px,6vw,46px);font-weight:700;line-height:1.25}
+.face .ar.w{color:var(--acc)}
+.face .hint{position:absolute;bottom:14px;font-size:13px;color:var(--mut)}
+.face .d{color:var(--mut);margin-top:10px;max-width:46ch;font-size:15px}
+.face .cat{position:absolute;top:14px;font-size:13px;color:var(--mut)}
+.row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.prog{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin:16px 0 6px}
+.prog i{display:block;height:100%;background:var(--acc);width:0;transition:width .3s}
+.stat{text-align:center;color:var(--mut);font-size:14px}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+
+#cl{display:none}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:start}
+.guide h2,.builder h2{font-size:24px;line-height:1.2;margin:0 0 6px}
+.guide h3{font-size:18px;margin:22px 0 8px}
+.req{list-style:none;padding:0;margin:10px 0;counter-reset:r}
+.req li{counter-increment:r;display:grid;grid-template-columns:34px minmax(0,1fr);gap:4px 10px;padding:10px 0;border-top:1px solid var(--line)}
+.req li::before{content:counter(r);grid-row:span 2;width:28px;height:28px;border-radius:50%;background:var(--acc);color:light-dark(#fff,#0f1716);display:grid;place-items:center;font-weight:700;font-size:14px}
+.req .ar{font-weight:600;color:var(--acc)}
+.req span{color:var(--mut);font-size:14.5px}
+.tips li,.steps li{margin:6px 0}
+.callout{background:var(--field);border-radius:10px;padding:12px 16px;font-size:14.5px;margin-top:16px}
+.builder .fs{border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:0 0 12px;background:var(--card)}
+.builder legend{font-weight:600;padding:0 6px}
+.builder label{display:block;font-size:14px;color:var(--mut);margin:8px 0 2px}
+.builder input,.builder textarea{width:100%;font:16px "IBM Plex Sans Arabic","IBM Plex Sans",sans-serif;padding:10px 12px;border:1.5px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+.builder textarea{min-height:84px;resize:vertical}
+.g2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 12px}
+.paper{background:light-dark(#fff,#f4f6f5);color:#111;border:1px solid var(--line);border-radius:6px;padding:28px 30px;box-shadow:0 10px 30px light-dark(#1f3a5f22,#0006);font-family:"IBM Plex Sans Arabic",sans-serif;direction:rtl;white-space:pre-wrap;line-height:1.9;font-size:15.5px;margin-top:12px}
+.sticky{position:sticky;top:16px}
+@media(max-width:960px){.two{grid-template-columns:minmax(0,1fr)}.sticky{position:static}}
+@media(max-width:600px){.g2{grid-template-columns:minmax(0,1fr)}.paper{padding:20px 16px}}
+
+#rp{display:none}
+#df{display:none}
+.builder .chk{direction:rtl;display:flex;gap:12px;align-items:flex-start;padding:8px 6px;border-radius:8px;cursor:pointer;min-height:44px;color:var(--ink)!important;font-size:15px!important;margin:0!important}
+.chk:hover{background:var(--field)}
+.builder .chk input{width:20px!important;height:20px!important;padding:0!important;margin:3px 0 0;flex:none;accent-color:var(--acc)}
+.chk .ar{flex:1;text-align:right}
+.grp{font-size:13px;color:var(--mut);margin:10px 0 2px;font-weight:600}
+
+#ap,#dm,#dl,#qs{display:none}
+.tools{margin:0 0 12px}
+.dmg{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:var(--field);border-radius:10px;padding:10px}
+.dmg select,.dmg input{font:15px "IBM Plex Sans Arabic",sans-serif;min-height:44px;padding:0 10px;border:1.5px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);flex:1 1 140px}
+.dmg button{min-height:44px}
+details.ph{border:1px solid var(--line);border-radius:10px;margin-top:8px;background:var(--card)}
+details.ph summary{cursor:pointer;padding:12px 14px;font-weight:600;min-height:44px}
+details.ph .pg{padding:0 14px 12px}
+details.ph .pg b{display:block;font-size:13px;color:var(--mut);margin:8px 0 4px}
+.phr{font:14px "IBM Plex Sans Arabic",sans-serif;min-height:36px;padding:4px 10px;margin:3px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.phr:hover{border-color:var(--acc)}
+.check{border:1.5px solid var(--line);border-radius:12px;padding:14px 16px;margin-top:12px;background:var(--card)}
+.check h3{margin:0 0 6px;font-size:17px;display:flex;justify-content:space-between;gap:10px}
+.check .pct{color:var(--acc)}
+.check ul{list-style:none;margin:0;padding:0;font-size:14.5px}
+.check li{padding:4px 0;display:flex;gap:8px}
+.check .ok::before{content:"✓";color:var(--acc);font-weight:700}
+.check .no::before{content:"✗";color:#c0392b;font-weight:700}
+.check .wn::before{content:"!";color:#b86e00;font-weight:700;width:10px;text-align:center}
+.cbar{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin:4px 0 10px}.cbar i{display:block;height:100%;background:var(--acc)}
+.calc{max-width:760px}
+.calc .fs{border:1px solid var(--line);border-radius:12px;padding:16px;background:var(--card)}
+.calc select,.calc input{width:100%;font:16px "IBM Plex Sans Arabic",sans-serif;min-height:48px;padding:0 12px;border:1.5px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+.calc label{display:block;font-size:14px;color:var(--mut);margin:10px 0 4px}
+.res{margin-top:16px;border-radius:14px;background:var(--field);padding:20px}
+.res .big{font-size:clamp(28px,5vw,40px);font-weight:700;color:var(--acc);line-height:1.2}
+.res .sub{color:var(--mut);margin-top:4px}
+.res dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 14px;margin:14px 0 0}
+.res dt{color:var(--mut)}.res dd{margin:0;font-weight:600}
+.qhead{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px}
+.score{font-size:18px;font-weight:700;color:var(--acc)}
+.qgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,520px),1fr));gap:14px}
+.q{border:1px solid var(--line);border-radius:12px;padding:16px;background:var(--card)}
+.q .tag{font-size:13px;color:var(--mut)}
+.q h3{font-size:17px;margin:4px 0 10px;line-height:1.6;font-weight:600}
+.q .opt{display:block;width:100%;text-align:start;margin:6px 0;font-weight:500;min-height:44px;padding:8px 12px;line-height:1.5}
+.q .opt.right{background:light-dark(#e3f4ea,#173a26);border-color:#2f8a4c}
+.q .opt.wrong{background:light-dark(#fbe7e5,#3a1d1b);border-color:#c0392b}
+.q .ex{display:none;margin-top:8px;font-size:14.5px;background:var(--field);border-radius:8px;padding:10px 12px}
+.q.done .ex{display:block}
+
+.ng{flex:none;align-self:center;font-size:12px;font-weight:600;color:var(--mut);padding:0 10px 0 4px;margin-inline-start:8px;border-inline-start:1px solid var(--line)}
+.grp{display:flex;flex:none;align-items:center;gap:2px}
+@media(max-width:760px){.grp{flex:1 1 100%;flex-wrap:wrap}.ng{border:0;margin:0;padding-inline:0 8px}}
+.grp:first-child .ng{border:0;margin:0}
+#hm{display:none}
+.hgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:14px;margin-top:8px}
+.hg h3{font-size:15px;color:var(--mut);margin:22px 0 8px;font-weight:600}
+.hc{border:1px solid var(--line);border-radius:12px;padding:16px;background:var(--card);display:flex;flex-direction:column;gap:6px}
+.hc b{font-size:18px;color:var(--acc)}
+.hc p{margin:0;color:var(--mut);font-size:14.5px;flex:1}
+.hc a{align-self:flex-start;margin-top:6px;text-decoration:none;font-weight:600;color:var(--acc);padding:8px 0;min-height:44px;display:inline-flex;align-items:center}
+.tod{border-radius:12px;background:var(--field);padding:14px 16px;margin-bottom:14px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center}
+.tod small{color:var(--mut);grid-column:1/-1}
+.tod b{font-size:22px;color:var(--acc)}
+.tod .d{grid-column:1/-1;margin:0;color:var(--ink)}
+.e .cp{grid-column:1/-1;justify-self:start;min-height:34px;padding:0 12px;font-size:13px;font-weight:500;margin-top:4px}
+#sort{font:15px "IBM Plex Sans Arabic",sans-serif;min-height:48px;padding:0 10px;border:1.5px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink)}
+.qtools{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.hij{display:none;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.hij.on{display:grid}
+.seg2{display:inline-flex;border:1.5px solid var(--line);border-radius:10px;overflow:hidden;margin-top:4px}
+.seg2 button{border:0;border-radius:0}
+
+#rv,#cb,#wr{display:none}
+.opt2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1fr);gap:0 8px;padding:0 6px 8px 34px}
+@media(max-width:600px){.opt2{grid-template-columns:minmax(0,1fr);padding-inline-start:6px}}
+#v-text{width:100%;min-height:420px;font:15.5px/1.9 "IBM Plex Sans Arabic",sans-serif;padding:14px 16px;border:1.5px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);resize:vertical}
+.check .rk::before{content:"!";color:#c0392b;font-weight:700;width:10px;text-align:center}
+.check li.rk{color:var(--ink)}
+.cl{border:1px solid var(--line);border-radius:12px;padding:16px 18px;background:var(--card)}
+.cl h3{margin:0 0 8px;font-size:19px;color:var(--acc);display:flex;justify-content:space-between;gap:10px;align-items:center}
+.cl .mt{background:var(--field);border-radius:8px;padding:12px 14px;line-height:1.95;white-space:pre-wrap}
+.cl dl{margin:10px 0 0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 12px;font-size:14.5px}
+.cl dt{font-weight:600;color:var(--mut)}.cl dd{margin:0}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,540px),1fr));gap:14px}
+.warnbar{border:1.5px solid light-dark(#e0b44c,#7a5b12);background:light-dark(#fff8e6,#2b220c);color:var(--ink);border-radius:10px;padding:10px 14px;margin:0 0 18px;font-size:14.5px}
+.warnbar b{color:light-dark(#8a5a00,#f0c060)}
+.foot2{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin-top:10px}
+footer{padding:0 max(5vw,16px) 36px;color:var(--mut);font-size:13px}
+@media(prefers-reduced-motion:reduce){.inner,.prog i{transition:none}}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap">
+  <h1>صياغة <span style="color:var(--acc)">| Siyagha</span><span class="ar" style="font-size:.5em;color:var(--mut)">أداة تدريب قانونية في المصطلحات والصياغة والإجراءات</span></h1>
+  <p class="lede">أداة تدريب للطلاب والممارسين: مسرد قانوني، وحالات تدريبية، ونماذج صياغة، ومراجعة العقود وبنودها، وحاسبة للمواعيد النظامية.</p>
+  <nav><span class="grp"><span class="ng">تعلّم</span><a href="#home" id="t-h">الرئيسية</a><a href="#glossary" id="t-g">المسرد القانوني</a><a href="#cases" id="t-q">حالات تدريبية</a></span><span class="grp"><span class="ng">صُغ</span><a href="#claim" id="t-c">صحيفة الدعوى</a><a href="#reply" id="t-r">المذكرة الجوابية</a><a href="#defense" id="t-d">مذكرة الدفاع</a><a href="#appeal" id="t-a">اللائحة الاعتراضية</a><a href="#demand" id="t-m">خطاب المطالبة</a></span><span class="grp"><span class="ng">العقود</span><a href="#write" id="t-w">صياغة عقد</a><a href="#review" id="t-v">مراجعة العقد</a><a href="#clauses" id="t-b">مكتبة البنود</a></span><span class="grp"><span class="ng">أدوات</span><a href="#deadline" id="t-k">حاسبة المواعيد</a></span></nav>
+</div></div>
+
+<section class="band" id="hm"><div class="wrap">
+  <h2 style="font-size:clamp(24px,3vw,32px);margin:0 0 6px">أهلًا بك في صياغة</h2>
+  <p class="lede" style="margin:0;max-width:70ch">أداة تدريب على المصطلحات القانونية السعودية وصياغة المذكرات والإجراءات. اختر من أين تبدأ:</p>
+  <div class="hg"><h3>تعلّم</h3><div class="hgrid">
+   <div class="hc"><b>المسرد القانوني</b><p>أكثر من 500 مصطلح بمقابلها الإنجليزي وتعريف عربي مبسّط، مع بحث بالعربية والإنجليزية.</p><a href="#glossary">افتح المسرد ←</a></div>
+   <div class="hc"><b>حالات تدريبية</b><p>20 واقعة قصيرة تختار فيها الإجابة الصحيحة، ثم تقرأ الشرح والسند النظامي.</p><a href="#cases">ابدأ التدريب ←</a></div>
+  </div></div>
+  <div class="hg"><h3>صُغ</h3><div class="hgrid">
+   <div class="hc"><b>صحيفة الدعوى</b><p>عندما تبدأ دعوى جديدة. مع فاحص لبيانات المادة 41.</p><a href="#claim">صُغ صحيفة ←</a></div>
+   <div class="hc"><b>المذكرة الجوابية</b><p>عندما تردّ على دعوى مدنية، مع الدفوع الشكلية مرتبة حسب المادتين 75 و76.</p><a href="#reply">صُغ مذكرة ←</a></div>
+   <div class="hc"><b>مذكرة الدفاع</b><p>عندما تدافع عن متهم في قضية جزائية، مع دفوع إجرائية وموضوعية جاهزة.</p><a href="#defense">صُغ مذكرة دفاع ←</a></div>
+   <div class="hc"><b>اللائحة الاعتراضية</b><p>عندما تعترض على حكم ابتدائي أمام محكمة الاستئناف.</p><a href="#appeal">صُغ لائحة ←</a></div>
+   <div class="hc"><b>خطاب المطالبة</b><p>قبل رفع الدعوى، لمطالبة المدين وديًا بمهلة محددة.</p><a href="#demand">صُغ خطابًا ←</a></div>
+  </div></div>
+  <div class="hg"><h3>العقود</h3><div class="hgrid">
+   <div class="hc"><b>صياغة عقد</b><p>تدرّب على كتابة عقد كامل: عبّئ البيانات واختر البنود، ويتكوّن العقد مع فاحص لبنوده.</p><a href="#write">اكتب عقدًا ←</a></div>
+   <div class="hc"><b>مراجعة العقد</b><p>الصق نص عقد، فتفحص الأداة البنود الأساسية وتنبّه إلى البنود الخطرة.</p><a href="#review">راجع عقدًا ←</a></div>
+   <div class="hc"><b>مكتبة البنود</b><p>صياغات نموذجية لأهم بنود العقود، مع متى يُستخدم كل بند وما يُنتبه إليه.</p><a href="#clauses">تصفّح البنود ←</a></div>
+  </div></div>
+  <div class="hg"><h3>أدوات</h3><div class="hgrid">
+   <div class="hc"><b>حاسبة المواعيد</b><p>احسب آخر يوم للاعتراض على الحكم بالتاريخين الهجري والميلادي.</p><a href="#deadline">احسب الموعد ←</a></div>
+  </div></div>
+  <p class="note" style="color:var(--mut);font-size:13px;margin-top:20px">ما تكتبه وتحفظه يبقى في متصفحك فقط. الأداة للتعليم والتدريب، وليست استشارة قانونية.</p>
+</div></section>
+<section class="band" id="gl"><div class="wrap">
+  <div class="tod" id="tod"></div>
+  <div class="bar"><input id="q" type="search" placeholder="ابحث: دعوى، appeal، حجز…" aria-label="البحث في المصطلحات" autocomplete="off"><select id="sort" aria-label="الترتيب"><option value="cat">حسب التصنيف</option><option value="az">أبجدي (أ–ي)</option></select><span class="count" id="count"></span></div>
+  <div class="chips" id="chips"></div>
+  <div class="grid" id="grid"></div>
+</div></section>
+
+
+<section class="band" id="cl"><div class="wrap">
+<div class="warnbar" role="note"><b>تنبيه:</b> هذا نموذج تعليمي للتدريب على الصياغة، وليس استشارة قانونية. لا تقدّم أي مسودة إلى محكمة أو جهة رسمية أو تعتمدها في تعامل حقيقي قبل مراجعتها من محامٍ مرخّص.</div>
+
+ <div class="two">
+  <div class="guide">
+   <h2>كيف تكتب صحيفة الدعوى</h2>
+   <p class="lede" style="margin-top:4px">صحيفة الدعوى هي الوثيقة التي تُرفع بها الدعوى، وقد حدّدت المادة الحادية والأربعون من نظام المرافعات الشرعية البيانات التي يجب أن تشتمل عليها.</p>
+   <h3>البيانات السبعة المطلوبة</h3>
+   <ol class="req">
+    <li><b class="ar">بيانات المدعي</b><span>الاسم الكامل، ورقم الهوية، والمهنة أو الوظيفة، ومكان الإقامة ومكان العمل.</span></li>
+    <li><b class="ar">بيانات ممثل المدعي</b><span>المحامي أو الوكيل، إن وُجد.</span></li>
+    <li><b class="ar">بيانات المدعى عليه</b><span>الاسم الكامل، ومهنته ومكان إقامته وعمله بقدر ما هو معلوم.</span></li>
+    <li><b class="ar">تاريخ تقديم الصحيفة</b><span>التاريخ الذي تُقدَّم فيه الصحيفة.</span></li>
+    <li><b class="ar">المحكمة المرفوعة أمامها الدعوى</b><span>المحكمة المختصة التي تُقام أمامها الدعوى.</span></li>
+    <li><b class="ar">محل إقامة مختار للمدعي</b><span>إذا لم يكن للمدعي محل إقامة في البلد الذي تقع فيه المحكمة.</span></li>
+    <li><b class="ar">موضوع الدعوى والطلبات والأسانيد</b><span>ما يطلبه المدعي، والأسس التي يستند إليها.</span></li>
+   </ol>
+   <h3>نصائح للكتابة</h3>
+   <ul class="tips">
+    <li><b>الوقائع:</b> رتّبها حسب التاريخ، واقعة واحدة في كل بند، واقتصر على ما يتصل بالنزاع.</li>
+    <li><b>الطلبات:</b> حدّد بدقة ما تطلب من المحكمة الحكم به، واكتب المبالغ بالأرقام والحروف، ولا تجمع طلبات لا رابط بينها.</li>
+    <li><b>الأسانيد:</b> اربط كل سند بواقعة أو طلب، كبند في العقد أو مادة نظامية أو قاعدة شرعية، وافصل بين الأسانيد والأدلة.</li>
+    <li><b>المرفقات:</b> رقّم كل مستند، وأشر إليه برقمه في الوقائع.</li>
+    <li><b>الأسلوب:</b> رسمي وموجز، بعيد عن العبارات الانفعالية والتجريح.</li>
+   </ul>
+   <h3>قبل التقديم تأكّد من</h3>
+   <ul class="tips">
+    <li>تطابق الأسماء وأرقام الهويات والصفات مع المستندات.</li>
+    <li>اختيار المحكمة وتصنيف الدعوى الصحيحين، فللمحاكم التجارية والعمالية والأسرية متطلبات إضافية في أنظمتها.</li>
+    <li>استيفاء أي إجراء سابق لازم، كالتسوية الودية في القضايا العمالية.</li>
+    <li>خلوّ العقد من شرط تحكيم يحيل النزاع إلى جهة أخرى.</li>
+   </ul>
+   <h3>التقديم عبر ناجز</h3>
+   <ol class="steps">
+    <li>سجّل الدخول إلى ناجز (najiz.sa) عبر النفاذ الوطني.</li>
+    <li>افتح الخدمات الإلكترونية، ثم الخدمات القضائية، ثم «صحيفة دعوى».</li>
+    <li>أنشئ طلبًا جديدًا واختر تصنيف الدعوى.</li>
+    <li>أدخل بيانات الأطراف والدعوى، وأرفق المستندات، ثم أرسل الطلب للمراجعة.</li>
+   </ol>
+   <p class="callout">استيفاء هذه البيانات لا يعني قبول الدعوى حتمًا، إذ تنظر المحكمة أيضًا في الاختصاص والصفة والمصلحة. هذا الدليل معلومات عامة وليس استشارة قانونية في قضية بعينها.</p>
+  </div>
+  <div class="builder">
+   <h2>أداة الصياغة</h2>
+   <div class="tools" id="c-tools"></div>
+   <p class="sample" style="color:var(--mut);font-size:14px;margin:0 0 10px">مُعبّأة بقضية تجريبية افتراضية. عدّل أي حقل وتتحدّث المسودة فورًا. اكتب كل واقعة أو سند أو طلب أو مرفق في سطر مستقل.</p>
+   <fieldset class="fs"><legend>المحكمة</legend>
+    <div class="g2"><div><label for="c-court">المحكمة</label><input id="c-court" dir="auto"></div><div><label for="c-type">نوع الدعوى</label><input id="c-type" dir="auto"></div></div></fieldset>
+   <fieldset class="fs"><legend>المدعي</legend>
+    <div class="g2"><div><label for="c-pn">الاسم الكامل</label><input id="c-pn" dir="auto"></div><div><label for="c-pid">رقم الهوية</label><input id="c-pid" dir="auto" inputmode="numeric"></div>
+    <div><label for="c-pj">المهنة</label><input id="c-pj" dir="auto"></div><div><label for="c-pa">محل الإقامة</label><input id="c-pa" dir="auto"></div></div>
+    <label for="c-rep">ممثل المدعي (اختياري)</label><input id="c-rep" dir="auto">
+    <label for="c-addr">محل إقامة مختار في بلد المحكمة (اختياري)</label><input id="c-addr" dir="auto"></fieldset>
+   <fieldset class="fs"><legend>المدعى عليه</legend>
+    <div class="g2"><div><label for="c-dn">الاسم الكامل</label><input id="c-dn" dir="auto"></div><div><label for="c-did">رقم الهوية (إن وُجد)</label><input id="c-did" dir="auto"></div></div>
+    <label for="c-da">محل الإقامة أو العمل (إن وُجد)</label><input id="c-da" dir="auto"></fieldset>
+   <fieldset class="fs"><legend>الدعوى</legend>
+    <label for="c-sub">موضوع الدعوى (سطر واحد)</label><input id="c-sub" dir="auto">
+    <label for="c-facts">الوقائع</label><textarea id="c-facts" dir="auto"></textarea>
+    <label for="c-grounds">الأسانيد</label><textarea id="c-grounds" dir="auto"></textarea>
+    <label for="c-req">الطلبات</label><textarea id="c-req" dir="auto"></textarea>
+    <label for="c-att">المرفقات</label><textarea id="c-att" dir="auto"></textarea></fieldset>
+   <div class="sticky">
+    <div class="row" style="justify-content:flex-start"><button class="pri" id="c-copy" type="button">نسخ المسودة</button><button id="c-clear" type="button">مسح الحقول</button><button id="c-sample" type="button">تحميل النموذج</button></div>
+    <div class="note" id="c-msg" style="color:var(--mut);font-size:14px;margin-top:6px"></div>
+    <div class="check" id="c-check"></div>
+    <div class="paper" id="c-out" lang="ar"></div>
+   </div>
+  </div>
+ </div>
+</div></section>
+<section class="band" id="rp"><div class="wrap">
+<div class="warnbar" role="note"><b>تنبيه:</b> هذا نموذج تعليمي للتدريب على الصياغة، وليس استشارة قانونية. لا تقدّم أي مسودة إلى محكمة أو جهة رسمية أو تعتمدها في تعامل حقيقي قبل مراجعتها من محامٍ مرخّص.</div>
+
+ <div class="two">
+  <div class="guide">
+   <h2>كيف تكتب المذكرة الجوابية</h2>
+   <p class="lede" style="margin-top:4px">المذكرة الجوابية هي ردّ المدعى عليه المكتوب على صحيفة الدعوى، يعرض فيها دفوعه، ويردّ على كل واقعة، ويبيّن ما يلتمسه من المحكمة.</p>
+   <h3>هيكل المذكرة</h3>
+   <ol class="req">
+    <li><b class="ar">بيانات القضية</b><span>المحكمة والدائرة ورقم القضية.</span></li>
+    <li><b class="ar">أطراف الدعوى</b><span>مقدّم المذكرة (المدعى عليه أو وكيله) ومن تُقدَّم ضده.</span></li>
+    <li><b class="ar">الدفوع الشكلية</b><span>الدفوع الإجرائية، وتُبدى قبل الدخول في الموضوع.</span></li>
+    <li><b class="ar">الرد على الموضوع</b><span>ردّ مفصّل على وقائع المدعي وطلباته بندًا بندًا.</span></li>
+    <li><b class="ar">الأسانيد</b><span>الأسس النظامية والشرعية للدفاع.</span></li>
+    <li><b class="ar">الطلبات</b><span>ما يلتمس المدعى عليه من المحكمة الحكم به.</span></li>
+    <li><b class="ar">المرفقات</b><span>المستندات المؤيدة، مرقّمة.</span></li>
+   </ol>
+   <h3>الترتيب مهم: نوعان من الدفوع</h3>
+   <ul class="tips">
+    <li><b>دفوع تُبدى أولًا وإلا سقطت (المادة 75):</b> الدفع ببطلان صحيفة الدعوى، وبعدم الاختصاص المكاني، وبإحالة الدعوى إلى محكمة أخرى لقيام النزاع ذاته أو دعوى مرتبطة به أمامها. يجب إبداؤها قبل أي طلب أو دفاع في الموضوع، وإلا سقط الحق فيها.</li>
+    <li><b>دفوع تجوز في أي مرحلة (المادة 76):</b> عدم الاختصاص لانتفاء الولاية أو بسبب نوع الدعوى أو قيمتها، وعدم قبول الدعوى لانعدام الصفة أو الأهلية أو المصلحة، وعدم جواز نظر الدعوى لسبق الفصل فيها.</li>
+    <li><b>شرط التحكيم:</b> إن تضمّن العقد شرط تحكيم فادفع به في البداية، قبل أي دفاع في الموضوع.</li>
+   </ul>
+   <h3>نصائح للكتابة</h3>
+   <ul class="tips">
+    <li><b>التزم بترقيم المدعي:</b> ردّ على كل واقعة في صحيفة الدعوى بالترتيب نفسه، ليسهل على القاضي المقارنة.</li>
+    <li><b>أقِرّ بالصحيح وأنكِر بدقة:</b> الإقرار بالوقائع غير المتنازع فيها يعزّز المصداقية، أما الإنكار المطلق فيُضعفها.</li>
+    <li><b>الدفاع الاحتياطي:</b> بعد الدفوع الشكلية أضف عبارة «واحتياطياً، ودون التسليم بصحة الدعوى» قبل الرد على الموضوع.</li>
+    <li><b>أيّد كل نقطة بمستند،</b> كإيصال تحويل أو بند في العقد أو رسالة، وأشر إليه برقم المرفق.</li>
+    <li><b>الدعوى المتقابلة مستقلة:</b> إن كانت للمدعى عليه طلبات خاصة به فليقدّمها دعوى متقابلة، لا ضمن الرد.</li>
+   </ul>
+   <p class="callout">هذا دليل عام للهيكلة والصياغة وليس استشارة قانونية في قضية بعينها. تحقّق من المواعيد وأي قواعد خاصة بالمحكمة التي تنظر الدعوى.</p>
+  </div>
+  <div class="builder">
+   <h2>أداة الصياغة</h2>
+   <div class="tools" id="r-tools"></div>
+   <p class="sample" style="color:var(--mut);font-size:14px;margin:0 0 10px">مُعبّأة بنموذج افتراضي: ردّ المدعى عليه على قضية القرض الواردة في تبويب صحيفة الدعوى. اكتب كل نقطة في سطر مستقل.</p>
+   <fieldset class="fs"><legend>القضية</legend>
+    <div class="g2"><div><label for="r-court">المحكمة</label><input id="r-court" dir="auto"></div><div><label for="r-circ">الدائرة</label><input id="r-circ" dir="auto"></div></div>
+    <label for="r-no">رقم القضية</label><input id="r-no" dir="auto"></fieldset>
+   <fieldset class="fs"><legend>الأطراف</legend>
+    <div class="g2"><div><label for="r-def">المدعى عليه (مقدّم المذكرة)</label><input id="r-def" dir="auto"></div><div><label for="r-cl">المدعي</label><input id="r-cl" dir="auto"></div></div>
+    <label for="r-agent">الوكيل أو المحامي (اختياري)</label><input id="r-agent" dir="auto">
+    <label for="r-sub">موضوع الدعوى المردود عليها</label><input id="r-sub" dir="auto"></fieldset>
+   <fieldset class="fs"><legend>الدفوع الشكلية (اختياري)</legend>
+    <div class="grp">المادة 75: تُبدى أولًا وإلا سقطت</div><div id="r-d75"></div>
+    <div class="grp">المادة 76 وغيرها: في أي مرحلة</div><div id="r-d76"></div>
+    <label for="r-dx">دفوع شكلية أخرى</label><textarea id="r-dx" dir="auto" style="min-height:60px"></textarea></fieldset>
+   <fieldset class="fs"><legend>الرد على الموضوع</legend>
+    <label for="r-resp">الرد على وقائع المدعي</label><textarea id="r-resp" dir="auto"></textarea>
+    <label for="r-gr">الأسانيد</label><textarea id="r-gr" dir="auto"></textarea>
+    <label for="r-req">الطلبات</label><textarea id="r-req" dir="auto"></textarea>
+    <label for="r-att">المرفقات</label><textarea id="r-att" dir="auto"></textarea></fieldset>
+   <div class="sticky">
+    <div class="row" style="justify-content:flex-start"><button class="pri" id="r-copy" type="button">نسخ المسودة</button><button id="r-clear" type="button">مسح الحقول</button><button id="r-sample" type="button">تحميل النموذج</button></div>
+    <div class="note" id="r-msg" style="color:var(--mut);font-size:14px;margin-top:6px"></div>
+    <div class="check" id="r-check"></div>
+    <div class="paper" id="r-out" lang="ar"></div>
+   </div>
+  </div>
+ </div>
+</div></section>
+<section class="band" id="df"><div class="wrap">
+<div class="warnbar" role="note"><b>تنبيه:</b> هذا نموذج تعليمي للتدريب على الصياغة، وليس استشارة قانونية. لا تقدّم أي مسودة إلى محكمة أو جهة رسمية أو تعتمدها في تعامل حقيقي قبل مراجعتها من محامٍ مرخّص.</div>
+
+ <div class="two">
+  <div class="guide">
+   <h2>كيف تكتب مذكرة الدفاع</h2>
+   <p class="lede" style="margin-top:4px">مذكرة الدفاع يقدّمها المتهم أو محاميه أمام المحكمة الجزائية، للرد على لائحة الدعوى العامة المقدمة من النيابة العامة، وعلى دعوى الحق الخاص إن وُجدت.</p>
+   <h3>هيكل المذكرة</h3>
+   <ol class="req">
+    <li><b class="ar">بيانات القضية</b><span>المحكمة الجزائية والدائرة ورقم القضية.</span></li>
+    <li><b class="ar">الأطراف</b><span>المتهم ووكيله، والنيابة العامة، والمدعي بالحق الخاص إن وُجد.</span></li>
+    <li><b class="ar">ملخص الاتهام</b><span>التهمة كما وردت في لائحة الدعوى، بإيجاز ودون تسليم بها.</span></li>
+    <li><b class="ar">الدفوع الإجرائية</b><span>بطلان الإجراءات وما ترتب عليها من أدلة، وتُقدَّم أولًا.</span></li>
+    <li><b class="ar">الدفوع الموضوعية</b><span>الرد على أركان الجريمة والأدلة والشهود.</span></li>
+    <li><b class="ar">الأسانيد</b><span>النصوص الشرعية والنظامية والمبادئ التي يقوم عليها الدفاع.</span></li>
+    <li><b class="ar">الطلبات</b><span>البراءة أصليًا، وتخفيف العقوبة احتياطيًا عند الحاجة.</span></li>
+   </ol>
+   <h3>ضمانات نظامية يُستند إليها</h3>
+   <ul class="tips">
+    <li><b>بطلان الإجراء المخالف:</b> كل إجراء مخالف لأحكام الشريعة الإسلامية أو الأنظمة المستمدة منها يكون باطلًا (المادة 187)، ويُحتجّ تبعًا لذلك ببطلان الدليل المستمد منه.</li>
+    <li><b>حق الاستعانة بمحامٍ:</b> لكل متهم أن يستعين بوكيل أو محامٍ للدفاع عنه في مرحلتي التحقيق والمحاكمة (المادة 4).</li>
+    <li><b>سلامة الإرادة في الاستجواب:</b> يجب أن يتم الاستجواب في حال لا تأثير فيها على إرادة المتهم في إبداء أقواله (المادة 102)، فالاعتراف الصادر تحت إكراه أو تأثير محل للطعن.</li>
+    <li><b>شرعية التجريم:</b> لا يجوز توقيع عقوبة جزائية إلا على أمر محظور ومعاقب عليه شرعًا أو نظامًا (المادة 3).</li>
+    <li><b>البراءة الأصلية:</b> الأصل في الإنسان البراءة، والشك يُفسَّر لمصلحة المتهم.</li>
+   </ul>
+   <h3>نصائح للكتابة</h3>
+   <ul class="tips">
+    <li><b>ادرس الملف كاملًا:</b> لائحة الدعوى، ومحاضر الضبط والتفتيش، ومحاضر التحقيق، وأقوال الشهود، والتقارير الفنية. أقوى الدفوع تأتي غالبًا من تفاصيل المحاضر.</li>
+    <li><b>رتّب الدفاع:</b> الدفوع الإجرائية أولًا، ثم الموضوعية، ثم طلب التخفيف احتياطيًا.</li>
+    <li><b>لا تعترف ضمنيًا:</b> إذا طلبت تخفيف العقوبة فاسبقه بعبارة «واحتياطياً، وعلى سبيل الفرض الجدلي ودون تسليم بالاتهام».</li>
+    <li><b>اربط كل دفع بموضعه في الملف:</b> كرقم المحضر أو تاريخه أو الصفحة، أو التناقض بين أقوال شاهدين.</li>
+    <li><b>اذكر الظروف المخففة بوقائع محددة:</b> كخلو السجل من السوابق، والظروف الأسرية، والتعاون مع جهات التحقيق.</li>
+   </ul>
+   <p class="callout">هذا دليل عام للهيكلة والصياغة وليس استشارة قانونية. القضايا الجزائية تمسّ حرية الشخص، فيُرجع فيها إلى محامٍ مرخّص، ويُتحقق من المواعيد والإجراءات الخاصة بكل محكمة.</p>
+  </div>
+  <div class="builder">
+   <h2>أداة الصياغة</h2>
+   <div class="tools" id="d-tools"></div>
+   <p class="sample" style="color:var(--mut);font-size:14px;margin:0 0 10px">مُعبّأة بقضية تجريبية افتراضية. اختر الدفوع المناسبة، واكتب كل نقطة في سطر مستقل.</p>
+   <fieldset class="fs"><legend>القضية</legend>
+    <div class="g2"><div><label for="d-court">المحكمة</label><input id="d-court" dir="auto"></div><div><label for="d-circ">الدائرة</label><input id="d-circ" dir="auto"></div></div>
+    <label for="d-no">رقم القضية</label><input id="d-no" dir="auto"></fieldset>
+   <fieldset class="fs"><legend>الأطراف والاتهام</legend>
+    <div class="g2"><div><label for="d-acc">المتهم</label><input id="d-acc" dir="auto"></div><div><label for="d-agent">الوكيل أو المحامي (اختياري)</label><input id="d-agent" dir="auto"></div></div>
+    <label for="d-priv">المدعي بالحق الخاص (اختياري)</label><input id="d-priv" dir="auto">
+    <label for="d-ch">التهمة المنسوبة</label><input id="d-ch" dir="auto">
+    <label for="d-sum">ملخص ما ورد في لائحة الدعوى</label><textarea id="d-sum" dir="auto" style="min-height:70px"></textarea></fieldset>
+   <fieldset class="fs"><legend>الدفوع الإجرائية (اختياري)</legend>
+    <div id="d-pp"></div>
+    <label for="d-px">دفوع إجرائية أخرى</label><textarea id="d-px" dir="auto" style="min-height:60px"></textarea></fieldset>
+   <fieldset class="fs"><legend>الدفوع الموضوعية</legend>
+    <div id="d-ss"></div>
+    <label for="d-resp">تفصيل الرد على الاتهام والأدلة</label><textarea id="d-resp" dir="auto"></textarea>
+    <label for="d-gr">الأسانيد</label><textarea id="d-gr" dir="auto"></textarea></fieldset>
+   <fieldset class="fs"><legend>الطلبات</legend>
+    <label for="d-req">الطلبات الأصلية</label><textarea id="d-req" dir="auto" style="min-height:60px"></textarea>
+    <label class="chk"><input type="checkbox" id="d-mit"><span class="ar">إضافة طلب احتياطي بتخفيف العقوبة</span></label>
+    <label for="d-mr">أسباب التخفيف</label><textarea id="d-mr" dir="auto" style="min-height:60px"></textarea>
+    <label for="d-att">المرفقات</label><textarea id="d-att" dir="auto" style="min-height:60px"></textarea></fieldset>
+   <div class="sticky">
+    <div class="row" style="justify-content:flex-start"><button class="pri" id="d-copy" type="button">نسخ المسودة</button><button id="d-clear" type="button">مسح الحقول</button><button id="d-sample" type="button">تحميل النموذج</button></div>
+    <div class="note" id="d-msg" style="color:var(--mut);font-size:14px;margin-top:6px"></div>
+    <div class="check" id="d-check"></div>
+    <div class="paper" id="d-out" lang="ar"></div>
+   </div>
+  </div>
+ </div>
+</div></section>
+<section class="band" id="dm"><div class="wrap">
+<div class="warnbar" role="note"><b>تنبيه:</b> هذا نموذج تعليمي للتدريب على الصياغة، وليس استشارة قانونية. لا تقدّم أي مسودة إلى محكمة أو جهة رسمية أو تعتمدها في تعامل حقيقي قبل مراجعتها من محامٍ مرخّص.</div>
+
+ <div class="two">
+  <div class="guide">
+   <h2>كيف تكتب خطاب المطالبة الودية</h2>
+   <p class="lede" style="margin-top:4px">خطاب المطالبة الودية يُرسل إلى المدين قبل رفع الدعوى، يطالبه بالوفاء خلال مهلة محددة. كثيرًا ما يُنهي النزاع دون تقاضٍ، وإن لم يُنهه فهو دليل على حسن النية وعلى إخطار المدين.</p>
+   <h3>عناصر الخطاب</h3>
+   <ol class="req">
+    <li><b class="ar">التاريخ والأطراف</b><span>اسم المرسل وصفته، واسم المرسل إليه وعنوانه.</span></li>
+    <li><b class="ar">الموضوع</b><span>سطر واحد يوضح أن الخطاب مطالبة ودية بمبلغ أو التزام مستحق.</span></li>
+    <li><b class="ar">أساس المطالبة</b><span>العقد أو الفاتورة أو السند الذي نشأ عنه الحق، برقمه وتاريخه.</span></li>
+    <li><b class="ar">الوقائع</b><span>ما تم تنفيذه، وما أخلّ به المدين، بإيجاز.</span></li>
+    <li><b class="ar">المبلغ</b><span>بالأرقام والحروف، وكيف تم احتسابه.</span></li>
+    <li><b class="ar">المهلة وطريقة الوفاء</b><span>عدد أيام محدد للسداد، ووسيلة الدفع.</span></li>
+    <li><b class="ar">التنبيه</b><span>أنه سيُلجأ إلى الإجراءات النظامية عند عدم الوفاء.</span></li>
+   </ol>
+   <h3>نصائح</h3>
+   <ul class="tips">
+    <li><b>احتفظ بإثبات الإرسال والاستلام،</b> كبريد إلكتروني مع إشعار قراءة، أو تسليم باليد مقابل توقيع، أو بريد مسجّل.</li>
+    <li><b>كن حازمًا ومهذبًا:</b> لا تهديد ولا عبارات مسيئة، فقد يُقدَّم الخطاب لاحقًا إلى المحكمة.</li>
+    <li><b>لا تطالب بأكثر من حقك:</b> المبالغة تُضعف موقفك إذا وصل النزاع إلى القضاء.</li>
+    <li><b>امنح مهلة معقولة،</b> وتكون عادة بين 7 و15 يومًا، ثم التزم بما أعلنته.</li>
+    <li><b>في القضايا العمالية</b> يلزم أيضًا تقديم طلب التسوية الودية عبر الجهة المختصة قبل رفع الدعوى.</li>
+   </ul>
+  </div>
+  <div class="builder">
+   <h2>أداة الصياغة</h2>
+   <div class="tools" id="m-tools"></div>
+   <p class="sample" style="color:var(--mut);font-size:14px;margin:0 0 10px">مُعبّأة بمثال افتراضي لمطالبة شركة بقيمة بضاعة مورّدة. اكتب كل واقعة في سطر مستقل.</p>
+   <fieldset class="fs"><legend>الأطراف</legend>
+    <div class="g2"><div><label for="m-from">المرسل</label><input id="m-from" dir="auto"></div><div><label for="m-fromc">صفة المرسل (اختياري)</label><input id="m-fromc" dir="auto"></div><div><label for="m-to">المرسل إليه</label><input id="m-to" dir="auto"></div><div><label for="m-addr">عنوان المرسل إليه</label><input id="m-addr" dir="auto"></div></div></fieldset>
+   <fieldset class="fs"><legend>المطالبة</legend>
+    <label for="m-basis">أساس المطالبة</label><input id="m-basis" dir="auto">
+    <label for="m-facts">الوقائع</label><textarea id="m-facts" dir="auto"></textarea>
+    <div class="g2"><div><label for="m-amt">المبلغ بالأرقام (ريال)</label><input id="m-amt" dir="auto" inputmode="decimal"></div><div><label for="m-words">المبلغ بالحروف (يُكتب تلقائيًا)</label><input id="m-words" dir="auto"></div><div><label for="m-days">مهلة السداد (أيام)</label><input id="m-days" dir="auto" inputmode="numeric"></div><div><label for="m-pay">طريقة السداد</label><input id="m-pay" dir="auto"></div></div></fieldset>
+   <div class="sticky">
+    <div class="row" style="justify-content:flex-start"><button class="pri" id="m-copy" type="button">نسخ المسودة</button><button id="m-clear" type="button">مسح الحقول</button><button id="m-sample" type="button">تحميل النموذج</button></div>
+    <div class="note" id="m-msg" style="color:var(--mut);font-size:14px;margin-top:6px"></div>
+    <div class="check" id="m-check"></div>
+    <div class="paper" id="m-out" lang="ar"></div>
+   </div>
+  </div>
+ </div>
+</div></section>
+<section class="band" id="ap"><div class="wrap">
+<div class="warnbar" role="note"><b>تنبيه:</b> هذا نموذج تعليمي للتدريب على الصياغة، وليس استشارة قانونية. لا تقدّم أي مسودة إلى محكمة أو جهة رسمية أو تعتمدها في تعامل حقيقي قبل مراجعتها من محامٍ مرخّص.</div>
+
+ <div class="two">
+  <div class="guide">
+   <h2>كيف تكتب اللائحة الاعتراضية</h2>
+   <p class="lede" style="margin-top:4px">اللائحة الاعتراضية (مذكرة الاعتراض بطلب الاستئناف) يقدّمها المحكوم عليه للاعتراض على حكم صادر من محكمة الدرجة الأولى، ويطلب فيها من محكمة الاستئناف نقضه أو تعديله.</p>
+   <h3>المدة أولًا</h3>
+   <ul class="tips">
+    <li><b>30 يومًا</b> للأحكام العادية، و<b>10 أيام</b> للأحكام الصادرة في المسائل المستعجلة (المادة 187 من نظام المرافعات الشرعية).</li>
+    <li>يبدأ العد من اليوم التالي لتسلّم صورة صك الحكم، وإذا صادف آخر يوم عطلة رسمية امتد إلى أول يوم عمل بعدها.</li>
+    <li>فوات المدة يُسقط حق الاعتراض ويكتسب الحكم القطعية. احسب موعدك في تبويب <a href="#deadline">حاسبة المواعيد</a>.</li>
+   </ul>
+   <h3>هيكل اللائحة</h3>
+   <ol class="req">
+    <li><b class="ar">بيانات الحكم المعترض عليه</b><span>المحكمة والدائرة، ورقم الحكم وتاريخه، وتاريخ تسلّم الصك.</span></li>
+    <li><b class="ar">الأطراف</b><span>المعترض (المستأنِف) والمعترض ضده (المستأنَف ضده).</span></li>
+    <li><b class="ar">منطوق الحكم</b><span>نص ما قضى به الحكم، كما ورد في الصك.</span></li>
+    <li><b class="ar">قبول الاعتراض شكلًا</b><span>بيان أن الاعتراض قُدّم خلال المدة النظامية.</span></li>
+    <li><b class="ar">أسباب الاعتراض</b><span>أوجه الخطأ في الحكم، كل سبب في بند مستقل.</span></li>
+    <li><b class="ar">الطلبات</b><span>قبول الاعتراض شكلًا، ثم نقض الحكم أو تعديله والحكم بما يطلبه المعترض.</span></li>
+   </ol>
+   <h3>نصائح للكتابة</h3>
+   <ul class="tips">
+    <li><b>اذكر كل طلباتك في اللائحة:</b> نطاق الاستئناف ينحصر فيما ورد في مذكرة الاعتراض من طلبات.</li>
+    <li><b>هاجم الحكم لا الخصم:</b> بيّن موضع الخطأ في أسباب الحكم نفسه، واقتبس من الصك عند الحاجة.</li>
+    <li><b>الدليل المُغفَل:</b> إن أغفل الحكم دليلًا قدّمته، فاذكر رقمه وتاريخ تقديمه وأثره في النتيجة.</li>
+    <li><b>رتّب الأسباب من الأقوى إلى الأضعف،</b> ولا تكرر ما قيل أمام محكمة الدرجة الأولى دون بيان خطأ الحكم فيه.</li>
+   </ul>
+   <p class="callout">هذا دليل عام وليس استشارة قانونية. للأحكام الجزائية والتجارية وغيرها قواعد خاصة في أنظمتها، فتحقّق منها.</p>
+  </div>
+  <div class="builder">
+   <h2>أداة الصياغة</h2>
+   <div class="tools" id="a-tools"></div>
+   <p class="sample" style="color:var(--mut);font-size:14px;margin:0 0 10px">مُعبّأة بنموذج افتراضي: اعتراض المدعى عليه في قضية القرض على حكم أغفل دليل السداد.</p>
+   <fieldset class="fs"><legend>الحكم المعترض عليه</legend>
+    <div class="g2"><div><label for="a-acourt">محكمة الاستئناف</label><input id="a-acourt" dir="auto"></div><div><label for="a-court">المحكمة مُصدرة الحكم</label><input id="a-court" dir="auto"></div><div><label for="a-circ">الدائرة مُصدرة الحكم</label><input id="a-circ" dir="auto"></div><div><label for="a-no">رقم الحكم</label><input id="a-no" dir="auto"></div><div><label for="a-date">تاريخ الحكم</label><input id="a-date" dir="auto"></div><div><label for="a-recv">تاريخ تسلّم الصك</label><input id="a-recv" dir="auto"></div></div>
+    <label for="a-op">منطوق الحكم</label><textarea id="a-op" dir="auto" style="min-height:60px"></textarea>
+    <label class="chk"><input type="checkbox" id="a-urg"><span class="ar">الحكم صادر في مسألة مستعجلة (مدة الاعتراض 10 أيام)</span></label>
+    <button type="button" id="a-calc" style="margin-top:6px">احسب الموعد ←</button></fieldset>
+   <fieldset class="fs"><legend>الأطراف</legend>
+    <div class="g2"><div><label for="a-ap">المعترض</label><input id="a-ap" dir="auto"></div><div><label for="a-res">المعترض ضده</label><input id="a-res" dir="auto"></div></div>
+    <label for="a-agent">الوكيل أو المحامي (اختياري)</label><input id="a-agent" dir="auto"></fieldset>
+   <fieldset class="fs"><legend>أسباب الاعتراض</legend>
+    <div id="a-rs"></div>
+    <label for="a-det">تفصيل الأسباب</label><textarea id="a-det" dir="auto"></textarea></fieldset>
+   <fieldset class="fs"><legend>الطلبات والمرفقات</legend>
+    <label for="a-req">الطلبات</label><textarea id="a-req" dir="auto" style="min-height:60px"></textarea>
+    <label for="a-att">المرفقات</label><textarea id="a-att" dir="auto" style="min-height:60px"></textarea></fieldset>
+   <div class="sticky">
+    <div class="row" style="justify-content:flex-start"><button class="pri" id="a-copy" type="button">نسخ المسودة</button><button id="a-clear" type="button">مسح الحقول</button><button id="a-sample" type="button">تحميل النموذج</button></div>
+    <div class="note" id="a-msg" style="color:var(--mut);font-size:14px;margin-top:6px"></div>
+    <div class="check" id="a-check"></div>
+    <div class="paper" id="a-out" lang="ar"></div>
+   </div>
+  </div>
+ </div>
+</div></section>
+<section class="band" id="dl"><div class="wrap"><div class="calc">
+  <h2 style="font-size:26px;margin:0 0 6px">حاسبة مواعيد الاعتراض</h2>
+  <p class="lede" style="margin-top:0">أدخل تاريخ تسلّم صورة صك الحكم ونوعه، لتعرف آخر يوم لتقديم الاعتراض بالتاريخين الميلادي والهجري.</p>
+  <div class="fs">
+   <label for="k-type">نوع الحكم</label>
+   <select id="k-type"><option value="30">حكم ابتدائي في قضية عادية (30 يومًا)</option><option value="10">حكم في مسألة مستعجلة (10 أيام)</option><option value="30c">حكم جزائي ابتدائي (30 يومًا)</option></select>
+   <label>تاريخ تسلّم صورة الصك</label>
+   <div class="seg2" role="group" aria-label="نوع التاريخ"><button type="button" id="k-g" class="on">ميلادي</button><button type="button" id="k-h">هجري</button></div>
+   <input type="date" id="k-date" style="margin-top:8px" aria-label="التاريخ الميلادي">
+   <div class="hij" id="k-hij" style="margin-top:8px"><input id="k-hd" inputmode="numeric" placeholder="اليوم" aria-label="اليوم الهجري"><select id="k-hm" aria-label="الشهر الهجري"></select><input id="k-hy" inputmode="numeric" placeholder="السنة" aria-label="السنة الهجرية"></div>
+   <div class="sub" id="k-conv" style="color:var(--mut);font-size:14px;margin-top:6px"></div>
+  </div>
+  <div class="res" id="k-res" aria-live="polite"></div>
+  <div class="warnbar" role="note" style="margin-top:12px"><b>تنبيه:</b> الحاسبة لا تحتسب إجازات الأعياد واليوم الوطني. لا تعتمد عليها وحدها في موعد حقيقي، وقدّم الاعتراض قبل آخر يوم بوقت كافٍ.</div>
+  <h3 style="margin-top:24px">كيف يُحسب الموعد</h3>
+  <ul class="tips">
+   <li>مدة الاعتراض بطلب الاستئناف 30 يومًا، و10 أيام للأحكام الصادرة في المسائل المستعجلة (المادة 187 من نظام المرافعات الشرعية).</li>
+   <li>يبدأ العد من اليوم التالي لتسلّم صورة الصك. وفي الأحكام الجزائية يبدأ من الموعد الذي حدّدته المحكمة لتسلّم الصك.</li>
+   <li>إذا صادف آخر يوم عطلة رسمية امتد الموعد إلى أول يوم عمل بعدها (المادة 22). تُعامل الأداة الجمعة والسبت عطلة تلقائيًا.</li>
+  </ul>
+  <p class="callout">لا تحتسب الأداة الإجازات الرسمية كعيدي الفطر والأضحى واليوم الوطني، فتحقّق منها إن قارب الموعد إحداها. الأفضل دائمًا تقديم الاعتراض قبل آخر يوم بوقت كافٍ.</p>
+</div></div></section>
+<section class="band" id="qs"><div class="wrap">
+  <div class="qhead"><div><h2 style="font-size:26px;margin:0">حالات تدريبية</h2><p class="lede" style="margin:4px 0 0">اقرأ كل واقعة واختر الإجابة الصحيحة، ثم اقرأ الشرح والسند النظامي.</p></div>
+  <div style="display:flex;gap:10px;align-items:center"><span class="score" id="q-score"></span><button id="q-copy" type="button">نسخ النتيجة</button><button id="q-retry" type="button">أعد الخاطئة</button><button id="q-reset" type="button">إعادة الاختبار</button></div></div>
+  <div class="qtools" id="q-tools"></div>
+  <div class="qgrid" id="q-grid"></div>
+</div></section>
+<section class="band" id="wr"><div class="wrap">
+<div class="warnbar" role="note"><b>تنبيه:</b> هذا نموذج تعليمي للتدريب على الصياغة، وليس استشارة قانونية. لا تقدّم أي مسودة إلى محكمة أو جهة رسمية أو تعتمدها في تعامل حقيقي قبل مراجعتها من محامٍ مرخّص.</div>
+
+ <div class="two">
+  <div class="guide">
+   <h2>كيف تكتب عقدًا</h2>
+   <p class="lede" style="margin-top:4px">العقد الجيد يجيب بوضوح عن خمسة أسئلة: من الأطراف؟ ما المحل؟ كم الثمن ومتى يُدفع؟ ما المدة؟ وماذا يحدث عند الخلاف؟ هذا التبويب للتدريب على الصياغة.</p>
+   <h3>هيكل العقد</h3>
+   <ol class="req">
+    <li><b class="ar">العنوان والتاريخ والمكان</b><span>نوع العقد، وتاريخ إبرامه ومدينته.</span></li>
+    <li><b class="ar">الأطراف</b><span>الاسم الكامل، ورقم السجل التجاري أو الهوية، والممثل في التوقيع وصفته، والعنوان.</span></li>
+    <li><b class="ar">التمهيد</b><span>خلفية التعاقد وغرضه، ويُعد جزءًا من العقد.</span></li>
+    <li><b class="ar">البنود الموضوعية</b><span>المحل، والثمن وطريقة الدفع، والمدة، والتزامات كل طرف.</span></li>
+    <li><b class="ar">البنود العامة</b><span>التعويض الاتفاقي، والقوة القاهرة، والإنهاء، والسرية، وتسوية النزاعات، والإخطارات.</span></li>
+    <li><b class="ar">الختام والتوقيع</b><span>كامل الاتفاق، وعدد النسخ، وتوقيع الأطراف.</span></li>
+   </ol>
+   <h3>نصائح للصياغة</h3>
+   <ul class="tips">
+    <li><b>استخدم «يلتزم»</b> للالتزامات، و«يحق» للحقوق، وتجنّب «يمكن» و«يُفضّل» لأنها لا تُلزم.</li>
+    <li><b>التزام واحد في كل بند فرعي،</b> مرقّمًا، ليسهل الإحالة إليه عند النزاع.</li>
+    <li><b>الأرقام بالأرقام والحروف،</b> والمدد بالأيام مع بيان بدايتها.</li>
+    <li><b>ضع التفاصيل الفنية في ملاحق</b> مرقّمة، وانصّ على أنها جزء من العقد.</li>
+    <li><b>طابِق أسماء الأطراف</b> مع السجل التجاري أو الهوية، وتأكد من صلاحية الممثل في التوقيع.</li>
+   </ul>
+   <p class="callout">المسودة نموذج تدريبي. أي عقد فعلي يحتاج مراجعة قانونية تراعي ظروفه والأنظمة الخاصة به.</p>
+  </div>
+  <div class="builder">
+   <h2>أداة الصياغة</h2>
+   <div class="tools" id="w-tools"></div>
+   <p class="sample" style="color:var(--mut);font-size:14px;margin:0 0 10px">مُعبّأة بعقد توريد افتراضي مكتمل البنود. قارنه بالعقد التجريبي في تبويب «مراجعة العقد» لترى الفرق.</p>
+   <fieldset class="fs"><legend>العقد</legend>
+    <div class="g2"><div><label for="w-type">نوع العقد</label><input id="w-type" dir="auto" list="w-types"></div><div><label for="w-date">تاريخ الإبرام</label><input id="w-date" dir="auto"></div><div><label for="w-city">مدينة الإبرام</label><input id="w-city" dir="auto"></div></div>
+    <datalist id="w-types"><option value="عقد توريد"><option value="عقد تقديم خدمات"><option value="عقد مقاولة"><option value="عقد إيجار"><option value="عقد شراكة"></datalist></fieldset>
+   <fieldset class="fs"><legend>الطرف الأول</legend>
+    <div class="g2"><div><label for="w-p1">الاسم</label><input id="w-p1" dir="auto"></div><div><label for="w-p1id">السجل التجاري أو الهوية</label><input id="w-p1id" dir="auto"></div><div><label for="w-p1rep">الممثل في التوقيع وصفته</label><input id="w-p1rep" dir="auto"></div><div><label for="w-p1ad">العنوان أو البريد الإلكتروني</label><input id="w-p1ad" dir="auto"></div></div></fieldset>
+   <fieldset class="fs"><legend>الطرف الثاني</legend>
+    <div class="g2"><div><label for="w-p2">الاسم</label><input id="w-p2" dir="auto"></div><div><label for="w-p2id">السجل التجاري أو الهوية</label><input id="w-p2id" dir="auto"></div><div><label for="w-p2rep">الممثل في التوقيع وصفته</label><input id="w-p2rep" dir="auto"></div><div><label for="w-p2ad">العنوان أو البريد الإلكتروني</label><input id="w-p2ad" dir="auto"></div></div></fieldset>
+   <fieldset class="fs"><legend>البنود الموضوعية</legend>
+    <label for="w-pre">التمهيد (اختياري، ويُكتب تلقائيًا إن تُرك)</label><textarea id="w-pre" dir="auto" style="min-height:60px"></textarea>
+    <label for="w-subj">محل العقد</label><input id="w-subj" dir="auto">
+    <div class="g2"><div><label for="w-price">القيمة بالأرقام (ريال)</label><input id="w-price" dir="auto" inputmode="decimal"></div><div><label for="w-pw">القيمة بالحروف (تُكتب تلقائيًا)</label><input id="w-pw" dir="auto"></div></div>
+    <label class="chk"><input type="checkbox" id="w-vat"><span class="ar">القيمة شاملة ضريبة القيمة المضافة</span></label>
+    <label for="w-pay">طريقة الدفع (كل دفعة في سطر)</label><textarea id="w-pay" dir="auto" style="min-height:60px"></textarea>
+    <div class="g2"><div><label for="w-dur">مدة العقد</label><input id="w-dur" dir="auto"></div><div><label for="w-start">تاريخ البدء</label><input id="w-start" dir="auto"></div></div>
+    <label for="w-ob1">التزامات الطرف الأول</label><textarea id="w-ob1" dir="auto" style="min-height:60px"></textarea>
+    <label for="w-ob2">التزامات الطرف الثاني</label><textarea id="w-ob2" dir="auto" style="min-height:60px"></textarea></fieldset>
+   <fieldset class="fs"><legend>البنود العامة</legend>
+    <label class="chk"><input type="checkbox" id="w-pen"><span class="ar">التعويض الاتفاقي (الشرط الجزائي)</span></label>
+    <div class="opt2"><div><label for="w-penr">النسبة ٪</label><input id="w-penr" dir="auto" inputmode="decimal"></div><div><label for="w-penp">عن كل</label><input id="w-penp" dir="auto"></div><div><label for="w-penc">الحد الأقصى ٪</label><input id="w-penc" dir="auto" inputmode="decimal"></div></div>
+    <label class="chk"><input type="checkbox" id="w-fm"><span class="ar">القوة القاهرة</span></label>
+    <label class="chk"><input type="checkbox" id="w-term"><span class="ar">الإنهاء للإخلال</span></label>
+    <div class="opt2"><div><label for="w-cure">مهلة إصلاح الإخلال (أيام)</label><input id="w-cure" dir="auto" inputmode="numeric"></div></div>
+    <label class="chk"><input type="checkbox" id="w-conf"><span class="ar">السرية</span></label>
+    <div class="opt2"><div><label for="w-confy">مدة السرية بعد العقد (سنوات)</label><input id="w-confy" dir="auto" inputmode="numeric"></div></div>
+    <label for="w-disp">تسوية النزاعات</label><select id="w-disp" style="width:100%;font:16px 'IBM Plex Sans Arabic',sans-serif;min-height:48px;padding:0 10px;border:1.5px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)"><option value="court">المحكمة المختصة</option><option value="arb">التحكيم</option></select>
+    <div class="g2"><div><label for="w-dcity">مدينة المحكمة أو مقر التحكيم</label><input id="w-dcity" dir="auto"></div></div>
+    <label class="chk"><input type="checkbox" id="w-notice"><span class="ar">الإخطارات</span></label>
+    <label class="chk"><input type="checkbox" id="w-entire"><span class="ar">كامل الاتفاق وعدد النسخ</span></label>
+    <div class="opt2"><div><label for="w-copies">عدد النسخ</label><input id="w-copies" dir="auto" inputmode="numeric"></div></div></fieldset>
+   <div class="sticky">
+    <div class="row" style="justify-content:flex-start"><button class="pri" id="w-copy" type="button">نسخ المسودة</button><button id="w-clear" type="button">مسح الحقول</button><button id="w-sample" type="button">تحميل النموذج</button></div>
+    <div class="note" id="w-msg" style="color:var(--mut);font-size:14px;margin-top:6px"></div>
+    <div class="check" id="w-check"></div>
+    <div class="paper" id="w-out" lang="ar"></div>
+   </div>
+  </div>
+ </div>
+</div></section>
+<section class="band" id="rv"><div class="wrap">
+<div class="warnbar" role="note"><b>تنبيه:</b> لا تلصق عقودًا حقيقية تتضمن بيانات سرية أو شخصية، خصوصًا على جهاز مشترك. الفحص آلي ومساعد، ولا يغني عن مراجعة قانونية كاملة.</div>
+
+ <div class="two">
+  <div>
+   <h2 style="font-size:24px;margin:0 0 6px">مراجعة العقد</h2>
+   <p class="lede" style="margin:0 0 12px">الصق نص العقد هنا، وتظهر النتيجة فورًا. الفحص يبحث عن كلمات البنود الأساسية، فهو مساعد للمراجعة وليس بديلًا عن قراءة العقد كاملًا.</p>
+   <textarea id="v-text" dir="auto" aria-label="نص العقد"></textarea>
+   <div class="row" style="justify-content:flex-start;margin-top:10px"><button class="pri" id="v-copy" type="button">نسخ تقرير المراجعة</button><button id="v-clear" type="button">مسح النص</button><button id="v-sample" type="button">تحميل عقد تجريبي</button></div>
+   <div class="note" id="v-msg" style="color:var(--mut);font-size:14px;margin-top:6px"></div>
+  </div>
+  <div class="sticky">
+   <div class="check" id="v-check" style="margin-top:0"></div>
+   <p class="callout" style="margin-top:12px">للصياغة البديلة لأي بند ناقص، افتح <a href="#clauses">مكتبة البنود</a>.</p>
+  </div>
+ </div>
+</div></section>
+<section class="band" id="cb"><div class="wrap">
+  <h2 style="font-size:26px;margin:0 0 6px">مكتبة البنود</h2>
+  <p class="lede" style="margin:0 0 12px;max-width:75ch">صياغات نموذجية لأهم بنود العقود. ما بين القوسين [ ] يُستبدل ببيانات العقد. هذه صياغات تعليمية، وكل عقد يحتاج تكييفها مع ظروفه.</p>
+  <div class="bar"><input id="b-q" type="search" placeholder="ابحث في البنود: القوة القاهرة، السرية…" aria-label="البحث في البنود" style="flex:1 1 320px;font:16px 'IBM Plex Sans Arabic',sans-serif;padding:12px 16px;border:1.5px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);min-height:48px"><span class="count" id="b-count"></span></div>
+  <div class="cgrid" id="b-grid"></div>
+</div></section>
+<footer><div class="wrap">المقابلات الإنجليزية تعكس الاستخدام الشائع في الممارسة السعودية، ويُرجع دائمًا إلى الترجمة الرسمية للنظام. إعداد: سارة أحمد الميموني.<div class="foot2"><span>تجمع الأداة إحصاءات زيارات مجهولة الهوية عبر GoatCounter، دون ملفات تعريف ارتباط، ودون أي بيانات شخصية أو أي شيء مما تكتبه.</span><span>آخر مراجعة للمحتوى: 22 نوفمبر 2026</span><span>© 2026 سارة أحمد الميموني. جميع الحقوق محفوظة.</span><button type="button" id="wipe" style="min-height:40px;font-size:13px">مسح بياناتي من هذا الجهاز</button><span id="wipe-msg"></span></div></div></footer>
+
+<script>
+{
+const T=[["Courts", "دعوى", "Lawsuit / claim", "طلب يقدّمه الشخص إلى المحكمة للمطالبة بحق له أو حمايته."], ["Courts", "مدعي", "Plaintiff / claimant", "الطرف الذي يرفع الدعوى ويطالب بالحق."], ["Courts", "مدعى عليه", "Defendant / respondent", "الطرف الذي تُرفع الدعوى ضده."], ["Courts", "صحيفة الدعوى", "Statement of claim", "الوثيقة التي تُرفع بها الدعوى، وتتضمن بيانات الأطراف والوقائع والطلبات والأسانيد."], ["Courts", "مذكرة جوابية", "Statement of defence / reply memorandum", "رد مكتوب يقدّمه أحد الأطراف على ما ورد في دعوى الطرف الآخر أو مذكرته."], ["Courts", "حكم", "Judgment", "القرار الذي تصدره المحكمة للفصل في الدعوى."], ["Courts", "حكم ابتدائي", "First-instance judgment", "الحكم الصادر من محكمة الدرجة الأولى، ويقبل الاعتراض عليه."], ["Courts", "حكم مكتسب للقطعية", "Final and binding judgment", "الحكم الذي لم يعد قابلًا للاعتراض بالطرق العادية، فيصبح واجب النفاذ."], ["Courts", "استئناف", "Appeal", "طلب مراجعة الحكم الابتدائي أمام محكمة أعلى درجة."], ["Courts", "محكمة الاستئناف", "Court of Appeal", "المحكمة التي تنظر الاعتراضات على أحكام محاكم الدرجة الأولى."], ["Courts", "المحكمة العليا", "Supreme Court", "أعلى محكمة في القضاء العام، تراقب سلامة تطبيق الشريعة والأنظمة في الأحكام."], ["Courts", "اعتراض", "Objection", "الطعن في حكم أو قرار خلال المدة المحددة نظامًا."], ["Courts", "التماس إعادة النظر", "Petition for reconsideration", "طريق استثنائي لطلب إعادة نظر حكم نهائي لأسباب محددة، كظهور أدلة جديدة."], ["Courts", "نقض", "Cassation / reversal", "إلغاء الحكم لمخالفته الشريعة أو النظام أو الخطأ في تطبيقهما."], ["Courts", "جلسة", "Hearing / session", "الموعد الذي تنعقد فيه المحكمة لنظر القضية."], ["Courts", "تبليغ", "Service of process / notification", "إعلام الطرف رسميًا بالدعوى أو الجلسة أو الحكم."], ["Courts", "بينة", "Evidence", "كل ما يُستدل به أمام المحكمة لإثبات واقعة."], ["Courts", "عبء الإثبات", "Burden of proof", "التزام الطرف بإقامة الدليل على ما يدّعيه."], ["Courts", "شاهد", "Witness", "شخص يُدلي أمام المحكمة بما يعلمه من وقائع."], ["Courts", "يمين", "Oath", "حلف بالله يؤديه أحد الأطراف وسيلةً من وسائل الإثبات."], ["Courts", "إقرار", "Admission / acknowledgment", "اعتراف الشخص بواقعة أو حق عليه لغيره."], ["Courts", "وكالة", "Power of attorney", "تفويض شخص لغيره بالتصرف نيابةً عنه، كالترافع أمام المحكمة."], ["Courts", "اختصاص", "Jurisdiction", "سلطة المحكمة في نظر نوع معين من القضايا أو في نطاق معين."], ["Courts", "اختصاص مكاني", "Territorial jurisdiction", "تحديد المحكمة المختصة بحسب المكان، والأصل أنه محل إقامة المدعى عليه."], ["Courts", "اختصاص نوعي", "Subject-matter jurisdiction", "تحديد المحكمة المختصة بحسب نوع الدعوى، كالتجارية والعمالية والأحوال الشخصية."], ["Courts", "سابقة قضائية", "Judicial precedent", "حكم سابق يُستأنس به في القضايا المماثلة."], ["Courts", "صلح", "Settlement / conciliation", "اتفاق الطرفين على إنهاء النزاع بالتراضي."], ["Courts", "تحكيم", "Arbitration", "الفصل في النزاع بواسطة محكّمين يختارهم الطرفان بدلًا من المحكمة."], ["Courts", "تنفيذ", "Enforcement / execution", "إجبار المحكوم عليه على الوفاء بما في الحكم أو السند التنفيذي بقوة النظام."], ["Courts", "سند تنفيذي", "Enforceable instrument", "مستند يجوز تنفيذه مباشرة دون رفع دعوى، كالحكم النهائي والشيك والسند لأمر."], ["Courts", "رد الدعوى", "Dismissal of the claim", "رفض المحكمة للدعوى لعدم ثبوتها أو لعدم استحقاق المدعي."], ["Courts", "شطب الدعوى", "Striking out the case", "رفع القضية من قائمة الجلسات، كأن يتغيب المدعي دون عذر."], ["Contracts", "عقد", "Contract", "اتفاق بين طرفين أو أكثر يُنشئ التزامات ملزمة لهم."], ["Contracts", "إيجاب وقبول", "Offer and acceptance", "تعبيران متطابقان عن إرادة الطرفين، يتم بهما انعقاد العقد."], ["Contracts", "محل العقد", "Subject matter of the contract", "ما يرد عليه العقد من مال أو عمل أو منفعة."], ["Contracts", "بند", "Clause", "فقرة مستقلة في العقد تتضمن حكمًا أو التزامًا محددًا."], ["Contracts", "شرط جزائي", "Penalty clause / liquidated damages", "مبلغ يتفق عليه الطرفان مسبقًا ويُستحق عند الإخلال بالعقد."], ["Contracts", "إخلال بالعقد", "Breach of contract", "عدم تنفيذ أحد الطرفين لالتزامه، أو تنفيذه على غير الوجه المتفق عليه."], ["Contracts", "فسخ", "Rescission", "حلّ العقد وزوال آثاره، غالبًا بسبب إخلال أحد الطرفين."], ["Contracts", "تعويض", "Compensation / damages", "مبلغ يُدفع لجبر الضرر الذي لحق بالمتضرر."], ["Contracts", "قوة قاهرة", "Force majeure", "حادث غير متوقع ولا يمكن دفعه، يجعل تنفيذ الالتزام مستحيلًا."], ["Contracts", "ضمان", "Warranty / guarantee", "التزام بسلامة المبيع أو العمل من العيوب خلال مدة معينة."], ["Contracts", "كفالة", "Surety / personal guarantee", "التزام شخص بأداء الدين إذا لم يؤدّه المدين."], ["Contracts", "رهن", "Mortgage / pledge", "تخصيص مال لضمان الوفاء بدين، يُستوفى منه الدين عند عدم السداد."], ["Contracts", "القانون الواجب التطبيق", "Governing law", "النظام الذي يختاره الطرفان ليحكم العقد وتفسيره."], ["Contracts", "سرية", "Confidentiality", "التزام بعدم إفشاء المعلومات التي يطّلع عليها الطرف بسبب العقد."], ["Contracts", "عدم المنافسة", "Non-compete", "التزام بعدم منافسة الطرف الآخر خلال مدة ونطاق محددين."], ["Contracts", "سجل تجاري", "Commercial register", "القيد الرسمي للمنشأة التجارية وبياناتها لدى الجهة المختصة."], ["Contracts", "شركة ذات مسؤولية محدودة", "Limited liability company (LLC)", "شركة لا يُسأل فيها الشركاء عن ديونها إلا بقدر حصصهم في رأس المال."], ["Criminal", "النيابة العامة", "Public Prosecution", "الجهة المختصة بالتحقيق في الجرائم وإقامة الدعوى الجزائية أمام المحاكم."], ["Criminal", "تحقيق", "Investigation", "جمع الأدلة واستجواب الأطراف للكشف عن حقيقة الجريمة المشتبه بها."], ["Criminal", "لائحة اتهام", "Indictment / bill of charges", "المستند الرسمي الذي تبيّن فيه النيابة العامة التهمة المنسوبة إلى المتهم وأدلتها."], ["Criminal", "متهم", "Accused", "الشخص المنسوب إليه ارتكاب جريمة."], ["Criminal", "جريمة", "Crime / offence", "فعل أو امتناع يعاقب عليه الشرع أو النظام."], ["Criminal", "مخالفة", "Violation / infraction", "خروج على نظام أو لائحة، وتكون عادةً أخف من الجريمة."], ["Criminal", "محضر", "Official report / record", "مستند مكتوب يحرّره موظف مختص لتوثيق إجراء أو واقعة."], ["Criminal", "محضر ضبط", "Seizure report", "محضر رسمي يوثّق المخالفة المضبوطة والمواد المتحفَّظ عليها."], ["Criminal", "ضبط", "Seizure / apprehension", "وضع اليد على الأشياء أو الأشخاص المتصلين بالجريمة أو المخالفة."], ["Criminal", "حجز", "Attachment / seizure of property", "وضع المال تحت يد القضاء أو الجهة المختصة لمنع التصرف فيه."], ["Criminal", "مصادرة", "Confiscation / forfeiture", "نزع ملكية المال المتصل بالجريمة نهائيًا لصالح الدولة."], ["Criminal", "قرينة", "Presumption / circumstantial evidence", "أمر معلوم يُستنتج منه أمر مجهول."], ["Criminal", "براءة", "Acquittal", "حكم بعدم إدانة المتهم بما نُسب إليه."], ["Criminal", "إدانة", "Conviction", "حكم بثبوت التهمة على المتهم."], ["Criminal", "عقوبة", "Penalty / punishment", "الجزاء الذي يُوقَّع على مرتكب الجريمة."], ["Criminal", "غرامة", "Fine", "عقوبة مالية يُلزم بها المخالف."], ["Customs & Tax", "تهريب جمركي", "Customs smuggling", "إدخال البضائع أو إخراجها بطرق غير مشروعة، بقصد التهرب من الرسوم أو مخالفة المنع والتقييد."], ["Customs & Tax", "تهرب ضريبي", "Tax evasion", "التخلص غير المشروع من دفع الضريبة المستحقة."], ["Customs & Tax", "بيان جمركي", "Customs declaration", "النموذج الذي يُصرَّح فيه عن البضائع المستوردة أو المصدّرة وبياناتها."], ["Customs & Tax", "القيمة الجمركية", "Customs value", "قيمة البضاعة التي تُحتسب على أساسها الرسوم الجمركية."], ["Customs & Tax", "التعريفة الجمركية", "Customs tariff", "جدول فئات الرسوم الجمركية بحسب أنواع البضائع."], ["Customs & Tax", "رسوم جمركية", "Customs duties", "المبالغ المفروضة على البضائع عند استيرادها أو تصديرها."], ["Customs & Tax", "فاتورة تجارية", "Commercial invoice", "فاتورة البائع التي تبيّن البضاعة وكميتها وسعرها."], ["Customs & Tax", "شهادة منشأ", "Certificate of origin", "مستند يثبت البلد الذي صُنعت فيه البضاعة."], ["Customs & Tax", "ربط ضريبي", "Tax assessment", "تحديد الجهة المختصة لمقدار الضريبة المستحقة على المكلّف."], ["Customs & Tax", "إقرار ضريبي", "Tax return", "ما يقدّمه المكلّف من بيانات عن دخله أو عملياته لأغراض الضريبة."], ["Customs & Tax", "ضريبة القيمة المضافة", "Value added tax (VAT)", "ضريبة غير مباشرة تُفرض على القيمة المضافة في كل مرحلة من مراحل التوريد."], ["Customs & Tax", "الزكاة", "Zakat", "فريضة مالية شرعية على الأموال الزكوية، تتولى جبايتها في المملكة هيئة الزكاة والضريبة والجمارك."], ["Customs & Tax", "اعتراض ضريبي", "Tax objection", "طعن المكلّف في الربط الضريبي أو القرار الصادر بحقه."], ["Banking & AML", "غسل الأموال", "Money laundering", "إخفاء المصدر غير المشروع للأموال لإظهارها بمظهر مشروع."], ["Banking & AML", "تمويل الإرهاب", "Terrorist financing", "توفير الأموال أو جمعها لاستخدامها في أعمال إرهابية أو لصالح منظمات إرهابية."], ["Banking & AML", "العناية الواجبة", "Due diligence", "إجراءات التحقق من هوية العميل وطبيعة نشاطه ومصدر أمواله."], ["Banking & AML", "اعرف عميلك", "Know your customer (KYC)", "مبدأ يُلزم المؤسسة المالية بالتعرف على عملائها والتحقق منهم وفهم تعاملاتهم."], ["Banking & AML", "بلاغ اشتباه", "Suspicious transaction report (STR)", "بلاغ يُرفع إلى الإدارة العامة للتحريات المالية عن عملية يُشتبه في صلتها بغسل الأموال أو تمويل الإرهاب."], ["Banking & AML", "الأشخاص السياسيون ممثلو المخاطر", "Politically exposed persons (PEPs)", "أشخاص يشغلون أو شغلوا وظائف عامة بارزة، وأقاربهم والمقرّبون منهم، ويخضعون لعناية واجبة مشددة."], ["Banking & AML", "المستفيد الحقيقي", "Beneficial owner", "الشخص الطبيعي الذي يملك العميل أو يسيطر عليه فعليًا في النهاية."], ["Banking & AML", "تجميد", "Freezing", "حظر نقل الأموال أو التصرف فيها أو استخدامها."], ["Banking & AML", "الامتثال", "Compliance", "التزام المنشأة بالأنظمة والتعليمات والسياسات المنطبقة عليها."], ["Banking & AML", "الحوكمة", "Governance", "منظومة القواعد والرقابة التي تُدار بها المنشأة وتُوجَّه."], ["Banking & AML", "إدارة المخاطر", "Risk management", "تحديد المخاطر وتقييمها ووضع الضوابط للحد منها."], ["Personal Status", "الأحوال الشخصية", "Personal status", "الأحكام المتعلقة بالأسرة، كالزواج والطلاق والحضانة والنفقة والميراث."], ["Personal Status", "عقد الزواج", "Marriage contract", "العقد الذي تنشأ به العلاقة الزوجية بين الرجل والمرأة."], ["Personal Status", "مهر", "Dowry (mahr)", "المال الذي يجب للزوجة على زوجها بعقد الزواج."], ["Personal Status", "نفقة", "Maintenance / alimony", "ما يجب من مال لسد الحاجات الأساسية، كنفقة الزوجة والأولاد."], ["Personal Status", "حضانة", "Custody", "رعاية الطفل وتربيته والقيام بشؤونه."], ["Personal Status", "طلاق", "Divorce", "حلّ عقد الزواج من قِبل الزوج أو بحكم القاضي."], ["Personal Status", "خلع", "Khul'", "فراق الزوجة لزوجها بطلب منها مقابل عوض تدفعه له."], ["Personal Status", "ولاية", "Guardianship", "سلطة شرعية على شؤون القاصر في نفسه أو ماله."], ["Personal Status", "تركة", "Estate", "ما يخلّفه المتوفى من أموال وحقوق."], ["Personal Status", "وصية", "Will / bequest", "تصرف في المال مضاف إلى ما بعد الموت."], ["Personal Status", "صك حصر ورثة", "Deed of heirs", "صك تصدره المحكمة يحدد ورثة المتوفى الشرعيين."], ["Courts", "نظام", "Law / statute", "التسمية السعودية للتشريع الصادر بمرسوم ملكي، ويقابل القانون في الدول الأخرى."], ["Courts", "لائحة تنفيذية", "Implementing regulations", "قواعد تفصيلية تصدر لتنفيذ نظام معين."], ["Courts", "مرسوم ملكي", "Royal decree", "أداة تصدر عن الملك، تُصدر بها الأنظمة وتُعتمد بها الاتفاقيات."], ["Courts", "قرار وزاري", "Ministerial decision", "قرار يصدره الوزير في حدود اختصاصه."], ["Courts", "تعميم", "Circular", "تعليمات رسمية تصدرها جهة إلى الجهات التابعة لها أو الخاضعة لإشرافها."], ["Courts", "مهلة نظامية", "Statutory deadline", "مدة يحددها النظام لاتخاذ إجراء معين، كتقديم الاعتراض."], ["Courts", "قضاء مستعجل", "Urgent (summary) proceedings", "إجراءات سريعة لحماية حق يُخشى عليه من فوات الوقت، قبل الفصل في أصل النزاع."], ["Courts", "خبير", "Expert", "مختص تندبه المحكمة لإبداء رأي فني في مسألة تتعلق بالدعوى."], ["Courts", "تأجيل", "Adjournment", "نقل نظر القضية إلى جلسة لاحقة."], ["Courts", "حكم غيابي", "Judgment in absentia", "حكم يصدر دون حضور المدعى عليه أو من يمثله."], ["Courts", "ديوان المظالم", "Board of Grievances", "جهة القضاء الإداري في المملكة، تختص بالمنازعات التي تكون الجهات الحكومية طرفًا فيها."], ["Courts", "إحالة", "Referral", "نقل القضية أو المسألة إلى محكمة أو جهة أخرى مختصة."], ["Labour", "عقد عمل", "Employment contract", "عقد يتعهد بموجبه العامل بالعمل لدى صاحب العمل وتحت إدارته مقابل أجر."], ["Labour", "عقد محدد المدة", "Fixed-term contract", "عقد عمل ينتهي بانتهاء مدة محددة فيه."], ["Labour", "عقد غير محدد المدة", "Indefinite contract", "عقد عمل لم تُحدد فيه مدة لانتهائه."], ["Labour", "فترة التجربة", "Probation period", "مدة في بداية العمل يُختبر خلالها مدى ملاءمة العامل للعمل."], ["Labour", "مكافأة نهاية الخدمة", "End-of-service award", "مبلغ يستحقه العامل عند انتهاء علاقة العمل، ويُحتسب على أساس مدة خدمته وأجره."], ["Labour", "مهلة الإشعار", "Notice period", "المدة التي يلتزم الطرف بإخطار الآخر خلالها قبل إنهاء العقد."], ["Labour", "إنهاء العقد لسبب غير مشروع", "Termination without a valid reason", "إنهاء علاقة العمل دون سبب يقرّه النظام، مما قد يرتب تعويضًا للطرف المتضرر."], ["Labour", "أجر", "Wage", "المقابل المالي الذي يتقاضاه العامل نظير عمله."], ["Labour", "العمل الإضافي", "Overtime", "العمل الزائد على ساعات العمل المعتادة، ويُستحق عنه أجر إضافي."], ["Labour", "إجازة سنوية", "Annual leave", "إجازة مدفوعة الأجر يستحقها العامل كل سنة."], ["Labour", "إصابة عمل", "Work injury", "إصابة تلحق بالعامل أثناء العمل أو بسببه."], ["Labour", "المحكمة العمالية", "Labour court", "المحكمة المختصة بنظر منازعات العمل."], ["Labour", "تسوية ودية", "Amicable settlement", "محاولة حل النزاع العمالي بالتراضي قبل إحالته إلى المحكمة."], ["Labour", "نقل الخدمات", "Transfer of services", "انتقال العامل من صاحب عمل إلى صاحب عمل آخر."], ["Labour", "نظام حماية الأجور", "Wage Protection System", "نظام إلكتروني يراقب التزام منشآت القطاع الخاص بصرف الأجور في مواعيدها."], ["Labour", "لائحة تنظيم العمل", "Work regulations", "اللائحة الداخلية التي تضعها المنشأة لتنظيم العمل والسلوك والجزاءات."], ["Real Estate", "صك ملكية", "Title deed", "المستند الرسمي الذي يثبت ملكية العقار."], ["Real Estate", "إفراغ", "Conveyance", "نقل ملكية العقار من البائع إلى المشتري رسميًا."], ["Real Estate", "عقد إيجار", "Lease agreement", "عقد يمكّن المستأجر من الانتفاع بالعقار مدة معينة مقابل أجرة."], ["Real Estate", "مؤجر", "Landlord / lessor", "مالك العقار أو من يملك منفعته، الذي يؤجّره لغيره."], ["Real Estate", "مستأجر", "Tenant / lessee", "الشخص الذي ينتفع بالعقار مقابل الأجرة."], ["Real Estate", "منصة إيجار", "Ejar platform", "المنصة الوطنية لتوثيق عقود الإيجار."], ["Real Estate", "البيع على الخارطة", "Off-plan sale", "بيع الوحدات العقارية قبل اكتمال إنشائها."], ["Real Estate", "وساطة عقارية", "Real estate brokerage", "التوفيق بين أطراف الصفقة العقارية مقابل عمولة."], ["Real Estate", "شفعة", "Pre-emption right", "حق الشريك في تملّك حصة شريكه المبيعة لغيره بالثمن نفسه."], ["Real Estate", "نزع ملكية للمنفعة العامة", "Expropriation for public benefit", "نزع الدولة ملكية عقار خاص للمصلحة العامة مقابل تعويض عادل."], ["Real Estate", "التسجيل العيني للعقار", "Real estate registration", "تسجيل العقار والحقوق المتعلقة به في سجل رسمي."], ["Real Estate", "حق الارتفاق", "Easement", "حق مقرر على عقار لمنفعة عقار آخر، كحق المرور."], ["Companies & IP", "نظام الشركات", "Companies Law", "النظام الذي ينظم تأسيس الشركات وإدارتها وانقضاءها."], ["Companies & IP", "عقد التأسيس", "Memorandum of association", "العقد الذي يتفق فيه المؤسسون على إنشاء الشركة وبياناتها الأساسية."], ["Companies & IP", "النظام الأساس", "Articles of association / bylaws", "الوثيقة التي تنظم إدارة الشركة وشؤونها الداخلية."], ["Companies & IP", "الجمعية العامة", "General assembly", "اجتماع المساهمين أو الشركاء، وهي أعلى سلطة في الشركة."], ["Companies & IP", "مجلس الإدارة", "Board of directors", "الجهة التي تتولى إدارة الشركة."], ["Companies & IP", "رأس المال", "Capital", "مجموع الأموال والحصص التي يقدّمها الشركاء للشركة."], ["Companies & IP", "سهم", "Share (stock)", "حصة في رأس مال شركة المساهمة."], ["Companies & IP", "حصة", "Equity interest", "نصيب الشريك في رأس مال الشركة، كما في الشركة ذات المسؤولية المحدودة."], ["Companies & IP", "تصفية", "Liquidation", "إنهاء أعمال الشركة وبيع أصولها وسداد ديونها."], ["Companies & IP", "إفلاس", "Bankruptcy", "الإجراءات النظامية المتبعة عند عجز المدين عن سداد ديونه."], ["Companies & IP", "إعادة التنظيم المالي", "Financial reorganisation", "إجراء من إجراءات الإفلاس يتيح للمدين المتعثر إعادة هيكلة ديونه مع استمرار نشاطه."], ["Companies & IP", "وكالة تجارية", "Commercial agency", "علاقة يتولى فيها الوكيل توزيع منتجات الموكّل أو تسويقها في منطقة معينة."], ["Companies & IP", "علامة تجارية", "Trademark", "ما يميّز منتجات منشأة أو خدماتها عن غيرها من اسم أو شعار."], ["Companies & IP", "براءة اختراع", "Patent", "وثيقة تمنح المخترع حق الحماية لاختراعه الجديد."], ["Companies & IP", "حق المؤلف", "Copyright", "الحماية المقررة للمصنفات الأدبية والفنية والعلمية الأصلية."], ["Companies & IP", "منافسة غير مشروعة", "Unfair competition", "ممارسات تجارية غير نزيهة تُلحق الضرر بالمنافسين."], ["Enforcement", "طلب تنفيذ", "Enforcement request", "طلب يُقدَّم إلى محكمة التنفيذ لتنفيذ سند تنفيذي."], ["Enforcement", "محكمة التنفيذ", "Enforcement court", "المحكمة المختصة بتنفيذ الأحكام والسندات التنفيذية."], ["Enforcement", "طالب التنفيذ", "Enforcement applicant / judgment creditor", "صاحب الحق الذي يطلب تنفيذ السند التنفيذي."], ["Enforcement", "المنفذ ضده", "Judgment debtor", "الشخص الذي يجري التنفيذ عليه."], ["Enforcement", "الحجز التحفظي", "Precautionary attachment", "حجز مؤقت على أموال المدين لحفظ حق الدائن إلى حين الفصل في النزاع."], ["Enforcement", "الحجز التنفيذي", "Executory attachment", "حجز أموال المدين تمهيدًا لبيعها واستيفاء الدين منها بموجب سند تنفيذي."], ["Enforcement", "منع السفر", "Travel ban", "إجراء يُمنع بموجبه المدين أو الطرف من مغادرة البلاد."], ["Enforcement", "الإفصاح عن الأموال", "Disclosure of assets", "إلزام المدين بالكشف عن أمواله التي يملكها."], ["Enforcement", "المماطلة", "Wilful delay in payment", "امتناع المدين القادر عن الوفاء بالدين الحالّ أو تأخيره."], ["Enforcement", "البيع بالمزاد العلني", "Sale by public auction", "بيع الأموال المحجوزة علنًا لمن يدفع أعلى سعر."], ["Enforcement", "الإعسار", "Insolvency (of an individual)", "عجز المدين عن الوفاء بديونه لعدم كفاية أمواله."], ["Enforcement", "سند لأمر", "Promissory note", "تعهد مكتوب بدفع مبلغ معين لشخص معين عند الطلب أو في تاريخ محدد."], ["Enforcement", "شيك", "Cheque", "أمر مكتوب إلى البنك بدفع مبلغ معين بمجرد الاطلاع، ويُعد سندًا تنفيذيًا."], ["Enforcement", "كمبيالة", "Bill of exchange", "أمر مكتوب من شخص إلى آخر بأن يدفع مبلغًا معينًا لشخص ثالث."], ["Evidence", "نظام الإثبات", "Law of Evidence", "النظام الذي يحدد قواعد الإثبات ووسائله أمام المحاكم."], ["Evidence", "محرر رسمي", "Official document", "مستند يصدره موظف عام مختص في حدود اختصاصه، كالصكوك الموثقة."], ["Evidence", "محرر عادي", "Private document", "مستند يوقّعه الأطراف دون تدخل موظف عام."], ["Evidence", "الدليل الرقمي", "Digital evidence", "دليل في صورة إلكترونية، كالرسائل والبريد الإلكتروني والسجلات الإلكترونية."], ["Evidence", "الشهادة", "Testimony", "إخبار الشاهد أمام المحكمة بما يعلمه من وقائع."], ["Evidence", "الخبرة", "Expert evidence", "رأي فني يقدّمه خبير تندبه المحكمة."], ["Evidence", "المعاينة", "Inspection", "اطلاع المحكمة أو الخبير على المكان أو الشيء محل النزاع."], ["Evidence", "الإقرار القضائي", "Judicial admission", "اعتراف الخصم أمام المحكمة بواقعة مدعى بها عليه أثناء نظر الدعوى."], ["Evidence", "اليمين الحاسمة", "Decisive oath", "يمين يوجهها أحد الخصمين إلى الآخر ليحسم بها النزاع."], ["Evidence", "اليمين المتممة", "Supplementary oath", "يمين توجهها المحكمة إلى أحد الخصمين لاستكمال دليل ناقص."], ["Evidence", "استجواب الخصم", "Examination of a party", "توجيه المحكمة أسئلة إلى أحد الخصوم لاستيضاح وقائع الدعوى."], ["Evidence", "الطعن بالتزوير", "Allegation of forgery", "ادعاء أن المستند المقدّم مزوّر."], ["Evidence", "حجية الأمر المقضي به", "Res judicata", "قوة الحكم النهائي التي تمنع إعادة نظر النزاع ذاته بين الأطراف أنفسهم."], ["Administrative", "القرار الإداري", "Administrative decision", "قرار تصدره جهة إدارية ويؤثر في المراكز النظامية للأفراد."], ["Administrative", "دعوى الإلغاء", "Annulment claim", "دعوى تُطلب فيها من المحكمة الإدارية إلغاء قرار إداري غير مشروع."], ["Administrative", "التظلم", "Administrative grievance", "شكوى تُقدَّم إلى الجهة الإدارية نفسها، وكثيرًا ما تكون شرطًا قبل اللجوء إلى القضاء."], ["Administrative", "المحكمة الإدارية", "Administrative court", "محكمة تابعة لديوان المظالم تختص بالمنازعات مع الجهات الحكومية."], ["Administrative", "العقد الإداري", "Administrative contract", "عقد تبرمه جهة حكومية لتسيير مرفق عام، ويتضمن شروطًا استثنائية."], ["Administrative", "المنافسات والمشتريات الحكومية", "Government tenders and procurement", "القواعد المنظمة لشراء الجهات الحكومية للسلع وترسية العقود."], ["Administrative", "الموظف العام", "Public employee", "من يعمل في جهة حكومية."], ["Administrative", "الجزاء التأديبي", "Disciplinary penalty", "عقوبة تُوقَّع على الموظف لإخلاله بواجبات وظيفته."], ["Courts", "دعوى متقابلة", "Counterclaim", "دعوى يرفعها المدعى عليه على المدعي في القضية نفسها."], ["Courts", "طلب عارض", "Incidental request", "طلب يُقدَّم أثناء نظر الدعوى فيعدّل الطلب الأصلي أو يضيف إليه."], ["Courts", "إدخال", "Joinder of a third party", "ضمّ شخص ليس طرفًا في الدعوى إليها."], ["Courts", "تدخل", "Intervention", "انضمام شخص من الغير إلى الدعوى من تلقاء نفسه حمايةً لمصلحته."], ["Courts", "وقف الدعوى", "Stay of proceedings", "تعليق السير في الدعوى مدة معينة، باتفاق الأطراف أو بحكم النظام."], ["Courts", "ترك الخصومة", "Abandonment of the case", "تنازل المدعي عن دعواه دون التنازل عن أصل الحق."], ["Courts", "صك الحكم", "Judgment deed", "المستند الرسمي المتضمن الحكم وأسبابه ومنطوقه."], ["Courts", "منطوق الحكم", "Operative part of the judgment", "الجزء الذي يتضمن ما قضت به المحكمة."], ["Courts", "تسبيب الحكم", "Reasoning of the judgment", "الأسباب التي بنت عليها المحكمة حكمها."], ["Courts", "الدفوع الشكلية", "Procedural defences", "دفوع تتعلق بإجراءات الدعوى لا بموضوعها."], ["Courts", "الدفوع الموضوعية", "Substantive defences", "دفوع تتعلق بأصل الحق المدعى به."], ["Courts", "لائحة اعتراضية", "Appeal memorandum", "المذكرة التي يُعترض بها على الحكم الابتدائي."], ["Courts", "الصفة", "Standing", "الصلة التي تخوّل الشخص رفع الدعوى أو الدفاع فيها."], ["Courts", "المصلحة", "Legal interest", "المنفعة التي يجنيها المدعي من دعواه، وهي شرط لقبولها."], ["Courts", "الأهلية", "Legal capacity", "صلاحية الشخص لاكتساب الحقوق والقيام بالتصرفات النظامية."], ["Courts", "ناجز", "Najiz", "المنصة الإلكترونية لوزارة العدل لتقديم الخدمات القضائية والتوثيقية."], ["Contracts", "نظام المعاملات المدنية", "Civil Transactions Law", "النظام المنظم للعقود والالتزامات والمسؤولية في المملكة."], ["Contracts", "عقد مقاولة", "Construction contract", "عقد يتعهد فيه أحد الطرفين بإنجاز عمل أو بناء مقابل أجر يتعهد به الآخر."], ["Contracts", "عقد توريد", "Supply contract", "عقد يلتزم فيه المورّد بتسليم بضائع بصفة دورية أو في مواعيد متفق عليها."], ["Contracts", "الإقالة", "Mutual rescission (iqala)", "اتفاق الطرفين على رفع العقد وإلغائه."], ["Contracts", "الغبن", "Lesion", "عدم التعادل الفاحش بين ما يعطيه كل طرف في العقد."], ["Contracts", "التغرير", "Fraudulent inducement", "خداع أحد المتعاقدين بوسائل احتيالية تدفعه إلى التعاقد."], ["Contracts", "الحوالة", "Assignment / transfer of debt", "نقل الدين أو الحق من ذمة إلى أخرى."], ["Contracts", "المقاصة", "Set-off", "انقضاء دينين متقابلين بين الشخصين نفسيهما بقدر الأقل منهما."], ["Contracts", "الإبراء", "Release", "تنازل الدائن عن حقه قِبل المدين دون مقابل."], ["Contracts", "الضرر", "Harm / damage", "الأذى الذي يلحق بالشخص في ماله أو بدنه أو معنوياته، وهو أساس التعويض."], ["Contracts", "المسؤولية التقصيرية", "Tort liability", "المسؤولية عن الضرر الناشئ عن فعل خارج نطاق العقد."], ["Criminal", "الحق العام", "Public right", "حق الدولة في ملاحقة الجريمة ومعاقبة مرتكبها."], ["Criminal", "الحق الخاص", "Private right", "حق المجني عليه الناشئ عن الجريمة، كالتعويض."], ["Criminal", "التوقيف", "Pre-trial detention", "حبس المتهم مؤقتًا أثناء التحقيق."], ["Criminal", "الإفراج بكفالة", "Release on bail", "إطلاق سراح المتهم الموقوف مقابل ضمان."], ["Criminal", "التعزير", "Discretionary punishment (ta'zir)", "عقوبة غير مقدّرة شرعًا، يقدّرها القاضي أو يحددها النظام."], ["Criminal", "الحد", "Fixed punishment (hadd)", "عقوبة مقدّرة شرعًا لجرائم محددة."], ["Criminal", "القصاص", "Retaliation (qisas)", "معاقبة الجاني بمثل فعله في القتل العمد أو الجناية على ما دون النفس."], ["Criminal", "الدية", "Blood money (diyah)", "المال الواجب بسبب القتل أو الجناية على ما دون النفس."], ["Criminal", "العفو", "Pardon", "إسقاط العقوبة كلها أو بعضها."], ["Criminal", "رد الاعتبار", "Rehabilitation", "محو آثار الحكم الجزائي بعد تنفيذ العقوبة ومضي المدة المقررة."], ["Criminal", "المحكمة الجزائية", "Criminal court", "المحكمة المختصة بنظر القضايا الجزائية."], ["Customs & Tax", "الإدخال المؤقت", "Temporary admission", "إدخال البضائع لمدة محددة دون أداء الرسوم بشرط إعادة تصديرها."], ["Customs & Tax", "المستودع الجمركي", "Bonded warehouse", "مستودع تُخزَّن فيه البضائع قبل أداء الرسوم الجمركية."], ["Customs & Tax", "المخلص الجمركي", "Customs broker", "شخص مرخّص ينجز الإجراءات الجمركية نيابةً عن المستوردين."], ["Customs & Tax", "البضائع الممنوعة", "Prohibited goods", "بضائع لا يجوز استيرادها أو تصديرها مطلقًا."], ["Customs & Tax", "البضائع المقيدة", "Restricted goods", "بضائع يتطلب استيرادها أو تصديرها إذنًا أو موافقة."], ["Customs & Tax", "الإعفاء الجمركي", "Customs exemption", "إعفاء من الرسوم الجمركية في الحالات التي يحددها النظام."], ["Customs & Tax", "الفوترة الإلكترونية", "E-invoicing (Fatoorah)", "إصدار الفواتير الضريبية وحفظها إلكترونيًا وفق متطلبات هيئة الزكاة والضريبة والجمارك."], ["Customs & Tax", "ضريبة الاستقطاع", "Withholding tax", "ضريبة تُقتطع من المبالغ المدفوعة لغير المقيمين."], ["Customs & Tax", "الضريبة الانتقائية", "Excise tax", "ضريبة تُفرض على سلع محددة، كالتبغ والمشروبات المحلاة."], ["Customs & Tax", "غرامة التأخير", "Late payment penalty", "غرامة تُفرض على التأخر في سداد الضريبة عن موعدها."], ["Banking & AML", "الجرائم الأصلية", "Predicate offences", "الجرائم التي تُتحصَّل منها الأموال محل غسل الأموال."], ["Banking & AML", "العقوبات المالية المستهدفة", "Targeted financial sanctions", "تجميد أموال الأشخاص المدرجين في قوائم العقوبات."], ["Banking & AML", "الإفصاح عن الأموال العابرة للحدود", "Cross-border cash declaration", "التصريح عن النقد والمعادن الثمينة المنقولة إلى داخل المملكة أو خارجها متى تجاوزت الحد المقرر."], ["Banking & AML", "التمويل", "Financing", "تقديم الأموال، غالبًا بصيغة متوافقة مع الشريعة كالمرابحة."], ["Banking & AML", "المرابحة", "Murabaha", "بيع السلعة بثمن شرائها مع ربح معلوم متفق عليه."], ["Courts", "المرافعة", "Pleading / advocacy", "تقديم الخصوم دفوعهم وطلباتهم أمام المحكمة شفاهةً أو كتابةً."], ["Courts", "الخصومة", "Litigation (adversarial proceeding)", "الحالة النظامية التي تنشأ بين أطراف الدعوى منذ رفعها حتى الفصل فيها."], ["Courts", "قيد الدعوى", "Registration of the case", "تسجيل الدعوى في سجلات المحكمة بعد استيفاء بياناتها."], ["Courts", "الدائرة القضائية", "Judicial circuit (panel)", "الهيئة القضائية داخل المحكمة التي تتولى نظر القضية."], ["Courts", "ضبط الجلسة", "Hearing record", "المحضر الذي تُدوَّن فيه وقائع الجلسة وأقوال الخصوم وما يتخذ فيها من إجراءات."], ["Courts", "حجز القضية للحكم", "Reserving the case for judgment", "إقفال باب المرافعة وتحديد موعد للنطق بالحكم."], ["Courts", "النطق بالحكم", "Pronouncement of judgment", "تلاوة الحكم علنًا في الجلسة."], ["Courts", "الحكم الحضوري", "Judgment in presence", "حكم يصدر بعد حضور الخصوم أو من يمثلهم."], ["Courts", "الحكم في حكم الحضوري", "Judgment deemed in presence", "حكم يُعدّ حضوريًا رغم غياب الخصم، كأن يكون قد بُلّغ لشخصه ولم يحضر."], ["Courts", "تنحي القاضي", "Self-recusal of a judge", "امتناع القاضي من تلقاء نفسه عن نظر الدعوى لسبب يقتضي ذلك."], ["Courts", "رد القاضي", "Challenge to a judge", "طلب أحد الخصوم منع القاضي من نظر الدعوى لسبب نظامي يخل بحياده."], ["Courts", "الإنابة القضائية", "Judicial delegation", "تكليف محكمة لمحكمة أخرى بإجراء معين، كسماع شاهد يقيم في بلدها."], ["Courts", "المحامي المتدرب", "Trainee lawyer", "من يتدرب على مهنة المحاماة تحت إشراف محامٍ مرخص، تمهيدًا للحصول على الترخيص."], ["Courts", "الهيئة السعودية للمحامين", "Saudi Bar Association", "الجهة المهنية التي ترعى شؤون المحامين وتطوّر مهنة المحاماة."], ["Courts", "الترافع عن الغير", "Representing others in court", "الحضور عن الخصم أمام المحاكم والدفاع عنه، ويقتصر أساسًا على المحامين وفئات محددة نظامًا."], ["Courts", "التقاضي الإلكتروني", "E-litigation", "رفع الدعاوى ونظرها وتبادل المذكرات عبر الوسائل الإلكترونية."], ["Courts", "الجلسة المرئية", "Video hearing", "جلسة قضائية تُعقد عن بُعد عبر الاتصال المرئي."], ["Courts", "الطلبات الختامية", "Final requests", "آخر ما يطلبه الخصم من المحكمة قبل إقفال باب المرافعة."], ["Courts", "منصة تراضي", "Taradhi platform", "منصة وزارة العدل للصلح الإلكتروني بين أطراف النزاع."], ["Courts", "عدم سماع الدعوى", "Non-hearing of the claim", "امتناع المحكمة عن نظر الدعوى لمانع نظامي، كمضي المدة المحددة."], ["Courts", "التقادم", "Prescription / limitation", "مضي مدة يحددها النظام يمتنع بعدها سماع الدعوى عند الإنكار."], ["Courts", "الاستئناف الفرعي", "Cross-appeal", "استئناف يرفعه المستأنف ضده تبعًا للاستئناف الأصلي، ويزول بزواله."], ["Courts", "تصحيح الحكم", "Correction of judgment", "تصحيح ما يقع في الحكم من أخطاء مادية بحتة، كتابية أو حسابية."], ["Courts", "تفسير الحكم", "Interpretation of judgment", "إيضاح ما وقع في منطوق الحكم من غموض أو لبس."], ["Courts", "القرار التمهيدي", "Interlocutory decision", "قرار يصدر أثناء نظر الدعوى قبل الفصل في موضوعها، كندب خبير."], ["Courts", "القاضي الفرد", "Single judge", "دائرة قضائية مكونة من قاضٍ واحد."], ["Evidence", "وسائل الإثبات", "Means of proof", "الطرق التي يقرها النظام لإثبات الوقائع، كالإقرار والشهادة والكتابة واليمين."], ["Evidence", "الكتابة", "Written evidence", "الإثبات بالمحررات الرسمية والعادية والإلكترونية."], ["Evidence", "التوقيع الإلكتروني", "Electronic signature", "بيانات إلكترونية تثبت هوية الموقّع وموافقته على مضمون المحرر."], ["Evidence", "دفاتر التاجر", "Merchant's books", "سجلات التاجر المحاسبية، ويُحتج بها في الإثبات بضوابط يحددها النظام."], ["Evidence", "القرائن القضائية", "Judicial presumptions", "قرائن يستنبطها القاضي من ظروف الدعوى ووقائعها."], ["Evidence", "القرينة النظامية", "Statutory presumption", "قرينة نص عليها النظام، تُعفي من تقررت لمصلحته من الإثبات."], ["Evidence", "تزكية الشهود", "Vetting of witnesses", "التحقق من عدالة الشهود وصلاحيتهم لقبول شهادتهم."], ["Evidence", "النكول", "Refusal to take the oath", "امتناع من وُجّهت إليه اليمين عن أدائها."], ["Evidence", "المضاهاة", "Handwriting comparison", "مقارنة الخط أو التوقيع المنكَر بخط أو توقيع ثابت للتحقق من نسبته."], ["Evidence", "إنكار الخط والتوقيع", "Denial of handwriting or signature", "نفي الخصم نسبة الخط أو التوقيع في المحرر العادي إليه."], ["Evidence", "البصمة الوراثية", "DNA evidence", "دليل علمي يعتمد على تحليل الحمض النووي لإثبات الهوية أو النسب."], ["Evidence", "الدليل المادي", "Physical evidence", "الأشياء المحسوسة التي تُقدَّم لإثبات الواقعة."], ["Enforcement", "نظام التنفيذ", "Enforcement Law", "النظام المنظم لإجراءات تنفيذ السندات التنفيذية في المملكة."], ["Enforcement", "قاضي التنفيذ", "Enforcement judge", "القاضي المختص بالإشراف على إجراءات التنفيذ والفصل في منازعاته."], ["Enforcement", "منازعة التنفيذ", "Enforcement dispute", "اعتراض يُقدَّم على إجراءات التنفيذ أو على السند التنفيذي."], ["Enforcement", "أمر التنفيذ", "Enforcement order", "قرار قاضي التنفيذ بالبدء في تنفيذ السند."], ["Enforcement", "مهلة الوفاء الاختياري", "Voluntary payment period", "المدة الممنوحة للمنفذ ضده للوفاء قبل اتخاذ إجراءات التنفيذ الجبري."], ["Enforcement", "التنفيذ الجبري", "Compulsory enforcement", "تنفيذ السند بقوة النظام عند امتناع المدين عن الوفاء."], ["Enforcement", "الحجز على الحسابات البنكية", "Bank account attachment", "حجز أموال المدين المودعة لدى البنوك."], ["Enforcement", "حجز ما للمدين لدى الغير", "Garnishment", "حجز أموال المدين أو مستحقاته الموجودة لدى شخص آخر."], ["Enforcement", "الحبس التنفيذي", "Enforcement detention", "حبس المدين المماطل وفق الشروط والضوابط التي يحددها النظام."], ["Enforcement", "تنفيذ الأحكام الأجنبية", "Enforcement of foreign judgments", "تنفيذ الأحكام الصادرة في دولة أخرى بعد التحقق من استيفائها الشروط النظامية."], ["Enforcement", "الكفيل الغارم", "Paying guarantor", "الكفيل الذي يلتزم بأداء الدين عن المدين عند عدم وفائه."], ["Enforcement", "توزيع حصيلة التنفيذ", "Distribution of enforcement proceeds", "توزيع المبالغ المتحصلة من التنفيذ على الدائنين وفق ترتيب الأولوية."], ["Contracts", "الالتزام", "Obligation", "رابطة نظامية يلتزم بموجبها المدين بأداء حق للدائن."], ["Contracts", "مصادر الالتزام", "Sources of obligation", "الأسباب المنشئة للالتزام، كالعقد والفعل الضار والإثراء بلا سبب والنظام."], ["Contracts", "الإثراء بلا سبب", "Unjust enrichment", "كسب شخص منفعة على حساب غيره دون سبب مشروع، فيلتزم برد ما أثرى به."], ["Contracts", "الفعل الضار", "Harmful act", "كل خطأ يسبب ضررًا للغير ويُلزم فاعله بالتعويض."], ["Contracts", "العقد الباطل", "Void contract", "عقد لا ينعقد أصلًا ولا يرتب أثرًا لتخلف ركن من أركانه."], ["Contracts", "العقد القابل للإبطال", "Voidable contract", "عقد منعقد يجوز إبطاله لمصلحة أحد الطرفين لعيب كالغلط أو الإكراه."], ["Contracts", "عيوب الإرادة", "Defects of consent", "ما يشوب رضا المتعاقد، كالغلط والتغرير والإكراه والاستغلال."], ["Contracts", "الغلط", "Mistake", "تصور خاطئ للواقع يدفع المتعاقد إلى التعاقد."], ["Contracts", "الإكراه", "Duress", "حمل الشخص على التعاقد بغير رضاه تحت التهديد."], ["Contracts", "الاستغلال", "Exploitation", "انتهاز حاجة المتعاقد أو ضعفه للحصول منه على مزايا فاحشة."], ["Contracts", "الشرط الفاسخ", "Condition subsequent", "شرط يترتب على تحققه زوال الالتزام."], ["Contracts", "الشرط الواقف", "Condition precedent", "شرط يتوقف على تحققه نفاذ الالتزام."], ["Contracts", "الأجل", "Term", "أمر مستقبل محقق الوقوع يترتب عليه نفاذ الالتزام أو انقضاؤه."], ["Contracts", "الوفاء", "Performance / payment", "تنفيذ المدين عين ما التزم به."], ["Contracts", "التجديد", "Novation", "استبدال التزام جديد بالتزام قديم ينقضي به."], ["Contracts", "اتحاد الذمة", "Merger of debtor and creditor", "اجتماع صفتي الدائن والمدين في شخص واحد فينقضي الدين."], ["Contracts", "الظروف الطارئة", "Unforeseen circumstances (hardship)", "حوادث استثنائية عامة غير متوقعة تجعل تنفيذ الالتزام مرهقًا، فيجوز للمحكمة رده إلى الحد المعقول."], ["Contracts", "العربون", "Earnest money", "مبلغ يدفعه أحد المتعاقدين عند التعاقد، يُحسب من الثمن إن تم العقد."], ["Contracts", "عقد الإذعان", "Adhesion contract", "عقد يضع شروطه أحد الطرفين، ولا يملك الآخر إلا قبولها أو رفضها جملةً."], ["Contracts", "عقد البيع", "Sale contract", "عقد يُنقل به ملك شيء مقابل ثمن."], ["Contracts", "عقد الهبة", "Gift contract", "تمليك مال لآخر دون عوض."], ["Contracts", "عقد القرض", "Loan contract", "تمليك مال لآخر على أن يرد مثله."], ["Contracts", "عقد الوديعة", "Deposit contract", "تسليم مال لآخر ليحفظه ويرده عند الطلب."], ["Contracts", "المسؤولية العقدية", "Contractual liability", "المسؤولية الناشئة عن الإخلال بالتزام عقدي."], ["Contracts", "الضرر المعنوي", "Non-material damage", "الأذى الذي يصيب الشخص في شعوره أو كرامته أو سمعته."], ["Contracts", "الكسب الفائت", "Loss of profit", "ما فات المتضرر من كسب بسبب الفعل الضار أو الإخلال بالعقد."], ["Contracts", "الإعذار", "Formal notice of default", "مطالبة المدين رسميًا بتنفيذ التزامه قبل المطالبة بالتعويض."], ["Contracts", "حسن النية", "Good faith", "مبدأ يوجب تنفيذ العقد بأمانة وفق ما يقتضيه التعامل النزيه."], ["Contracts", "التضامن", "Joint and several liability", "التزام عدة مدينين بدين واحد بحيث يجوز مطالبة أي منهم بكامله."], ["Contracts", "الحق العيني", "Real right", "سلطة مباشرة لشخص على شيء معين، كالملكية والرهن."], ["Contracts", "الحق الشخصي", "Personal right (claim)", "رابطة بين دائن ومدين يطالب بموجبها الدائن المدين بأداء معين."], ["Criminal", "نظام الإجراءات الجزائية", "Law of Criminal Procedure", "النظام المنظم لإجراءات الاستدلال والتحقيق والمحاكمة في القضايا الجزائية."], ["Criminal", "الاستدلال", "Preliminary inquiry", "جمع المعلومات والأدلة عن الجريمة قبل مرحلة التحقيق."], ["Criminal", "رجل الضبط الجنائي", "Criminal investigation officer", "الموظف المخوّل بالبحث عن مرتكبي الجرائم وضبطهم وجمع الأدلة."], ["Criminal", "القبض", "Arrest", "التحفظ على الشخص وتقييد حريته مدة محددة وفق النظام."], ["Criminal", "التفتيش", "Search", "البحث في شخص أو مسكن أو مكان عن أدلة الجريمة وفق الضوابط النظامية."], ["Criminal", "الاستجواب", "Interrogation", "مواجهة المتهم بالتهمة والأدلة ومناقشته فيها تفصيلًا."], ["Criminal", "الجريمة المتلبس بها", "Flagrant offence", "الجريمة التي تُشاهد حال ارتكابها أو عقب ارتكابها ببرهة يسيرة."], ["Criminal", "الجرائم الكبيرة الموجبة للتوقيف", "Major offences requiring detention", "جرائم يحددها النائب العام يجب فيها توقيف المتهم."], ["Criminal", "حفظ الدعوى", "Closing the case file", "قرار النيابة العامة بعدم إقامة الدعوى الجزائية لعدم كفاية الأدلة أو لغير ذلك."], ["Criminal", "القصد الجنائي", "Criminal intent", "اتجاه إرادة الجاني إلى ارتكاب الجريمة مع علمه بعناصرها."], ["Criminal", "الركن المادي", "Material element (actus reus)", "السلوك الإجرامي ونتيجته والعلاقة السببية بينهما."], ["Criminal", "الركن المعنوي", "Mental element (mens rea)", "الحالة الذهنية للجاني وقت ارتكاب الجريمة."], ["Criminal", "الشروع", "Attempt", "البدء في تنفيذ الجريمة دون إتمامها لسبب خارج عن إرادة الفاعل."], ["Criminal", "الاشتراك الجنائي", "Complicity", "مساهمة أكثر من شخص في الجريمة بالتحريض أو الاتفاق أو المساعدة."], ["Criminal", "العود", "Recidivism", "ارتكاب الشخص جريمة جديدة بعد الحكم عليه في جريمة سابقة."], ["Criminal", "الظروف المخففة", "Mitigating circumstances", "وقائع تدعو القاضي إلى تخفيف العقوبة."], ["Criminal", "الظروف المشددة", "Aggravating circumstances", "وقائع توجب تشديد العقوبة أو تجيزه."], ["Criminal", "الدفاع الشرعي", "Self-defence", "دفع الاعتداء الحال عن النفس أو العرض أو المال بالقدر اللازم."], ["Criminal", "السوابق", "Criminal record", "الأحكام الجزائية السابقة المسجلة على الشخص."], ["Criminal", "وقف تنفيذ العقوبة", "Suspended sentence", "تعليق تنفيذ العقوبة مدة معينة بشروط."], ["Criminal", "العقوبات البديلة", "Alternative sentences", "عقوبات غير سالبة للحرية، كالخدمة المجتمعية."], ["Criminal", "المحكمة الجزائية المتخصصة", "Specialized Criminal Court", "محكمة تختص بقضايا الإرهاب وتمويله وما يتصل بها."], ["Criminal", "الادعاء بالحق الخاص", "Private claim in criminal proceedings", "مطالبة المجني عليه بحقه الخاص أمام المحكمة الجزائية."], ["Criminal", "انقضاء الدعوى الجزائية", "Extinction of the criminal action", "زوال حق إقامة الدعوى الجزائية أو الاستمرار فيها لسبب نظامي، كصدور حكم نهائي."], ["Criminal", "الاحتيال المالي", "Financial fraud", "الاستيلاء على مال الغير بطرق احتيالية."], ["Criminal", "خيانة الأمانة", "Breach of trust", "تصرف الأمين في مال سُلّم إليه على سبيل الأمانة تصرفًا يضر بصاحبه."], ["Criminal", "التزوير", "Forgery", "تغيير الحقيقة في محرر بقصد الغش بما يُحدث ضررًا."], ["Criminal", "الرشوة", "Bribery", "طلب الموظف أو قبوله منفعة مقابل أداء عمل من أعمال وظيفته أو الامتناع عنه."], ["Customs & Tax", "هيئة الزكاة والضريبة والجمارك", "Zakat, Tax and Customs Authority (ZATCA)", "الجهة الحكومية المختصة بالزكاة والضرائب والجمارك في المملكة."], ["Customs & Tax", "نظام الجمارك الموحد", "GCC Common Customs Law", "النظام الجمركي الموحد لدول مجلس التعاون الخليجي المطبق في المملكة."], ["Customs & Tax", "التصنيف الجمركي", "Customs classification", "تحديد البند الجمركي للبضاعة وفق النظام المنسق."], ["Customs & Tax", "النظام المنسق", "Harmonized System (HS)", "نظام دولي لتصنيف البضائع وترميزها لأغراض الجمارك."], ["Customs & Tax", "الفسح الجمركي", "Customs clearance", "الإذن بإخراج البضائع من الدائرة الجمركية بعد إتمام إجراءاتها."], ["Customs & Tax", "المعاينة الجمركية", "Customs inspection", "فحص البضائع للتحقق من مطابقتها لما ورد في البيان الجمركي."], ["Customs & Tax", "بوليصة الشحن", "Bill of lading", "مستند يصدره الناقل يثبت استلام البضاعة للشحن ويمثل ملكيتها."], ["Customs & Tax", "قائمة الحمولة", "Cargo manifest", "بيان بالبضائع المحمولة على وسيلة النقل."], ["Customs & Tax", "المنطقة الحرة", "Free zone", "منطقة تُعامل فيها البضائع معاملة خاصة من حيث الرسوم والإجراءات."], ["Customs & Tax", "العبور (الترانزيت)", "Transit", "مرور البضائع عبر الإقليم الجمركي إلى دولة أخرى دون أداء الرسوم، بضمانات."], ["Customs & Tax", "إعادة التصدير", "Re-export", "تصدير بضائع سبق استيرادها."], ["Customs & Tax", "رد الرسوم", "Duty drawback", "استرداد الرسوم الجمركية المدفوعة في حالات يحددها النظام."], ["Customs & Tax", "ما في حكم التهريب", "Acts deemed smuggling", "أفعال يعدّها النظام الجمركي تهريبًا حكمًا وإن لم تكتمل صورته المعتادة."], ["Customs & Tax", "المكلّف", "Taxpayer", "الشخص الملزم بالزكاة أو الضريبة نظامًا."], ["Customs & Tax", "التسجيل الضريبي", "Tax registration", "قيد المكلّف لدى الهيئة وحصوله على رقم ضريبي."], ["Customs & Tax", "الرقم الضريبي", "Tax identification number", "الرقم المخصص للمكلّف المسجل لأغراض الضريبة."], ["Customs & Tax", "الفاتورة الضريبية", "Tax invoice", "فاتورة تتضمن البيانات التي تتطلبها أنظمة ضريبة القيمة المضافة."], ["Customs & Tax", "ضريبة المدخلات", "Input tax", "الضريبة التي يدفعها المكلّف على مشترياته، ويجوز خصمها بشروط."], ["Customs & Tax", "ضريبة المخرجات", "Output tax", "الضريبة التي يحصّلها المكلّف على مبيعاته الخاضعة."], ["Customs & Tax", "الأمانة العامة للجان الضريبية", "General Secretariat of Tax Committees", "الجهة المختصة بالفصل في المخالفات والمنازعات الزكوية والضريبية والجمركية."], ["Customs & Tax", "ضريبة الدخل", "Income tax", "ضريبة تُفرض على الدخل وفق نظام ضريبة الدخل، وتسري أساسًا على حصص غير السعوديين وغير المقيمين."], ["Banking & AML", "الإدارة العامة للتحريات المالية", "General Directorate of Financial Intelligence", "الجهة المختصة بتلقي بلاغات الاشتباه وتحليلها وإحالتها إلى الجهات المختصة."], ["Banking & AML", "البنك المركزي السعودي", "Saudi Central Bank (SAMA)", "الجهة المشرفة على البنوك وقطاع التمويل والتأمين."], ["Banking & AML", "مسؤول الإبلاغ", "Money laundering reporting officer (MLRO)", "الموظف المسؤول داخل المؤسسة عن تلقي حالات الاشتباه ورفعها إلى الجهة المختصة."], ["Banking & AML", "تنبيه العميل", "Tipping off", "إفشاء أمر البلاغ أو التحقيق للعميل، وهو محظور نظامًا."], ["Banking & AML", "العناية الواجبة المشددة", "Enhanced due diligence", "إجراءات تحقق إضافية للعملاء أو التعاملات عالية المخاطر."], ["Banking & AML", "العناية الواجبة المبسطة", "Simplified due diligence", "إجراءات تحقق مخففة في الحالات منخفضة المخاطر وفق الضوابط النظامية."], ["Banking & AML", "النهج القائم على المخاطر", "Risk-based approach", "توجيه إجراءات المكافحة وتكثيفها بحسب درجة المخاطر."], ["Banking & AML", "مراقبة العمليات", "Transaction monitoring", "المتابعة المستمرة لعمليات العملاء لكشف غير المعتاد منها."], ["Banking & AML", "التجزئة", "Structuring", "تقسيم المبالغ إلى عمليات صغيرة لتفادي حدود الإبلاغ أو المراجعة."], ["Banking & AML", "الشركات الوهمية", "Shell companies", "شركات بلا نشاط حقيقي تُستخدم لإخفاء الأموال أو ملكيتها."], ["Banking & AML", "البنوك المراسلة", "Correspondent banking", "تقديم بنك خدماته المصرفية لبنك آخر في دولة أخرى."], ["Banking & AML", "الحوالات البرقية", "Wire transfers", "تحويل الأموال إلكترونيًا بين المؤسسات المالية."], ["Banking & AML", "قوائم العقوبات", "Sanctions lists", "قوائم الأشخاص والكيانات الخاضعين لتجميد الأموال وحظر التعامل."], ["Banking & AML", "مجموعة العمل المالي (فاتف)", "Financial Action Task Force (FATF)", "هيئة دولية تضع معايير مكافحة غسل الأموال وتمويل الإرهاب."], ["Banking & AML", "السرية المصرفية", "Banking secrecy", "التزام البنك بعدم إفشاء معلومات العملاء إلا في الحدود النظامية."], ["Banking & AML", "حماية العملاء", "Customer protection", "مبادئ تُلزم المؤسسات المالية بمعاملة العملاء بعدل وشفافية."], ["Banking & AML", "التمويل الاستهلاكي", "Consumer finance", "تمويل يُمنح للأفراد لأغراض شخصية."], ["Banking & AML", "التورق", "Tawarruq", "شراء سلعة بالأجل ثم بيعها نقدًا لغير بائعها للحصول على السيولة."], ["Banking & AML", "الإجارة المنتهية بالتمليك", "Lease-to-own (ijara)", "إجارة يتملك فيها المستأجر العين في نهاية المدة."], ["Banking & AML", "الضمان البنكي", "Bank guarantee", "تعهد من البنك بدفع مبلغ للمستفيد عند إخلال العميل بالتزامه."], ["Banking & AML", "الاعتماد المستندي", "Letter of credit", "تعهد البنك بالدفع للبائع مقابل تقديم مستندات محددة."], ["Personal Status", "نظام الأحوال الشخصية", "Personal Status Law", "النظام المنظم لأحكام الأسرة في المملكة، الصادر عام 1443هـ."], ["Personal Status", "الخطبة", "Engagement", "طلب الزواج والوعد به، ولا تُعد عقدًا."], ["Personal Status", "الكفاءة", "Compatibility (kafa'a)", "التقارب بين الزوجين في أمور يعتد بها الشرع."], ["Personal Status", "الشروط في عقد الزواج", "Conditions in the marriage contract", "شروط يتفق عليها الزوجان عند العقد ويلزم الوفاء بها ما لم تخالف الشرع."], ["Personal Status", "الطلاق الرجعي", "Revocable divorce", "طلاق يجوز فيه للزوج مراجعة زوجته خلال العدة دون عقد جديد."], ["Personal Status", "الطلاق البائن", "Irrevocable divorce", "طلاق لا يملك فيه الزوج مراجعة زوجته إلا بعقد جديد، أو لا تحل له بعده."], ["Personal Status", "العدة", "Waiting period (idda)", "مدة تتربصها المرأة بعد الفرقة أو وفاة الزوج."], ["Personal Status", "فسخ النكاح", "Judicial dissolution of marriage", "حلّ عقد الزواج بحكم القاضي لسبب يقره الشرع."], ["Personal Status", "الرجعة", "Return after revocable divorce", "إعادة الزوج زوجته المطلقة طلاقًا رجعيًا خلال العدة."], ["Personal Status", "النسب", "Lineage (paternity)", "انتساب الولد إلى أبيه شرعًا."], ["Personal Status", "حق الزيارة", "Visitation rights", "حق الوالد غير الحاضن في رؤية المحضون."], ["Personal Status", "المتعة", "Mut'a compensation", "مال يُعطى للمطلقة تطييبًا لخاطرها في أحوال معينة، ويقدّره القاضي."], ["Personal Status", "الإرث", "Inheritance", "انتقال التركة إلى الورثة وفق الأنصبة الشرعية."], ["Personal Status", "الفروض", "Fixed shares", "الأنصبة المقدرة شرعًا للورثة، كالنصف والربع والثمن."], ["Personal Status", "العصبة", "Residuary heirs", "الورثة الذين يأخذون ما بقي من التركة بعد أصحاب الفروض."], ["Personal Status", "الحجب", "Exclusion (in inheritance)", "منع وارث من الميراث كله أو بعضه لوجود وارث أقرب."], ["Personal Status", "القاصر", "Minor", "من لم يبلغ السن النظامية للأهلية الكاملة."], ["Personal Status", "الوصي", "Guardian / executor", "من يُعيَّن لإدارة أموال القاصر أو لتنفيذ الوصية."], ["Personal Status", "الحجر", "Interdiction", "منع الشخص من التصرف في ماله لصغر أو سفه أو جنون أو لمصلحة الدائنين."], ["Personal Status", "الوقف", "Endowment (waqf)", "حبس الأصل وتسبيل منفعته في وجوه البر."], ["Personal Status", "الإصلاح الأسري", "Family reconciliation", "جهود الصلح بين الزوجين أو أفراد الأسرة قبل التقاضي أو أثناءه."], ["Labour", "نظام العمل", "Labour Law", "النظام المنظم لعلاقات العمل في القطاع الخاص."], ["Labour", "وزارة الموارد البشرية والتنمية الاجتماعية", "Ministry of Human Resources and Social Development", "الجهة المشرفة على تنظيم سوق العمل."], ["Labour", "صاحب العمل", "Employer", "كل شخص طبيعي أو اعتباري يشغّل عاملًا أو أكثر مقابل أجر."], ["Labour", "العامل", "Worker", "كل شخص طبيعي يعمل لمصلحة صاحب العمل وتحت إدارته مقابل أجر."], ["Labour", "الأجر الأساسي", "Basic wage", "الأجر المتفق عليه دون البدلات."], ["Labour", "البدلات", "Allowances", "مبالغ تُدفع للعامل إضافةً إلى الأجر الأساسي، كبدل السكن والنقل."], ["Labour", "الأجر الفعلي", "Actual wage", "الأجر الأساسي مضافًا إليه سائر الزيادات المستحقة كالبدلات."], ["Labour", "توثيق عقد العمل", "Employment contract authentication", "توثيق عقد العمل إلكترونيًا عبر المنصة المعتمدة."], ["Labour", "منصة قوى", "Qiwa platform", "منصة إلكترونية لخدمات قطاع العمل، منها توثيق العقود."], ["Labour", "الاستقالة", "Resignation", "إنهاء العامل علاقة العمل بإرادته."], ["Labour", "الفصل التأديبي", "Dismissal for misconduct", "فصل العامل دون مكافأة أو تعويض في الحالات التي يحددها النظام."], ["Labour", "التعويض عن الإنهاء", "Compensation for termination", "تعويض يستحقه الطرف المتضرر من إنهاء العقد لسبب غير مشروع."], ["Labour", "شهادة الخدمة", "Service certificate", "شهادة يعطيها صاحب العمل للعامل عند انتهاء العقد تبيّن مدة خدمته وعمله."], ["Labour", "التوطين", "Saudization (localization)", "سياسات تُلزم المنشآت بتوظيف نسبة من المواطنين."], ["Labour", "نطاقات", "Nitaqat", "برنامج يصنّف المنشآت بحسب نسب التوطين فيها."], ["Labour", "الإجازة المرضية", "Sick leave", "إجازة يستحقها العامل المريض بأجر كامل أو جزئي وفق النظام."], ["Labour", "إجازة الوضع", "Maternity leave", "إجازة تستحقها العاملة بمناسبة الوضع."], ["Labour", "ساعات العمل", "Working hours", "المدة التي يكون فيها العامل تحت تصرف صاحب العمل."], ["Labour", "العمل المرن", "Flexible work", "العمل بالساعة أو وفق تنظيم مرن خاص."], ["Labour", "التأمينات الاجتماعية", "Social insurance", "نظام يوفر معاشات وتعويضات للعاملين المشتركين فيه."], ["Labour", "المنازعة العمالية", "Labour dispute", "نزاع بين العامل وصاحب العمل ناشئ عن علاقة العمل."], ["Real Estate", "الهيئة العامة للعقار", "Real Estate General Authority", "الجهة المنظمة للقطاع العقاري."], ["Real Estate", "السجل العقاري", "Real estate registry", "سجل رسمي تُقيد فيه العقارات والحقوق العينية المتعلقة بها."], ["Real Estate", "الرهن العقاري", "Real estate mortgage", "رهن العقار ضمانًا لدين، وغالبًا لتمويل شرائه."], ["Real Estate", "التمويل العقاري", "Real estate finance", "تمويل شراء العقار أو بنائه."], ["Real Estate", "اتحاد الملاك", "Owners' association", "كيان يضم ملاك الوحدات في العقار المشترك لإدارة أجزائه المشتركة."], ["Real Estate", "الأجزاء المشتركة", "Common areas", "أجزاء العقار المملوكة لجميع الملاك على الشيوع، كالمداخل والمصاعد."], ["Real Estate", "الملكية الشائعة", "Co-ownership", "ملكية شخصين أو أكثر لشيء واحد دون فرز حصة كل منهم."], ["Real Estate", "القسمة", "Partition", "تحديد حصة كل شريك في المال المشترك وفرزها."], ["Real Estate", "إخلاء العقار", "Eviction", "إلزام المستأجر أو الشاغل بترك العقار."], ["Real Estate", "الأجرة", "Rent", "المقابل الذي يدفعه المستأجر للانتفاع بالعقار."], ["Real Estate", "التطوير العقاري", "Real estate development", "تهيئة الأرض وإقامة المشاريع العقارية عليها."], ["Real Estate", "رسوم الأراضي البيضاء", "White land fees", "رسوم سنوية تُفرض على الأراضي غير المطورة داخل النطاق العمراني."], ["Real Estate", "المخطط المعتمد", "Approved subdivision plan", "مخطط تقسيم الأرض المعتمد من الجهة المختصة."], ["Real Estate", "التعدي على العقار", "Encroachment", "الاستيلاء على عقار الغير أو جزء منه دون حق."], ["Companies & IP", "شركة المساهمة", "Joint stock company", "شركة يُقسم رأس مالها إلى أسهم قابلة للتداول."], ["Companies & IP", "شركة المساهمة المبسطة", "Simplified joint stock company", "شكل مرن من شركات المساهمة استحدثه نظام الشركات."], ["Companies & IP", "شركة التضامن", "General partnership", "شركة يُسأل فيها الشركاء مسؤولية شخصية وتضامنية عن ديونها."], ["Companies & IP", "شركة التوصية البسيطة", "Limited partnership", "شركة تضم شركاء متضامنين وشركاء موصين لا يُسألون إلا بقدر حصصهم."], ["Companies & IP", "المؤسسة الفردية", "Sole proprietorship", "منشأة يملكها شخص واحد دون شخصية اعتبارية مستقلة."], ["Companies & IP", "الشخصية الاعتبارية", "Legal personality", "صلاحية الكيان لاكتساب الحقوق وتحمل الالتزامات باسمه."], ["Companies & IP", "مدير الشركة", "Company manager", "الشخص المسؤول عن إدارة الشركة ذات المسؤولية المحدودة."], ["Companies & IP", "مسؤولية أعضاء مجلس الإدارة", "Directors' liability", "مسؤولية أعضاء المجلس عن الأضرار الناشئة عن أخطائهم في الإدارة."], ["Companies & IP", "تعارض المصالح", "Conflict of interest", "حالة تتعارض فيها مصلحة الشخص الخاصة مع واجبه تجاه الشركة."], ["Companies & IP", "الاندماج", "Merger", "اتحاد شركتين أو أكثر في شركة واحدة."], ["Companies & IP", "الاستحواذ", "Acquisition", "تملك حصة مسيطرة في شركة أخرى."], ["Companies & IP", "هيئة السوق المالية", "Capital Market Authority", "الجهة المنظمة للسوق المالية في المملكة."], ["Companies & IP", "الطرح العام", "Public offering", "عرض الأوراق المالية على الجمهور للاكتتاب."], ["Companies & IP", "الامتياز التجاري", "Franchise", "ترخيص باستخدام علامة ونظام عمل تجاري مقابل عوض مالي."], ["Companies & IP", "الهيئة السعودية للملكية الفكرية", "Saudi Authority for Intellectual Property", "الجهة المنظمة لحقوق الملكية الفكرية وحمايتها."], ["Companies & IP", "التقليد", "Counterfeiting", "صنع منتج يحاكي منتجًا محميًا بعلامة تجارية دون إذن صاحبها."], ["Companies & IP", "النموذج الصناعي", "Industrial design", "الشكل الخارجي المبتكر لمنتج صناعي."], ["Companies & IP", "السر التجاري", "Trade secret", "معلومات ذات قيمة تجارية تحرص المنشأة على سريتها."], ["Companies & IP", "الترخيص", "Licence", "إذن من صاحب الحق لغيره باستعمال حقه بشروط."], ["Companies & IP", "حوكمة الشركات", "Corporate governance", "قواعد توجيه الشركة والرقابة عليها وتوزيع الصلاحيات والمسؤوليات فيها."], ["Administrative", "نظام المرافعات أمام ديوان المظالم", "Law of Procedure before the Board of Grievances", "النظام المنظم لإجراءات التقاضي أمام المحاكم الإدارية."], ["Administrative", "محكمة الاستئناف الإدارية", "Administrative Court of Appeal", "المحكمة التي تنظر الاعتراضات على أحكام المحاكم الإدارية."], ["Administrative", "المحكمة الإدارية العليا", "Supreme Administrative Court", "أعلى محكمة في القضاء الإداري."], ["Administrative", "عيب عدم الاختصاص", "Lack of competence", "صدور القرار الإداري من جهة لا تملك إصداره."], ["Administrative", "عيب الشكل", "Defect of form", "مخالفة القرار للشكل أو الإجراءات التي يتطلبها النظام."], ["Administrative", "عيب السبب", "Defect of cause", "انعدام الوقائع التي بُني عليها القرار أو عدم صحتها."], ["Administrative", "إساءة استعمال السلطة", "Abuse of power", "استعمال الإدارة سلطتها لغير الغرض الذي مُنحت من أجله."], ["Administrative", "دعوى التعويض الإدارية", "Administrative compensation claim", "دعوى يطلب فيها المتضرر التعويض عن أضرار قرارات الإدارة أو أعمالها."], ["Administrative", "الضبط الإداري", "Administrative regulation (police power)", "سلطة الإدارة في حفظ النظام العام بعناصره من أمن وصحة وسكينة."], ["Administrative", "المرفق العام", "Public service", "نشاط تتولاه الدولة أو تشرف عليه لإشباع حاجة عامة."], ["Administrative", "الترسية", "Contract award", "اختيار العرض الفائز في المنافسة الحكومية."], ["Administrative", "الضمان الابتدائي والنهائي", "Bid and performance bonds", "ضمانات يقدمها المتنافس عند التقدم للمنافسة ثم عند الترسية."], ["Administrative", "القرار السلبي", "Negative decision (implied refusal)", "امتناع الإدارة عن اتخاذ قرار كان يجب عليها اتخاذه نظامًا."], ["Arbitration", "نظام التحكيم", "Arbitration Law", "النظام المنظم لإجراءات التحكيم في المملكة."], ["Arbitration", "اتفاق التحكيم", "Arbitration agreement", "اتفاق الطرفين على إحالة نزاعاتهما إلى التحكيم."], ["Arbitration", "شرط التحكيم", "Arbitration clause", "بند في العقد يحيل النزاعات المستقبلية إلى التحكيم."], ["Arbitration", "مشارطة التحكيم", "Submission agreement", "اتفاق على التحكيم يُبرم بعد نشوء النزاع."], ["Arbitration", "هيئة التحكيم", "Arbitral tribunal", "المحكّم الفرد أو المحكّمون الذين يفصلون في النزاع."], ["Arbitration", "حكم التحكيم", "Arbitral award", "القرار الذي تصدره هيئة التحكيم في النزاع."], ["Arbitration", "دعوى بطلان حكم التحكيم", "Action to annul an arbitral award", "دعوى يُطعن بها في حكم التحكيم لأسباب يحددها النظام."], ["Arbitration", "المركز السعودي للتحكيم التجاري", "Saudi Center for Commercial Arbitration (SCCA)", "مركز مؤسسي يدير قضايا التحكيم التجاري."], ["Arbitration", "الوساطة", "Mediation", "مساعدة طرف محايد للخصوم على الوصول إلى تسوية دون أن يفرض عليهم حلًا."], ["Arbitration", "التوفيق", "Conciliation", "تدخل طرف ثالث لتقريب وجهات النظر واقتراح حلول للنزاع."], ["Arbitration", "التحكيم المؤسسي", "Institutional arbitration", "تحكيم يُدار وفق قواعد مركز تحكيم."], ["Arbitration", "التحكيم الحر", "Ad hoc arbitration", "تحكيم يتولى أطرافه تنظيم إجراءاته دون مركز تحكيم."], ["Arbitration", "اتفاقية نيويورك", "New York Convention", "اتفاقية دولية للاعتراف بأحكام التحكيم الأجنبية وتنفيذها، والمملكة طرف فيها."], ["Cyber & Data", "نظام مكافحة الجرائم المعلوماتية", "Anti-Cybercrime Law", "النظام الذي يجرّم الأفعال المرتكبة باستخدام الحاسب الآلي والشبكة المعلوماتية."], ["Cyber & Data", "الجريمة المعلوماتية", "Cybercrime", "كل فعل يُرتكب باستخدام الحاسب الآلي أو الشبكة المعلوماتية بالمخالفة للنظام."], ["Cyber & Data", "الدخول غير المشروع", "Unauthorized access", "الدخول إلى نظام أو موقع إلكتروني دون تصريح."], ["Cyber & Data", "التشهير الإلكتروني", "Online defamation", "المساس بسمعة الغير عبر الوسائل الإلكترونية."], ["Cyber & Data", "الابتزاز الإلكتروني", "Cyber extortion", "تهديد شخص عبر الوسائل الإلكترونية لإجباره على فعل أو امتناع."], ["Cyber & Data", "نظام حماية البيانات الشخصية", "Personal Data Protection Law", "النظام المنظم لجمع البيانات الشخصية ومعالجتها وحماية حقوق أصحابها."], ["Cyber & Data", "البيانات الشخصية", "Personal data", "كل بيان يؤدي إلى معرفة الفرد أو تحديد هويته."], ["Cyber & Data", "جهة التحكم", "Data controller", "الجهة التي تحدد الغرض من معالجة البيانات الشخصية وطريقتها."], ["Cyber & Data", "معالجة البيانات", "Data processing", "أي عملية تُجرى على البيانات الشخصية، كالجمع والحفظ والنقل."], ["Cyber & Data", "نظام التعاملات الإلكترونية", "Electronic Transactions Law", "النظام المنظم للتعاملات والتوقيعات الإلكترونية."], ["Cyber & Data", "الهيئة السعودية للبيانات والذكاء الاصطناعي", "Saudi Data and AI Authority (SDAIA)", "الجهة المختصة بالبيانات والذكاء الاصطناعي في المملكة."], ["Notarization", "كاتب العدل", "Notary public", "الموظف المختص بتوثيق العقود والإقرارات والوكالات."], ["Notarization", "التوثيق", "Notarization", "إثبات العقود والتصرفات رسميًا لدى الجهة المختصة."], ["Notarization", "الموثق المرخص", "Licensed notary", "شخص مرخص من وزارة العدل لممارسة بعض أعمال التوثيق."], ["Notarization", "الوكالة الإلكترونية", "Electronic power of attorney", "وكالة تُصدر وتُوثّق إلكترونيًا عبر منصة ناجز."], ["Notarization", "فسخ الوكالة", "Revocation of power of attorney", "إنهاء الوكالة من قِبل الموكّل."], ["Notarization", "الإقرار الموثق", "Notarized acknowledgment", "إقرار يُثبت أمام كاتب العدل أو الموثق."]];
+const CATS=["All",...new Set(T.map(t=>t[0]))];
+const CAR={"All":"الكل","Courts":"المحاكم والإجراءات","Contracts":"العقود","Criminal":"الجنائي والتحقيق","Customs & Tax":"الجمارك والضرائب","Banking & AML":"البنوك ومكافحة غسل الأموال","Personal Status":"الأحوال الشخصية","Labour":"العمل","Real Estate":"العقار","Companies & IP":"الشركات والملكية الفكرية","Enforcement":"التنفيذ","Evidence":"الإثبات","Administrative":"القضاء الإداري","Arbitration":"التحكيم والوسائل البديلة","Cyber & Data":"المعلوماتية وحماية البيانات","Notarization":"التوثيق"};
+const $=id=>document.getElementById(id);
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const norm=s=>s.toLowerCase().replace(/[ً-ْـ]/g,"").replace(/[أإآ]/g,"ا").replace(/ة/g,"ه").replace(/ى/g,"ي");
+let cat="All",q="";
+try{cat=localStorage.getItem("glcat")||"All"}catch(e){}
+if(!CATS.includes(cat))cat="All";
+function hl(s){if(!q)return esc(s);const n=norm(s),k=norm(q),i=n.indexOf(k);if(i<0)return esc(s);return esc(s.slice(0,i))+"<mark>"+esc(s.slice(i,i+k.length))+"</mark>"+esc(s.slice(i+k.length))}
+let sortBy="cat";try{sortBy=localStorage.getItem("glsort")||"cat"}catch(e){}
+const abc=s=>s.replace(/^ال/,"");
+function list(){const L=T.filter(t=>(cat==="All"||t[0]===cat)&&(!q||norm(t[1]+" "+t[2]+" "+t[3]).includes(norm(q))));return sortBy==="az"?[...L].sort((a,b)=>abc(a[1]).localeCompare(abc(b[1]),"ar")):L}
+function chips(){$("chips").innerHTML=CATS.map(c=>`<button class="chip${c===cat?" on":""}" data-c="${c}" type="button">${CAR[c]||c} <span style="opacity:.7">${c==="All"?T.length:T.filter(t=>t[0]===c).length}</span></button>`).join("")}
+function render(){const L=list();$("count").textContent=L.length+" من "+T.length+" مصطلحًا";
+ $("grid").innerHTML=L.length?L.map(t=>`<article class="e"><div class="ar" lang="ar">${hl(t[1])}</div><div class="en">${hl(t[2])}</div><div class="tag">${CAR[t[0]]||t[0]}</div><p class="d">${hl(t[3])}</p><button type="button" class="cp" data-i="${T.indexOf(t)}">نسخ</button></article>`).join(""):`<p class="empty">لا توجد مصطلحات تطابق «${esc(q)}». جرّب كلمة أقصر، أو اختر «الكل».</p>`}
+$("chips").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;cat=b.dataset.c;try{localStorage.setItem("glcat",cat)}catch(e){}chips();render()});
+$("q").addEventListener("input",e=>{q=e.target.value.trim();render()});
+$("sort").value=sortBy;$("sort").addEventListener("change",e=>{sortBy=e.target.value;try{localStorage.setItem("glsort",sortBy)}catch(_){ }render()});
+$("grid").addEventListener("click",async e=>{const b=e.target.closest(".cp");if(!b)return;const t=T[+b.dataset.i];try{await navigator.clipboard.writeText(t[1]+" — "+t[2]+"\n"+t[3]);b.textContent="تم النسخ ✓"}catch(_){b.textContent="تعذّر النسخ"}setTimeout(()=>b.textContent="نسخ",1500)});
+{const now=new Date(),doy=Math.floor((now-new Date(now.getFullYear(),0,0))/864e5),t=T[(doy*37)%T.length];
+ $("tod").innerHTML=`<small>مصطلح اليوم · ${esc(CAR[t[0]]||t[0])}</small><b lang="ar">${esc(t[1])}</b><span class="en" style="direction:ltr;font-weight:600">${esc(t[2])}</span><p class="d">${esc(t[3])}</p>`}
+
+// statement of claim
+const CF=["court","type","pn","pid","pj","pa","rep","addr","dn","did","da","sub","facts","grounds","req","att"];
+const CS={court:"المحكمة العامة بجدة",type:"دعوى مطالبة مالية",pn:"خالد محمد العتيبي",pid:"1000000000",pj:"موظف",pa:"جدة، حي الروضة",rep:"",addr:"",dn:"فهد عبدالله القحطاني",did:"",da:"جدة، حي الصفا",sub:"مطالبة بسداد مبلغ قرض قدره خمسون ألف ريال",
+facts:"بتاريخ 1446/03/10هـ أقرضت المدعى عليه مبلغ 50,000 ريال بموجب سند قرض موقع منه (مرفق 1).\nاتفقنا على السداد في موعد أقصاه 1446/09/10هـ.\nحل موعد السداد ولم يسدد المدعى عليه أي مبلغ رغم مطالبتي له ودياً عدة مرات (مرفق 2).",
+grounds:"سند القرض الموقع من المدعى عليه والمتضمن إقراره بالمبلغ وموعد السداد.\nوجوب الوفاء بالدين عند حلول أجله شرعاً ونظاماً.",
+req:"إلزام المدعى عليه بأن يدفع للمدعي مبلغ 50,000 ريال (خمسين ألف ريال) قيمة القرض.",
+att:"صورة سند القرض.\nصور رسائل المطالبة الودية."};
+const ORD=["أولاً","ثانياً","ثالثاً","رابعاً","خامساً","سادساً","سابعاً"];
+const lines=v=>v.split("\n").map(x=>x.trim()).filter(Boolean);
+const num=a=>a.map((x,i)=>(i+1)+"- "+x).join("\n");
+const cv=k=>$("c-"+k).value.trim();
+function draft(){
+ const today=new Date().toLocaleDateString("en-GB");
+ let o="بسم الله الرحمن الرحيم\n\n";
+ o+="فضيلة رئيس "+(cv("court")||"[المحكمة]")+"                حفظه الله\n";
+ o+="السلام عليكم ورحمة الله وبركاته، وبعد:\n\n";
+ o+="نوع الدعوى: "+(cv("type")||"[نوع الدعوى]")+"\n";
+ o+="تاريخ تقديم الصحيفة: "+today+"م\n\n";
+ o+="المدعي: "+(cv("pn")||"[الاسم الكامل]")+"، هوية رقم: "+(cv("pid")||"[رقم الهوية]")+"، المهنة: "+(cv("pj")||"[المهنة]")+"، محل الإقامة: "+(cv("pa")||"[العنوان]")+".\n";
+ if(cv("rep"))o+="ممثل المدعي: "+cv("rep")+".\n";
+ if(cv("addr"))o+="محل الإقامة المختار للمدعي: "+cv("addr")+".\n";
+ o+="المدعى عليه: "+(cv("dn")||"[الاسم الكامل]")+(cv("did")?"، هوية رقم: "+cv("did"):"")+(cv("da")?"، محل الإقامة/العمل: "+cv("da"):"")+".\n\n";
+ o+="موضوع الدعوى: "+(cv("sub")||"[موضوع الدعوى]")+".\n\n";
+ const parts=[["الوقائع",lines($("c-facts").value)],["الأسانيد",lines($("c-grounds").value)]];
+ let n=0;
+ parts.forEach(([h,a])=>{o+=ORD[n++]+": "+h+":\n"+(a.length?num(a):"[أضف "+h+"]")+"\n\n"});
+ const r=lines($("c-req").value);
+ o+=ORD[n++]+": الطلبات:\nبناءً على ما تقدم، أطلب من فضيلتكم:\n"+(r.length?num(r):"[أضف الطلبات]")+"\n\n";
+ const at=lines($("c-att").value);
+ if(at.length)o+="المرفقات:\n"+num(at)+"\n\n";
+ o+="والله يحفظكم ويرعاكم،،،\n\n";
+ o+="مقدمه: "+(cv("rep")||cv("pn")||"[الاسم]")+"\nالتوقيع: ..................";
+ $("c-out").textContent=o;
+ try{const d={};CF.forEach(k=>d[k]=$("c-"+k).value);localStorage.setItem("glclaim",JSON.stringify(d))}catch(e){}
+}
+function fill(d){CF.forEach(k=>$("c-"+k).value=d[k]||"");draft()}
+let cd=null;try{cd=JSON.parse(localStorage.getItem("glclaim"))}catch(e){}
+fill(cd||CS);
+CF.forEach(k=>$("c-"+k).addEventListener("input",draft));
+$("c-clear").addEventListener("click",()=>{fill({});$("c-msg").textContent="";$("c-court").focus()});
+$("c-sample").addEventListener("click",()=>{fill(CS);$("c-msg").textContent="تم تحميل النموذج."});
+$("c-copy").addEventListener("click",async()=>{try{await navigator.clipboard.writeText($("c-out").textContent);$("c-msg").textContent="تم نسخ المسودة. الصقها في Word أو في ناجز."}catch(e){$("c-msg").textContent="تعذّر النسخ. حدّد نص المسودة وانسخه يدويًا."}});
+
+// reply memorandum
+const D75=[["inv","الدفع ببطلان صحيفة الدعوى لعدم اشتمالها على البيانات المنصوص عليها في المادة الحادية والأربعين من نظام المرافعات الشرعية."],
+["loc","الدفع بعدم اختصاص المحكمة مكانياً بنظر الدعوى، لكون محل إقامة المدعى عليه في مدينة [المدينة]."],
+["ref","الدفع بإحالة الدعوى إلى [المحكمة] لقيام النزاع ذاته، أو دعوى مرتبطة به، أمامها."],
+["arb","الدفع بعدم جواز نظر الدعوى لوجود اتفاق تحكيم بين الطرفين."]];
+const D76=[["subj","الدفع بعدم اختصاص المحكمة نوعياً بنظر الدعوى."],
+["cap","الدفع بعدم قبول الدعوى لانعدام صفة المدعي."],
+["int","الدفع بعدم قبول الدعوى لانتفاء مصلحة المدعي."],
+["res","الدفع بعدم جواز نظر الدعوى لسبق الفصل فيها بحكم نهائي."]];
+const ck=([k,t])=>`<label class="chk"><input type="checkbox" id="rd-${k}"><span class="ar" lang="ar">${t}</span></label>`;
+$("r-d75").innerHTML=D75.map(ck).join("");$("r-d76").innerHTML=D76.map(ck).join("");
+const RF=["court","circ","no","def","cl","agent","sub","dx","resp","gr","req","att"];
+const RS={court:"المحكمة العامة بجدة",circ:"الدائرة الثالثة",no:"[رقم القضية]",def:"فهد عبدالله القحطاني",cl:"خالد محمد العتيبي",agent:"",sub:"المطالبة بمبلغ قرض قدره خمسون ألف ريال",dx:"",
+resp:"يقر المدعى عليه بأنه اقترض من المدعي مبلغ 50,000 ريال بموجب السند المرفق بصحيفة الدعوى.\nغير أن ما ذكره المدعي من عدم سداد أي مبلغ غير صحيح، إذ سدد المدعى عليه مبلغ 30,000 ريال على ثلاث دفعات بتحويلات بنكية إلى حساب المدعي (مرفق 1).\nوبذلك يكون المتبقي في ذمة المدعى عليه مبلغ 20,000 ريال فقط، وهو مستعد لسداده وفق جدول يتفق عليه.",
+gr:"كشف الحساب البنكي الذي يثبت التحويلات الثلاث إلى حساب المدعي.\nأن الدين يسقط بقدر ما سُدّد منه شرعاً ونظاماً.",
+req:"رد دعوى المدعي فيما زاد على مبلغ 20,000 ريال (عشرين ألف ريال).\nتمكين المدعى عليه من سداد المبلغ المتبقي على أقساط مناسبة.",
+att:"كشف حساب بنكي يثبت التحويلات إلى حساب المدعي.",d:[]};
+const rv=k=>$("r-"+k).value.trim();
+const DALL=[...D75,...D76];
+function rdraft(){
+ const sel=DALL.filter(([k])=>$("rd-"+k).checked).map(d=>d[1]).concat(lines($("r-dx").value));
+ const resp=lines($("r-resp").value),gr=lines($("r-gr").value),rq=lines($("r-req").value),at=lines($("r-att").value);
+ let o="بسم الله الرحمن الرحيم\n\n";
+ o+="فضيلة رئيس "+(rv("circ")||"[الدائرة]")+" في "+(rv("court")||"[المحكمة]")+"                حفظه الله\n";
+ o+="السلام عليكم ورحمة الله وبركاته، وبعد:\n\n";
+ o+="مذكرة جوابية في القضية رقم: "+(rv("no")||"[رقم القضية]")+"\n";
+ o+="مقدمة من: "+(rv("def")||"[اسم المدعى عليه]")+" (المدعى عليه)"+(rv("agent")?"، بواسطة وكيله: "+rv("agent"):"")+"\n";
+ o+="ضد: "+(rv("cl")||"[اسم المدعي]")+" (المدعي)\n";
+ o+="الموضوع: الرد على صحيفة الدعوى المقدمة من المدعي بشأن "+(rv("sub")||"[موضوع الدعوى]")+".\n\n";
+ let n=0;
+ if(sel.length){o+=ORD[n++]+": الدفوع الشكلية:\nيدفع المدعى عليه، قبل الدخول في موضوع الدعوى، بما يلي:\n"+num(sel)+"\n\n"}
+ o+=ORD[n++]+": الرد على موضوع الدعوى:\n"+(sel.length?"واحتياطياً، ودون التسليم بصحة ما ورد في صحيفة الدعوى، يجيب المدعى عليه بما يلي:\n":"")+(resp.length?num(resp):"[أضف الرد على الوقائع]")+"\n\n";
+ o+=ORD[n++]+": الأسانيد:\n"+(gr.length?num(gr):"[أضف الأسانيد]")+"\n\n";
+ o+=ORD[n++]+": الطلبات:\nبناءً على ما تقدم، يلتمس المدعى عليه من فضيلتكم:\n"+(sel.length?"أصلياً: قبول الدفوع الشكلية المبينة أعلاه.\nواحتياطياً:\n":"")+(rq.length?num(rq):"[أضف الطلبات]")+"\n\n";
+ if(at.length)o+="المرفقات:\n"+num(at)+"\n\n";
+ o+="والله يحفظكم ويرعاكم،،،\n\n";
+ o+="مقدمه: "+(rv("agent")||rv("def")||"[الاسم]")+"\nالتاريخ: "+new Date().toLocaleDateString("en-GB")+"م\nالتوقيع: ..................";
+ $("r-out").textContent=o;
+ try{const d={d:DALL.filter(([k])=>$("rd-"+k).checked).map(x=>x[0])};RF.forEach(k=>d[k]=$("r-"+k).value);localStorage.setItem("glreply",JSON.stringify(d))}catch(e){}
+}
+function rfill(d){RF.forEach(k=>$("r-"+k).value=d[k]||"");DALL.forEach(([k])=>$("rd-"+k).checked=(d.d||[]).includes(k));rdraft()}
+let rd=null;try{rd=JSON.parse(localStorage.getItem("glreply"))}catch(e){}
+rfill(rd||RS);
+RF.forEach(k=>$("r-"+k).addEventListener("input",rdraft));
+DALL.forEach(([k])=>$("rd-"+k).addEventListener("change",rdraft));
+$("r-clear").addEventListener("click",()=>{rfill({});$("r-msg").textContent="";$("r-court").focus()});
+$("r-sample").addEventListener("click",()=>{rfill(RS);$("r-msg").textContent="تم تحميل النموذج."});
+$("r-copy").addEventListener("click",async()=>{try{await navigator.clipboard.writeText($("r-out").textContent);$("r-msg").textContent="تم نسخ المسودة. الصقها في Word أو في ناجز."}catch(e){$("r-msg").textContent="تعذّر النسخ. حدّد نص المسودة وانسخه يدويًا."}});
+
+// defence memorandum
+const DP=[["arr","الدفع ببطلان إجراءات القبض والتفتيش لمخالفتها أحكام نظام الإجراءات الجزائية، وبطلان ما ترتب عليها من أدلة."],
+["conf","الدفع ببطلان الاعتراف المنسوب إلى المتهم لصدوره في ظروف أثّرت على إرادته، خلافًا للمادة الثانية بعد المائة من نظام الإجراءات الجزائية."],
+["law","الدفع بالإخلال بحق المتهم في الاستعانة بوكيل أو محامٍ أثناء التحقيق، المكفول بالمادة الرابعة من نظام الإجراءات الجزائية."],
+["jur","الدفع بعدم اختصاص المحكمة بنظر الدعوى."],
+["res","الدفع بعدم جواز نظر الدعوى لسبق الفصل في الواقعة ذاتها بحكم نهائي."]];
+const DS=[["elem","انتفاء أركان الجريمة المنسوبة إلى المتهم."],
+["evid","عدم كفاية الأدلة على ثبوت الاتهام، والشك يُفسَّر لمصلحة المتهم."],
+["wit","تناقض أقوال الشهود وعدم اطمئنانها، بما لا يصلح معه الاستناد إليها."],
+["int","انتفاء القصد الجنائي لدى المتهم."]];
+const dck=([k,t])=>`<label class="chk"><input type="checkbox" id="dd-${k}"><span class="ar" lang="ar">${t}</span></label>`;
+$("d-pp").innerHTML=DP.map(dck).join("");$("d-ss").innerHTML=DS.map(dck).join("");
+const DF=["court","circ","no","acc","agent","priv","ch","sum","px","resp","gr","req","mr","att"];
+const DX=[...DP,...DS];
+const DSAMP={court:"المحكمة الجزائية بجدة",circ:"الدائرة الجزائية الثانية",no:"[رقم القضية]",acc:"سعد علي الحربي",agent:"",priv:"ماجد سالم الغامدي",ch:"الاعتداء على المدعي بالحق الخاص بالضرب",
+sum:"تتهم النيابة العامة المتهم بالاعتداء على المدعي بالحق الخاص بالضرب أمام محل تجاري، استنادًا إلى أقوال شاهدين وتقرير طبي.",
+px:"",resp:"ينكر المتهم الاعتداء المنسوب إليه، ويقرّ بوجود مشادة كلامية فقط.\nذكر الشاهد الأول أن الواقعة حدثت مساءً، بينما ذكر الشاهد الثاني أنها حدثت ظهرًا (مرفق 1).\nأثبت التقرير الطبي إصابة في اليد اليسرى، في حين ادعى المدعي بالحق الخاص الضرب على الوجه (مرفق 2).\nلم تتضمن أوراق القضية تسجيلًا من كاميرات المحل رغم وجودها في موقع الواقعة.",
+gr:"أن الأصل في الإنسان البراءة، ولا تثبت الإدانة إلا بدليل يقيني.\nأن الشك يُفسَّر لمصلحة المتهم.",
+req:"الحكم ببراءة المتهم مما نُسب إليه.\nرد دعوى الحق الخاص.",mr:"خلو سجل المتهم من السوابق.\nكونه عائلًا لأسرة مكونة من خمسة أفراد.",
+att:"صورة من محضر أقوال الشاهدين.\nصورة من التقرير الطبي.",d:["evid","wit"],mit:true};
+const dv=k=>$("d-"+k).value.trim();
+function ddraft(){
+ const pp=DP.filter(([k])=>$("dd-"+k).checked).map(x=>x[1]).concat(lines($("d-px").value));
+ const ss=DS.filter(([k])=>$("dd-"+k).checked).map(x=>x[1]).concat(lines($("d-resp").value));
+ const gr=lines($("d-gr").value),rq=lines($("d-req").value),mr=lines($("d-mr").value),at=lines($("d-att").value),mit=$("d-mit").checked;
+ let o="بسم الله الرحمن الرحيم\n\n";
+ o+="فضيلة رئيس "+(dv("circ")||"[الدائرة]")+" في "+(dv("court")||"[المحكمة]")+"                حفظه الله\n";
+ o+="السلام عليكم ورحمة الله وبركاته، وبعد:\n\n";
+ o+="مذكرة دفاع في القضية رقم: "+(dv("no")||"[رقم القضية]")+"\n";
+ o+="مقدمة من: المتهم/ "+(dv("acc")||"[اسم المتهم]")+(dv("agent")?"، بواسطة وكيله: "+dv("agent"):"")+"\n";
+ o+="في الدعوى العامة المقامة من: النيابة العامة"+(dv("priv")?"، ودعوى الحق الخاص المقامة من: "+dv("priv"):"")+"\n";
+ o+="بشأن: اتهامه بـ"+(dv("ch")||"[التهمة]")+".\n\n";
+ let n=0;
+ o+=ORD[n++]+": ملخص الاتهام:\n"+(dv("sum")||"[ملخص لائحة الدعوى]")+"\nوالمتهم لا يسلّم بشيء مما ورد في لائحة الدعوى، ويبدي دفاعه على النحو الآتي:\n\n";
+ if(pp.length)o+=ORD[n++]+": الدفوع الإجرائية:\n"+num(pp)+"\n\n";
+ o+=ORD[n++]+": الدفوع الموضوعية:\n"+(pp.length?"واحتياطياً، ودون التسليم بصحة الإجراءات، يدفع المتهم بما يلي:\n":"")+(ss.length?num(ss):"[أضف الدفوع الموضوعية]")+"\n\n";
+ o+=ORD[n++]+": الأسانيد:\n"+(gr.length?num(gr):"[أضف الأسانيد]")+"\n\n";
+ o+=ORD[n++]+": الطلبات:\nبناءً على ما تقدم، يلتمس المتهم من فضيلتكم:\n";
+ const R=[];if(pp.length)R.push("الحكم ببطلان الإجراءات المبينة أعلاه وما ترتب عليها من أدلة.");R.push(...rq);
+ o+=(pp.length||rq.length?"أصلياً:\n"+num(R):"[أضف الطلبات]")+"\n";
+ if(mit)o+="واحتياطياً، وعلى سبيل الفرض الجدلي ودون تسليم بالاتهام: استعمال الرأفة بالمتهم وتخفيف العقوبة إلى أدنى حد، مراعاةً لما يلي:\n"+(mr.length?num(mr):"[أضف أسباب التخفيف]")+"\n";
+ o+="\n";
+ if(at.length)o+="المرفقات:\n"+num(at)+"\n\n";
+ o+="والله يحفظكم ويرعاكم،،،\n\n";
+ o+="مقدمه: "+(dv("agent")||dv("acc")||"[الاسم]")+"\nالتاريخ: "+new Date().toLocaleDateString("en-GB")+"م\nالتوقيع: ..................";
+ $("d-out").textContent=o;
+ try{const d={d:DX.filter(([k])=>$("dd-"+k).checked).map(x=>x[0]),mit};DF.forEach(k=>d[k]=$("d-"+k).value);localStorage.setItem("gldef",JSON.stringify(d))}catch(e){}
+}
+function dfill(d){DF.forEach(k=>$("d-"+k).value=d[k]||"");DX.forEach(([k])=>$("dd-"+k).checked=(d.d||[]).includes(k));$("d-mit").checked=!!d.mit;ddraft()}
+let dd=null;try{dd=JSON.parse(localStorage.getItem("gldef"))}catch(e){}
+dfill(dd||DSAMP);
+DF.forEach(k=>$("d-"+k).addEventListener("input",ddraft));
+DX.forEach(([k])=>$("dd-"+k).addEventListener("change",ddraft));$("d-mit").addEventListener("change",ddraft);
+$("d-clear").addEventListener("click",()=>{dfill({});$("d-msg").textContent="";$("d-court").focus()});
+$("d-sample").addEventListener("click",()=>{dfill(DSAMP);$("d-msg").textContent="تم تحميل النموذج."});
+$("d-copy").addEventListener("click",async()=>{try{await navigator.clipboard.writeText($("d-out").textContent);$("d-msg").textContent="تم نسخ المسودة. الصقها في Word أو في ناجز."}catch(e){$("d-msg").textContent="تعذّر النسخ. حدّد نص المسودة وانسخه يدويًا."}});
+
+// ===== shared: phrase library + saved drafts =====
+const PH=[["الربط والاستدلال",["وحيث إن ","ومن المقرر شرعًا ونظامًا أن ","وبما أن ","وتأسيسًا على ما تقدم، ","ومما يؤكد ذلك ","ولا أدلّ على ذلك من "]],
+["الدفاع والرد",["ودون التسليم بصحة ما ورد في ","وعلى سبيل الفرض الجدلي، ","وهذا يخالف الثابت في أوراق الدعوى، إذ ","وقد جاء الادعاء مرسلًا خاليًا من الدليل، ","والبيّنة على من ادّعى واليمين على من أنكر."]],
+["الإحالة إلى الأدلة",["كما هو ثابت بالمرفق رقم ( )","وفقًا لما نصّت عليه المادة ( ) من نظام ","استنادًا إلى البند ( ) من العقد المبرم بين الطرفين"]],
+["الطلبات",["إلزام المدعى عليه بأن يدفع للمدعي مبلغًا قدره ( ) ريال.","رد دعوى المدعي لعدم ثبوتها.","الحكم بعدم قبول الدعوى.","نقض الحكم المعترض عليه، والحكم بـ "]]];
+function tools(x,get,set){
+ const box=$(x+"-tools");if(!box)return;
+ box.innerHTML=`<div class="dmg"><select id="${x}-dsel" aria-label="المسودات المحفوظة"><option value="">المسودات المحفوظة…</option></select><input id="${x}-dname" placeholder="اسم المسودة" aria-label="اسم المسودة"><button type="button" id="${x}-dsave">حفظ</button><button type="button" id="${x}-ddel">حذف</button></div>
+ <details class="ph"><summary>مكتبة العبارات القانونية</summary><div class="pg">${PH.map(([h,a])=>`<b>${h}</b>`+a.map(t=>`<button type="button" class="phr">${esc(t)}</button>`).join("")).join("")}</div></details>`;
+ const key="gldrafts-"+x;let last=null;
+ const ld=()=>{try{return JSON.parse(localStorage.getItem(key))||{}}catch(e){return{}}};
+ const sv=o=>{try{localStorage.setItem(key,JSON.stringify(o))}catch(e){}};
+ const list=()=>{const o=ld();$(x+"-dsel").innerHTML=`<option value="">المسودات المحفوظة (${Object.keys(o).length})…</option>`+Object.keys(o).map(n=>`<option>${esc(n)}</option>`).join("")};
+ list();
+ const host=box.closest(".builder");
+ host.addEventListener("focusin",e=>{if(e.target.tagName==="TEXTAREA"||(e.target.tagName==="INPUT"&&e.target.type!=="checkbox"&&!e.target.closest(".dmg")))last=e.target});
+ box.addEventListener("click",e=>{const b=e.target.closest(".phr");if(!b)return;
+  const t=last||host.querySelector("textarea");const v=b.textContent,st=t.selectionStart??t.value.length,en=t.selectionEnd??t.value.length;
+  t.value=t.value.slice(0,st)+v+t.value.slice(en);t.focus();const c=st+v.length;try{t.setSelectionRange(c,c)}catch(_){ }
+  t.dispatchEvent(new Event("input",{bubbles:true}))});
+ $(x+"-dsave").addEventListener("click",()=>{const n=$(x+"-dname").value.trim()||("مسودة "+new Date().toLocaleString("ar-SA"));const o=ld();o[n]=get();sv(o);list();$(x+"-dsel").value=n;$(x+"-msg").textContent="تم حفظ المسودة «"+n+"» في هذا المتصفح."});
+ $(x+"-dsel").addEventListener("change",e=>{const n=e.target.value;if(!n)return;const o=ld();if(o[n]){set(o[n]);$(x+"-dname").value=n;$(x+"-msg").textContent="تم فتح المسودة «"+n+"»."}});
+ $(x+"-ddel").addEventListener("click",()=>{const n=$(x+"-dsel").value;if(!n){$(x+"-msg").textContent="اختر مسودة محفوظة لحذفها.";return}const o=ld();delete o[n];sv(o);list();$(x+"-dname").value="";$(x+"-msg").textContent="تم حذف المسودة «"+n+"»."});
+}
+const pick=(F,x)=>Object.fromEntries(F.map(k=>[k,$(x+"-"+k).value]));
+tools("c",()=>pick(CF,"c"),fill);
+tools("r",()=>({...pick(RF,"r"),d:DALL.filter(([k])=>$("rd-"+k).checked).map(v=>v[0])}),rfill);
+tools("d",()=>({...pick(DF,"d"),d:DX.filter(([k])=>$("dd-"+k).checked).map(v=>v[0]),mit:$("d-mit").checked}),dfill);
+
+// ===== claim checker =====
+function check(){
+ const v=k=>$("c-"+k).value.trim(),L=k=>lines($("c-"+k).value);
+ const it=[],wn=[];
+ const pOK=v("pn")&&v("pid")&&v("pj")&&v("pa");
+ it.push([pOK,"بيانات المدعي"+(pOK?"":": أكمل الاسم ورقم الهوية والمهنة ومحل الإقامة")]);
+ it.push([true,"بيانات ممثل المدعي"+(v("rep")?"":" (لا يوجد ممثل، وهذا جائز)")]);
+ it.push([!!v("dn"),"بيانات المدعى عليه"+(v("dn")?"":": اسم المدعى عليه مطلوب")]);
+ it.push([true,"تاريخ تقديم الصحيفة (يُضاف تلقائيًا)"]);
+ it.push([!!v("court"),"المحكمة المرفوعة أمامها الدعوى"]);
+ it.push([true,"محل الإقامة المختار"+(v("addr")?"":" (يلزم فقط إن لم يقم المدعي في بلد المحكمة)")]);
+ const sOK=v("sub")&&L("req").length&&L("grounds").length;
+ it.push([sOK,"موضوع الدعوى والطلبات والأسانيد"+(sOK?"":": "+[!v("sub")&&"الموضوع",!L("req").length&&"الطلبات",!L("grounds").length&&"الأسانيد"].filter(Boolean).join("، ")+" ناقصة")]);
+ if(v("pid")&&!/^[12]\d{9}$/.test(v("pid").replace(/\s/g,"")))wn.push("رقم الهوية يُفترض أن يتكون من 10 أرقام ويبدأ بـ1 أو 2.");
+ if(!v("da"))wn.push("أضف محل إقامة المدعى عليه أو عمله، فهو يُعين على التبليغ وتحديد الاختصاص المكاني.");
+ const allT=$("c-facts").value+" "+$("c-req").value;
+ const refs=[...allT.matchAll(/مرفق\s*(\d+)/g)].map(m=>+m[1]),na=L("att").length;
+ if(refs.length&&Math.max(...refs)>na)wn.push(`الوقائع تشير إلى مرفق رقم ${Math.max(...refs)}، لكن قائمة المرفقات فيها ${na} فقط.`);
+ if(L("req").some(r=>/مبلغ|ريال/.test(r)&&!/[\d٠-٩]/.test(r)))wn.push("أحد الطلبات يذكر مبلغًا دون رقم. اكتب المبلغ بالأرقام والحروف.");
+ if(L("req").length&&!L("req").some(r=>/حروف|\(.+\)/.test(r))&&L("req").some(r=>/[\d٠-٩]/.test(r)))wn.push("اكتب المبلغ بالحروف أيضًا بين قوسين، تفاديًا لأي لبس.");
+ if(L("facts").length<2)wn.push("الوقائع قليلة. اعرضها مرتبة زمنيًا، واقعة في كل سطر.");
+ const ok=it.filter(i=>i[0]).length,pct=Math.round(ok/it.length*100);
+ $("c-check").innerHTML=`<h3><span>فاحص الصحيفة (المادة 41)</span><span class="pct">${ok}/${it.length}</span></h3><div class="cbar"><i style="width:${pct}%"></i></div><ul>${it.map(([o,t])=>`<li class="${o?"ok":"no"}">${esc(t)}</li>`).join("")}${wn.map(t=>`<li class="wn">${esc(t)}</li>`).join("")}</ul>${!wn.length&&ok===it.length?'<p style="margin:8px 0 0;color:var(--acc);font-weight:600">الصحيفة مكتملة البيانات ولا توجد ملاحظات.</p>':""}`;
+}
+CF.forEach(k=>$("c-"+k).addEventListener("input",check));check();
+["c-clear","c-sample"].forEach(id=>$(id).addEventListener("click",check));
+$("c-dsel").addEventListener("change",check);
+
+// ===== demand letter =====
+const MF=["from","fromc","to","addr","basis","facts","amt","words","days","pay"];
+const MS={from:"مؤسسة الريادة للتجارة",fromc:"المدير العام",to:"شركة الأفق للمقاولات",addr:"جدة، حي الحمراء",basis:"الفاتورة رقم 2045 بتاريخ 1447/02/15هـ عن توريد مواد بناء",
+facts:"قامت مؤسسة الريادة للتجارة بتوريد مواد البناء المتفق عليها كاملة، واستلمتها شركتكم بموجب سند الاستلام الموقع.\nحلّ أجل السداد المتفق عليه في الفاتورة منذ أكثر من ستين يومًا دون سداد أي مبلغ.\nتمت مراجعتكم هاتفيًا أكثر من مرة دون استجابة.",
+amt:"85,000",words:"خمسة وثمانون ألف ريال",days:"10",pay:"التحويل إلى الحساب البنكي للمؤسسة المذكور في الفاتورة"};
+const mv=k=>$("m-"+k).value.trim();
+function mdraft(){
+ const f=lines($("m-facts").value);
+ let o="التاريخ: "+new Date().toLocaleDateString("ar-SA-u-ca-islamic-umalqura-nu-latn")+"\n\n";
+ o+="السادة/ "+(mv("to")||"[المرسل إليه]")+"                المحترمين\n";
+ if(mv("addr"))o+="العنوان: "+mv("addr")+"\n";
+ o+="\nالموضوع: مطالبة ودية بسداد مبلغ مستحق\n\nالسلام عليكم ورحمة الله وبركاته، وبعد:\n\n";
+ o+="فإشارةً إلى "+(mv("basis")||"[أساس المطالبة]")+"، نود إحاطتكم بما يلي:\n"+(f.length?num(f):"[أضف الوقائع]")+"\n\n";
+ o+="وحيث إن ذمتكم مشغولة بمبلغ قدره ("+(mv("amt")||"[المبلغ]")+") ريال"+(mv("words")?" ("+mv("words")+")":"")+"، ";
+ o+="فإننا نطالبكم وديًا بسداد المبلغ كاملًا خلال ("+(mv("days")||"[عدد]")+") أيام من تاريخ استلامكم هذا الخطاب"+(mv("pay")?"، عن طريق "+mv("pay"):"")+".\n\n";
+ o+="وفي حال عدم السداد خلال المدة المحددة، سنضطر، مع الأسف، إلى اتخاذ الإجراءات النظامية اللازمة لحفظ حقوقنا، بما في ذلك رفع دعوى أمام المحكمة المختصة، والمطالبة بما يترتب على ذلك من مصروفات.\n\n";
+ o+="آملين تفهّمكم والمبادرة بالسداد، حرصًا على استمرار التعامل بيننا.\n\nوتقبلوا وافر التحية والتقدير،،،\n\n";
+ o+=(mv("from")||"[المرسل]")+(mv("fromc")?"\n"+mv("fromc"):"")+"\nالتوقيع: ..................";
+ $("m-out").textContent=o;try{localStorage.setItem("gldemand",JSON.stringify(pick(MF,"m")))}catch(e){}
+}
+function mfill(d){MF.forEach(k=>$("m-"+k).value=d[k]||"");mdraft()}
+let md=null;try{md=JSON.parse(localStorage.getItem("gldemand"))}catch(e){}
+mfill(md||MS);MF.forEach(k=>$("m-"+k).addEventListener("input",mdraft));
+tools("m",()=>pick(MF,"m"),mfill);
+
+// ===== appeal =====
+const AR=[["shr","مخالفة الحكم لأحكام الشريعة الإسلامية أو الأنظمة المرعية."],
+["app","الخطأ في تطبيق النظام أو تأويله."],
+["rea","القصور في تسبيب الحكم، إذ لم يبيّن الأسباب التي بُني عليها بما يكفي لحمله."],
+["def","الإخلال بحق الدفاع."],
+["ign","إغفال الحكم دفوعًا أو أدلة جوهرية قدّمها المعترض، لو بُحثت لتغيّر بها وجه الحكم."]];
+$("a-rs").innerHTML=AR.map(([k,t])=>`<label class="chk"><input type="checkbox" id="ar-${k}"><span class="ar" lang="ar">${t}</span></label>`).join("");
+const AF=["acourt","court","circ","no","date","recv","op","ap","res","agent","det","req","att"];
+const AS={acourt:"محكمة الاستئناف بمنطقة مكة المكرمة",court:"المحكمة العامة بجدة",circ:"الدائرة الثالثة",no:"[رقم الحكم]",date:"1447/04/20هـ",recv:"1447/04/25هـ",
+op:"حكمت الدائرة بإلزام المدعى عليه فهد عبدالله القحطاني بأن يدفع للمدعي خالد محمد العتيبي مبلغ 50,000 ريال.",ap:"فهد عبدالله القحطاني",res:"خالد محمد العتيبي",agent:"",
+det:"قدّم المعترض أمام الدائرة كشف حساب بنكي يثبت تحويل مبلغ 30,000 ريال إلى حساب المعترض ضده (مرفق 1)، ولم يتعرض الحكم لهذا الدليل إيرادًا أو ردًّا.\nأن المعترض ضده لم ينكر استلام التحويلات، واكتفى بالقول إنها عن تعاملات أخرى دون أن يقدّم ما يثبت ذلك.\nأن الحكم ألزم المعترض بكامل مبلغ القرض دون خصم ما ثبت سداده، وهو ما يخالف قاعدة سقوط الدين بقدر ما سُدّد منه.",
+req:"نقض الحكم المعترض عليه، والحكم بإلزام المعترض بمبلغ 20,000 ريال (عشرين ألف ريال) فقط، وهو الباقي من القرض.",att:"كشف الحساب البنكي المثبت للتحويلات.\nصورة صك الحكم المعترض عليه.",r:["ign","rea"],urg:false};
+const av=k=>$("a-"+k).value.trim();
+function adraft(){
+ const rs=AR.filter(([k])=>$("ar-"+k).checked).map(x=>x[1]).concat(lines($("a-det").value)),rq=lines($("a-req").value),at=lines($("a-att").value),urg=$("a-urg").checked;
+ let o="بسم الله الرحمن الرحيم\n\n";
+ o+="أصحاب الفضيلة رئيس وأعضاء الدائرة المختصة في "+(av("acourt")||"[محكمة الاستئناف]")+"                حفظهم الله\n";
+ o+="السلام عليكم ورحمة الله وبركاته، وبعد:\n\n";
+ o+="لائحة اعتراضية على الحكم رقم: "+(av("no")||"[رقم الحكم]")+" وتاريخ: "+(av("date")||"[التاريخ]")+"، الصادر من "+(av("circ")||"[الدائرة]")+" في "+(av("court")||"[المحكمة]")+".\n\n";
+ o+="المعترض: "+(av("ap")||"[اسم المعترض]")+(av("agent")?"، بواسطة وكيله: "+av("agent"):"")+"\nالمعترض ضده: "+(av("res")||"[اسم المعترض ضده]")+"\n\n";
+ o+="منطوق الحكم المعترض عليه:\n«"+(av("op")||"[منطوق الحكم]")+"»\n\n";
+ o+="أولاً: قبول الاعتراض شكلاً:\nتسلّم المعترض صورة صك الحكم بتاريخ "+(av("recv")||"[التاريخ]")+"، وقد قُدّم هذا الاعتراض خلال المدة النظامية البالغة "+(urg?"عشرة أيام للأحكام الصادرة في المسائل المستعجلة":"ثلاثين يومًا")+" المنصوص عليها في المادة السابعة والثمانين بعد المائة من نظام المرافعات الشرعية، فيكون مقبولًا شكلًا.\n\n";
+ o+="ثانياً: أسباب الاعتراض:\n"+(rs.length?num(rs):"[أضف أسباب الاعتراض]")+"\n\n";
+ o+="ثالثاً: الطلبات:\nبناءً على ما تقدم، يلتمس المعترض من فضيلتكم:\n"+num(["قبول الاعتراض شكلًا لتقديمه في الموعد النظامي.",...rq])+"\n\n";
+ if(at.length)o+="المرفقات:\n"+num(at)+"\n\n";
+ o+="والله يحفظكم ويرعاكم،،،\n\nمقدمه: "+(av("agent")||av("ap")||"[الاسم]")+"\nالتاريخ: "+new Date().toLocaleDateString("en-GB")+"م\nالتوقيع: ..................";
+ $("a-out").textContent=o;
+ try{localStorage.setItem("glappeal",JSON.stringify(aget()))}catch(e){}
+}
+const aget=()=>({...pick(AF,"a"),r:AR.filter(([k])=>$("ar-"+k).checked).map(x=>x[0]),urg:$("a-urg").checked});
+function afill(d){AF.forEach(k=>$("a-"+k).value=d[k]||"");AR.forEach(([k])=>$("ar-"+k).checked=(d.r||[]).includes(k));$("a-urg").checked=!!d.urg;adraft()}
+let ad=null;try{ad=JSON.parse(localStorage.getItem("glappeal"))}catch(e){}
+afill(ad||AS);AF.forEach(k=>$("a-"+k).addEventListener("input",adraft));AR.forEach(([k])=>$("ar-"+k).addEventListener("change",adraft));$("a-urg").addEventListener("change",adraft);
+tools("a",aget,afill);
+
+// copy / clear / sample for new builders
+[["m",mfill,MS],["a",afill,AS]].forEach(([x,f,S])=>{
+ $(x+"-clear").addEventListener("click",()=>{f({});$(x+"-msg").textContent=""});
+ $(x+"-sample").addEventListener("click",()=>{f(S);$(x+"-msg").textContent="تم تحميل النموذج."});
+ $(x+"-copy").addEventListener("click",async()=>{try{await navigator.clipboard.writeText($(x+"-out").textContent);$(x+"-msg").textContent="تم نسخ المسودة. الصقها في Word أو في ناجز."}catch(e){$(x+"-msg").textContent="تعذّر النسخ. حدّد نص المسودة وانسخه يدويًا."}});
+});
+
+
+// ===== generic checkers =====
+function showCheck(id,title,it,wn){const ok=it.filter(i=>i[0]).length,pct=Math.round(ok/it.length*100);
+ $(id).innerHTML=`<h3><span>${title}</span><span class="pct">${ok}/${it.length}</span></h3><div class="cbar"><i style="width:${pct}%"></i></div><ul>${it.map(([o,t])=>`<li class="${o?"ok":"no"}">${esc(t)}</li>`).join("")}${wn.map(t=>`<li class="wn">${esc(t)}</li>`).join("")}</ul>${!wn.length&&ok===it.length?'<p style="margin:8px 0 0;color:var(--acc);font-weight:600">البيانات مكتملة ولا توجد ملاحظات.</p>':""}`}
+const ph=v=>/\[|\]/.test(v);
+function attWarn(x,fields,attK){const txt=fields.map(k=>$(x+"-"+k).value).join(" ");const refs=[...txt.matchAll(/مرفق\s*(?:رقم\s*)?\(?(\d+)/g)].map(m=>+m[1]),na=lines($(x+"-"+attK).value).length;return refs.length&&Math.max(...refs)>na?`النص يشير إلى مرفق رقم ${Math.max(...refs)}، لكن قائمة المرفقات فيها ${na} فقط.`:null}
+const CHK={
+ r(){const v=k=>$("r-"+k).value.trim(),L=k=>lines($("r-"+k).value),wn=[];
+  const d75=D75.some(([k])=>$("rd-"+k).checked);
+  const it=[[v("court")&&v("circ"),"المحكمة والدائرة"],[v("no")&&!ph(v("no")),"رقم القضية"+(ph(v("no"))?": ما زال نصًا مؤقتًا بين قوسين":"")],[v("def")&&v("cl"),"أطراف الدعوى"],[!!v("sub"),"موضوع الدعوى المردود عليها"],[L("resp").length>0,"الرد على الوقائع"],[L("gr").length>0,"الأسانيد"],[L("req").length>0,"الطلبات"]];
+  if(d75)wn.push("اخترت دفعًا من دفوع المادة 75: احرص على إبدائه في أول جلسة قبل أي دفاع في الموضوع، وإلا سقط الحق فيه.");
+  const a=attWarn("r",["resp","gr"],"att");if(a)wn.push(a);
+  if(L("resp").length===1)wn.push("ردّ على كل واقعة في صحيفة الدعوى ببند مستقل وبالترتيب نفسه.");
+  showCheck("r-check","فاحص المذكرة الجوابية",it,wn)},
+ d(){const v=k=>$("d-"+k).value.trim(),L=k=>lines($("d-"+k).value),wn=[];
+  const sub=DS.some(([k])=>$("dd-"+k).checked)||L("resp").length>0;
+  const it=[[v("court")&&v("circ"),"المحكمة والدائرة"],[v("no")&&!ph(v("no")),"رقم القضية"+(ph(v("no"))?": ما زال نصًا مؤقتًا بين قوسين":"")],[!!v("acc"),"اسم المتهم"],[!!v("ch"),"التهمة المنسوبة"],[!!v("sum"),"ملخص لائحة الدعوى"],[sub,"الدفوع الموضوعية"],[L("gr").length>0,"الأسانيد"],[L("req").length>0||$("d-mit").checked,"الطلبات"]];
+  if($("d-mit").checked&&!L("mr").length)wn.push("فعّلت طلب التخفيف دون ذكر أسبابه. اذكر ظروفًا محددة كخلو السجل من السوابق.");
+  if($("d-mit").checked&&!L("req").length)wn.push("طلب التخفيف وحده قد يُفهم تسليمًا بالتهمة. قدّم طلب البراءة أصليًا قبله.");
+  const a=attWarn("d",["resp","gr"],"att");if(a)wn.push(a);
+  showCheck("d-check","فاحص مذكرة الدفاع",it,wn)},
+ a(){const v=k=>$("a-"+k).value.trim(),L=k=>lines($("a-"+k).value),wn=[];
+  const rs=AR.some(([k])=>$("ar-"+k).checked)||L("det").length>0;
+  const it=[[!!v("acourt"),"محكمة الاستئناف"],[v("court")&&v("circ"),"المحكمة والدائرة مُصدرة الحكم"],[v("no")&&!ph(v("no"))&&v("date"),"رقم الحكم وتاريخه"+(ph(v("no"))?": رقم الحكم ما زال نصًا مؤقتًا":"")],[!!v("recv"),"تاريخ تسلّم الصك"],[!!v("op"),"منطوق الحكم"],[v("ap")&&v("res"),"المعترض والمعترض ضده"],[rs,"أسباب الاعتراض"],[L("req").length>0,"الطلبات"]];
+  if(v("recv"))wn.push("تحقّق من أن اليوم داخل مدة الاعتراض. استخدم زر «احسب الموعد» تحت الأداة.");
+  if(L("req").length&&!L("req").some(r=>/نقض|إلغاء|تعديل/.test(r)))wn.push("نطاق الاستئناف محصور في طلبات اللائحة: اطلب صراحةً نقض الحكم أو تعديله وما تريد الحكم به.");
+  const a=attWarn("a",["det"],"att");if(a)wn.push(a);
+  showCheck("a-check","فاحص اللائحة الاعتراضية",it,wn)},
+ m(){const v=k=>$("m-"+k).value.trim(),wn=[];const n=parseInt(v("days"));const amt=+v("amt").replace(/[,٬\s]/g,"");
+  const it=[[!!v("from"),"المرسل"],[v("to")&&v("addr"),"المرسل إليه وعنوانه"],[!!v("basis"),"أساس المطالبة"],[lines($("m-facts").value).length>0,"الوقائع"],[amt>0,"المبلغ بالأرقام"],[!!v("words"),"المبلغ بالحروف"],[n>0,"مهلة السداد"],[!!v("pay"),"طريقة السداد"]];
+  if(v("amt")&&!(amt>0))wn.push("المبلغ بالأرقام غير صحيح. اكتب أرقامًا فقط، مثل 85000.");
+  if(n>0&&n<7)wn.push("مهلة أقل من 7 أيام قد تُعد غير معقولة. المعتاد بين 7 و15 يومًا.");
+  if(n>30)wn.push("مهلة طويلة جدًا قد تُضعف جدية المطالبة.");
+  wn.push("احتفظ بإثبات إرسال الخطاب واستلامه.");
+  showCheck("m-check","فاحص خطاب المطالبة",it,wn)}};
+for(const x in CHK){const host=$(x+"-out").closest(".builder");["input","change","click"].forEach(ev=>host.addEventListener(ev,()=>setTimeout(CHK[x],0)));CHK[x]()}
+
+// ===== amount to Arabic words =====
+function words(n){
+ const U=["","واحد","اثنان","ثلاثة","أربعة","خمسة","ستة","سبعة","ثمانية","تسعة"],TN=["","عشرة","عشرون","ثلاثون","أربعون","خمسون","ستون","سبعون","ثمانون","تسعون"],H=["","مائة","مائتان","ثلاثمائة","أربعمائة","خمسمائة","ستمائة","سبعمائة","ثمانمائة","تسعمائة"];
+ const b100=x=>{if(x<10)return U[x];if(x===10)return "عشرة";if(x===11)return "أحد عشر";if(x===12)return "اثنا عشر";if(x<20)return U[x-10]+" عشر";const u=x%10,t=Math.floor(x/10);return u?U[u]+" و"+TN[t]:TN[t]};
+ const b1000=x=>{const h=Math.floor(x/100),r=x%100;return [H[h],r?b100(r):""].filter(Boolean).join(" و")};
+ const scale=(x,one,two,few,many)=>x===1?one:x===2?two:x<=10?b1000(x)+" "+few:b1000(x)+" "+many;
+ if(!(n>0)||n>=1e12)return "";
+ const parts=[],bil=Math.floor(n/1e9),mil=Math.floor(n%1e9/1e6),th=Math.floor(n%1e6/1e3),r=n%1000;
+ if(bil)parts.push(scale(bil,"مليار","ملياران","مليارات","مليار"));
+ if(mil)parts.push(scale(mil,"مليون","مليونان","ملايين","مليون"));
+ if(th)parts.push(scale(th,"ألف","ألفان","آلاف","ألف"));
+ if(r)parts.push(b1000(r));
+ const lr=n%100,cur=n===1?"ريال واحد":n===2?"ريالان":(lr>=3&&lr<=10?"ريالات":"ريال");
+ if(n===1||n===2)return cur;
+ return (parts.join(" و")+" "+cur).replace(/(ألفان|مليونان|ملياران|مائتان) (ريال)$/,(m,x,y)=>x.slice(0,-1)+" "+y);
+}
+{let lastAuto="";const upd=()=>{const n=Math.floor(+$("m-amt").value.replace(/[,٬\s]/g,""));const w=words(n);if(!$("m-words").value.trim()||$("m-words").value===lastAuto){$("m-words").value=w;lastAuto=w;mdraft();CHK.m()}};
+ $("m-amt").addEventListener("input",upd);}
+
+// ===== deadline calculator =====
+const fmtG=d=>d.toLocaleDateString("ar-SA-u-ca-gregory-nu-latn",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+const fmtH=d=>d.toLocaleDateString("ar-SA-u-ca-islamic-umalqura-nu-latn",{day:"numeric",month:"long",year:"numeric"});
+function calc(){
+ const t=$("k-type").value,n=parseInt(t),v=$("k-date").value;
+ if(!v){$("k-res").innerHTML='<div class="sub">اختر تاريخ تسلّم الصك لعرض الموعد.</div>';return}
+ const [y,mo,da]=v.split("-").map(Number),r=new Date(y,mo-1,da,12);
+ const start=new Date(r);start.setDate(r.getDate()+1);
+ const end=new Date(r);end.setDate(r.getDate()+n);
+ let ext=0;while(end.getDay()===5||end.getDay()===6){end.setDate(end.getDate()+1);ext++}
+ const today=new Date();today.setHours(12,0,0,0);
+ const left=Math.round((end-today)/864e5);
+ const st=left<0?`<span style="color:#c0392b">انتهت المدة منذ ${-left} يومًا</span>`:left===0?`<span style="color:#c0392b">اليوم هو آخر يوم</span>`:`متبقٍ ${left} يومًا`;
+ $("k-res").innerHTML=`<div class="sub">آخر يوم لتقديم الاعتراض</div><div class="big">${fmtG(end)}</div><div class="sub">${fmtH(end)} · ${st}</div>
+ <dl><dt>المدة النظامية</dt><dd>${n} ${n===10?"أيام":"يومًا"}${t==="30c"?" (حكم جزائي)":""}</dd><dt>تاريخ التسلّم</dt><dd>${fmtG(r)}</dd><dt>بداية العد</dt><dd>${fmtG(start)}</dd>${ext?`<dt>تمديد</dt><dd>صادف آخر يوم عطلة نهاية الأسبوع، فامتد الموعد ${ext} ${ext===1?"يومًا":"يومين"} إلى أول يوم عمل.</dd>`:""}</dl>`;
+ try{localStorage.setItem("glcalc",JSON.stringify({t,v}))}catch(e){}
+}
+{let c=null;try{c=JSON.parse(localStorage.getItem("glcalc"))}catch(e){}
+ if(c){$("k-type").value=c.t;$("k-date").value=c.v}else{const d=new Date();d.setDate(d.getDate()-5);$("k-date").value=d.toISOString().slice(0,10)}}
+$("k-type").addEventListener("change",calc);$("k-date").addEventListener("input",calc);calc();
+// hijri support
+const HM=["محرم","صفر","ربيع الأول","ربيع الآخر","جمادى الأولى","جمادى الآخرة","رجب","شعبان","رمضان","شوال","ذو القعدة","ذو الحجة"];
+$("k-hm").innerHTML=HM.map((m,i)=>`<option value="${i+1}">${m}</option>`).join("");
+const hp=new Intl.DateTimeFormat("en-u-ca-islamic-umalqura-nu-latn",{day:"numeric",month:"numeric",year:"numeric"});
+function g2h(d){const o={};hp.formatToParts(d).forEach(p=>o[p.type]=p.value);return [parseInt(o.year),parseInt(o.month),parseInt(o.day)]}
+function h2g(y,m,dd){const est=new Date(Date.UTC(622,6,16,12)+((y-1)*354.367+(m-1)*29.53+dd-1)*864e5);for(let k=-45;k<=45;k++){const t=new Date(est.getTime()+k*864e5);const [a,b,c]=g2h(t);if(a===y&&b===m&&c===dd)return new Date(t.getUTCFullYear(),t.getUTCMonth(),t.getUTCDate(),12)}return null}
+let kmode="g";
+function setMode(m){kmode=m;$("k-g").classList.toggle("on",m==="g");$("k-h").classList.toggle("on",m==="h");$("k-date").style.display=m==="g"?"block":"none";$("k-hij").classList.toggle("on",m==="h");
+ if(m==="h"&&$("k-date").value){const [y,mo,d]=$("k-date").value.split("-").map(Number);const [a,b,c]=g2h(new Date(y,mo-1,d,12));$("k-hy").value=a;$("k-hm").value=b;$("k-hd").value=c}
+ $("k-conv").textContent="";}
+function syncH(){const y=parseInt($("k-hy").value),m=parseInt($("k-hm").value),d=parseInt($("k-hd").value);
+ if(!(y>1300&&d>=1&&d<=30)){$("k-conv").textContent="أدخل اليوم والسنة الهجرية (مثل 1448).";return}
+ const g=h2g(y,m,d);if(!g){$("k-conv").textContent="هذا التاريخ غير موجود في تقويم أم القرى.";return}
+ $("k-date").value=`${g.getFullYear()}-${String(g.getMonth()+1).padStart(2,"0")}-${String(g.getDate()).padStart(2,"0")}`;
+ $("k-conv").textContent="يوافق "+fmtG(g);calc()}
+$("k-g").addEventListener("click",()=>setMode("g"));$("k-h").addEventListener("click",()=>setMode("h"));
+["k-hd","k-hy"].forEach(id=>$(id).addEventListener("input",syncH));$("k-hm").addEventListener("change",syncH);
+$("a-calc").addEventListener("click",()=>{$("k-type").value=$("a-urg").checked?"10":"30";
+ const m=$("a-recv").value.replace(/[٠-٩]/g,c=>"٠١٢٣٤٥٦٧٨٩".indexOf(c)).match(/(\d{4})\s*\/\s*(\d{1,2})\s*\/\s*(\d{1,2})/);
+ if(m&&+m[1]>1300){setMode("h");$("k-hy").value=m[1];$("k-hm").value=String(+m[2]);$("k-hd").value=String(+m[3]);syncH()}else calc();
+ location.hash="#deadline"});
+
+
+// ===== training cases =====
+const Q=[
+["المرافعات","أقام المدعي دعواه أمام المحكمة العامة بجدة، والمدعى عليه يقيم في الرياض. ردّ المدعى عليه على موضوع الدعوى في الجلسة الأولى، ثم دفع في الجلسة الثانية بعدم الاختصاص المكاني. ما مصير هذا الدفع؟",
+ ["تقبله المحكمة لأنه من النظام العام","يسقط الحق فيه لأنه لم يُبدَ قبل أي طلب أو دفاع","يجوز إبداؤه في أي مرحلة من مراحل الدعوى","تحيل المحكمة الدعوى تلقائيًا إلى الرياض"],1,
+ "الدفع بعدم الاختصاص المكاني من الدفوع التي يجب إبداؤها قبل أي طلب أو دفاع في الدعوى، وإلا سقط الحق فيها (المادة 75 من نظام المرافعات الشرعية). وبما أنه ردّ على الموضوع أولًا فقد سقط حقه."],
+["المرافعات","في مرحلة الاستئناف، دفع المدعى عليه لأول مرة بأن المدعي لا صفة له في الدعوى لأنه ليس طرفًا في العقد. هل يُقبل هذا الدفع؟",
+ ["لا، لأنه لم يُبدَ أمام محكمة الدرجة الأولى","نعم، فالدفع بانعدام الصفة يجوز إبداؤه في أي مرحلة","لا، لأن الدفوع الشكلية كلها تسقط بالرد على الموضوع","نعم، بشرط موافقة المدعي"],1,
+ "الدفع بعدم قبول الدعوى لانعدام الصفة أو الأهلية أو المصلحة يجوز إبداؤه في أي مرحلة تكون فيها الدعوى (المادة 76 من نظام المرافعات الشرعية)."],
+["صحيفة الدعوى","أيّ مما يلي ليس من البيانات التي أوجبتها المادة 41 في صحيفة الدعوى؟",
+ ["رقم هوية المدعي","المحكمة المرفوعة أمامها الدعوى","قائمة بأسماء الشهود","تاريخ تقديم الصحيفة"],2,
+ "تشمل بيانات المادة 41: بيانات المدعي وممثله والمدعى عليه، وتاريخ التقديم، والمحكمة، ومحل الإقامة المختار، والموضوع والطلبات والأسانيد. أما الشهود فيُقدَّمون عند الإثبات."],
+["المواعيد","تسلّم المحكوم عليه صورة صك حكم ابتدائي في قضية عادية يوم الأحد. متى يبدأ حساب مدة الاعتراض، وكم مدتها؟",
+ ["من يوم النطق بالحكم، ومدتها 30 يومًا","من يوم الأحد نفسه، ومدتها 15 يومًا","من اليوم التالي للتسلّم (الاثنين)، ومدتها 30 يومًا","من اليوم التالي للتسلّم، ومدتها 60 يومًا"],2,
+ "مدة الاعتراض بطلب الاستئناف 30 يومًا (المادة 187)، ويبدأ العد من اليوم التالي لتسلّم صورة الصك."],
+["المواعيد","صدر حكم في مسألة مستعجلة. ما مدة الاعتراض عليه بطلب الاستئناف؟",
+ ["10 أيام","15 يومًا","30 يومًا","لا يجوز الاعتراض عليه"],0,
+ "يُستثنى من مدة الثلاثين يومًا الأحكام الصادرة في المسائل المستعجلة، فتكون مدة الاعتراض عليها عشرة أيام (المادة 187)."],
+["التحكيم","تضمّن عقد التوريد شرط تحكيم، لكن المورّد رفع دعواه أمام المحكمة. ماذا يفعل المدعى عليه إن أراد التمسك بالتحكيم؟",
+ ["ينتظر حتى صدور الحكم ثم يعترض عليه","يدفع بوجود اتفاق التحكيم قبل أي طلب أو دفاع في الموضوع","يرد على الموضوع أولًا ثم يدفع بالتحكيم","لا شيء، فالمحكمة تحكم بعدم الاختصاص من تلقاء نفسها"],1,
+ "يجب على المدعى عليه أن يتمسك باتفاق التحكيم في بداية الدعوى، قبل أي طلب أو دفاع في الموضوع. فإن ردّ على الموضوع أولًا عُدّ ذلك تنازلًا عن التمسك بالتحكيم."],
+["الجزائي","اعترف المتهم بعد استجواب متواصل استمر ساعات طويلة دون راحة. ما أنسب دفع لمحاميه؟",
+ ["الدفع بعدم اختصاص المحكمة","الدفع ببطلان الاعتراف لصدوره في حال أثّرت على إرادة المتهم","طلب تخفيف العقوبة فقط","الدفع بسبق الفصل في الدعوى"],1,
+ "يجب أن يتم الاستجواب في حال لا تأثير فيها على إرادة المتهم في إبداء أقواله (المادة 102 من نظام الإجراءات الجزائية)، وكل إجراء مخالف يكون باطلًا (المادة 187)."],
+["الجزائي","طلب المتهم حضور محاميه أثناء التحقيق فرُفض طلبه دون مسوّغ. على أي ضمانة يستند الدفاع؟",
+ ["حق الاستعانة بوكيل أو محامٍ في مرحلتي التحقيق والمحاكمة","حق المتهم في الصمت فقط","حق الاعتراض خلال 30 يومًا","حق طلب التحكيم"],0,
+ "لكل متهم أن يستعين بوكيل أو محامٍ للدفاع عنه في مرحلتي التحقيق والمحاكمة (المادة 4 من نظام الإجراءات الجزائية)."],
+["المذكرة الجوابية","المدعى عليه اقترض فعلًا 50,000 ريال وسدّد منها 30,000 بتحويلات بنكية. ما أفضل نهج في مذكرته الجوابية؟",
+ ["إنكار الدعوى كاملة","الإقرار بالقرض، وإثبات السداد الجزئي بالمستندات، وطلب رد ما زاد على المتبقي","عدم الحضور حتى يُحكم غيابيًا","طلب التأجيل دون رد"],1,
+ "الإقرار بالوقائع الثابتة يعزز المصداقية، وإثبات السداد بالمستندات يحصر النزاع في المبلغ المتبقي. أما الإنكار المطلق فيُضعف الموقف أمام سند موقّع."],
+["العمل","عامل يريد المطالبة بمستحقاته عن نهاية الخدمة. ما الخطوة التي تسبق عادةً رفع الدعوى أمام المحكمة العمالية؟",
+ ["تقديم طلب تسوية ودية","رفع الدعوى مباشرة أمام المحكمة العامة","تقديم بلاغ إلى النيابة العامة","التحكيم الإلزامي"],0,
+ "تمرّ المنازعات العمالية أولًا بمرحلة التسوية الودية لدى الجهة المختصة، فإن لم تنتهِ بالصلح أُحيلت إلى المحكمة العمالية."],
+["الجزائي","صدر حكم جزائي ابتدائي بإدانة المتهم. ما مدة الاعتراض عليه، ومن متى تبدأ؟",
+ ["15 يومًا من تاريخ النطق بالحكم","30 يومًا من الموعد الذي حددته المحكمة لتسلّم صك الحكم","60 يومًا من تاريخ إيداع الصك","لا يجوز الاعتراض على الأحكام الجزائية"],1,
+ "مهلة الاعتراض على الحكم الجزائي الابتدائي ثلاثون يومًا، تبدأ من الموعد الذي حددته المحكمة لتسلّم الصك، حتى لو تأخر المحكوم عليه في تسلّمه."],
+["المواعيد","تسلّم المحكوم عليه صك حكم عادي، ووافق اليوم الثلاثون من مدة الاعتراض يوم جمعة. ما آخر يوم يجوز فيه تقديم الاعتراض؟",
+ ["يوم الخميس الذي قبله","يوم الجمعة نفسه إلكترونيًا فقط","يوم الأحد التالي، أول يوم عمل بعد العطلة","تسقط المدة ولا يُقبل الاعتراض"],2,
+ "إذا صادف آخر الموعد عطلة رسمية امتد إلى أول يوم عمل بعدها (المادة 22 من نظام المرافعات الشرعية)، والجمعة والسبت عطلة رسمية، فيمتد الموعد إلى الأحد."],
+["الاستئناف","قدّم المعترض لائحته الاعتراضية وطلب فيها تخفيض المبلغ المحكوم به فقط، ثم أراد أمام محكمة الاستئناف أن يطلب رفض الدعوى كلها. ما الحكم؟",
+ ["تنظر المحكمة في كل ما عُرض أمام محكمة الدرجة الأولى","نطاق الاستئناف ينحصر فيما ورد في مذكرة الاعتراض من طلبات","يجوز إضافة أي طلب جديد في أي جلسة","تحيل المحكمة الطلب الجديد إلى المحكمة الابتدائية"],1,
+ "نطاق قضية الاستئناف لا يشمل كل ما عُرض أمام محكمة الدرجة الأولى، وإنما ينحصر فيما ورد في مذكرة الاعتراض من طلبات. لذلك يجب أن تتضمن اللائحة الاعتراضية جميع الطلبات من البداية."],
+["الاستئناف","اعترض المدعى عليه على الحكم، والمدعي نفسه غير راضٍ عن جزء من الحكم لكنه لم يعترض في المدة. هل بقي له طريق؟",
+ ["لا، فقد سقط حقه نهائيًا","نعم، يجوز له رفع استئناف فرعي تبعًا للاستئناف الأصلي قبل انتهاء جلسة المرافعة الأولى","نعم، يرفع دعوى جديدة أمام المحكمة الابتدائية","نعم، يطلب التماس إعادة النظر"],1,
+ "يجوز للمستأنف ضده، قبل انتهاء جلسة المرافعة الأولى، أن يرفع استئنافًا فرعيًا يتبع الاستئناف الأصلي، ويزول بزواله."],
+["البنوك","طلب موظف البنك من عميل توضيح مصدر مبلغ نقدي كبير، فألغى العميل العملية وغادر. ما التصرف الصحيح؟",
+ ["لا شيء، لأن العملية لم تتم","إبلاغ مسؤول الإبلاغ في البنك، لأن العمليات المشبوهة تُبلَّغ ولو كانت محاولة لم تكتمل","الاتصال بالعميل لسؤاله عن سبب الإلغاء","الإبلاغ فقط إذا تجاوز المبلغ حدًا معينًا"],1,
+ "تلتزم المؤسسة المالية بالإبلاغ عن جميع العمليات المشبوهة، بما فيها محاولات إجراء العمليات التي لم تكتمل، متى قامت أسباب معقولة للاشتباه، بصرف النظر عن قيمة العملية."],
+["البنوك","أثناء إعداد بلاغ اشتباه عن عميل، سأل العميل الموظف: هل هناك مشكلة في حسابي؟ ما التصرف السليم؟",
+ ["إخباره بأن بلاغًا يُعدّ عنه حتى يستعد","نصحه بإغلاق الحساب قبل اكتمال البلاغ","عدم إفشاء أمر البلاغ له، والتعامل معه بشكل اعتيادي","تأجيل البلاغ حتى يغادر العميل البنك"],2,
+ "يُحظر تنبيه العميل أو إفشاء أمر البلاغ أو التحقيق له، لأن ذلك قد يمكّنه من إخفاء الأموال أو إتلاف الأدلة."],
+["المرافعات","رفع المدعي دعوى سبق أن صدر فيها حكم نهائي بين الطرفين أنفسهم، في الموضوع نفسه وبالسبب نفسه. بماذا يدفع المدعى عليه؟",
+ ["بعدم الاختصاص المكاني","بعدم جواز نظر الدعوى لسبق الفصل فيها","ببطلان صحيفة الدعوى","لا يدفع بشيء ويرد على الموضوع"],1,
+ "الدفع بعدم جواز نظر الدعوى لسبق الفصل فيها يقوم على حجية الحكم النهائي، ويجوز إبداؤه في أي مرحلة تكون فيها الدعوى (المادة 76)."],
+["صحيفة الدعوى","يريد المدعي أن يطالب جاره بقيمة إصلاح جدار، ويطالب في الصحيفة نفسها شركةً بأجرة عمل لا علاقة لها بالجار. ما الصواب؟",
+ ["جمع الطلبين في صحيفة واحدة لتوفير الوقت","رفع كل مطالبة في دعوى مستقلة، لعدم الارتباط بينهما","ذكر الطلب الثاني في المرفقات فقط","الاكتفاء بالطلب الأكبر قيمة"],1,
+ "لا ينبغي أن تجمع صحيفة الدعوى طلبات لا رابط بينها، خصوصًا مع اختلاف الخصوم وسبب كل مطالبة. لكل نزاع مستقل دعواه."],
+["الإثبات","لم يجد المدعي بيّنة على دعواه، فطلب من المحكمة أن يحلف المدعى عليه على نفي الدعوى لينتهي النزاع. ما اسم هذه اليمين؟",
+ ["اليمين المتممة","اليمين الحاسمة","يمين الاستظهار","اليمين القضائية التكميلية"],1,
+ "اليمين الحاسمة يوجهها أحد الخصمين إلى الآخر ليحسم بها النزاع. أما اليمين المتممة فتوجهها المحكمة لاستكمال دليل ناقص. وإذا امتنع من وُجّهت إليه اليمين عن أدائها سُمّي ذلك نكولًا."],
+["الجزائي","هاجم شخص المتهم بسكين في الطريق، فدفعه المتهم بقوة فسقط وأصيب. ما أنسب دفع موضوعي لمحامي المتهم؟",
+ ["الدفع بعدم الاختصاص","الدفع بالدفاع الشرعي، لأنه ردّ اعتداءً حالًّا بالقدر اللازم","الدفع بسبق الفصل","الدفع ببطلان صحيفة الدعوى"],1,
+ "الدفاع الشرعي هو دفع الاعتداء الحالّ عن النفس أو العرض أو المال بالقدر اللازم لردّه. ويعتمد قبوله على إثبات وجود الاعتداء وتناسب الرد معه."]];
+let qa={};try{qa=JSON.parse(localStorage.getItem("glquiz"))||{}}catch(e){}
+let qf="all",qonly=null;
+const QT=["all",...new Set(Q.map(x=>x[0]))];
+function qrender(){
+ $("q-tools").innerHTML=QT.map(t=>`<button type="button" class="chip${qf===t&&!qonly?" on":""}" data-f="${t}">${t==="all"?"الكل":t} <span style="opacity:.7">${t==="all"?Q.length:Q.filter(x=>x[0]===t).length}</span></button>`).join("")+(qonly?`<button type="button" class="chip on" data-f="all">الحالات الخاطئة (${qonly.length}) ✕</button>`:"");
+ const show=Q.map((x,i)=>i).filter(i=>qonly?qonly.includes(i):(qf==="all"||Q[i][0]===qf));
+ $("q-grid").innerHTML=show.map(i=>{const [tag,qq,o,c,ex]=Q[i],a=qa[i];return `<article class="q${a!=null?" done":""}"><div class="tag">الحالة ${i+1} · ${tag}</div><h3>${qq}</h3>${o.map((t,j)=>`<button type="button" class="opt${a!=null&&j===c?" right":""}${a===j&&j!==c?" wrong":""}" data-q="${i}" data-o="${j}" ${a!=null?"disabled":""}>${t}</button>`).join("")}<div class="ex"><b>${a===c?"إجابة صحيحة.":"الإجابة الصحيحة: "+o[c]+"."}</b> ${ex}</div></article>`}).join("")||'<p class="empty">لا توجد حالات هنا.</p>';
+ const n=Object.keys(qa).length,r=Object.entries(qa).filter(([i,a])=>Q[i][3]===a).length;
+ $("q-score").textContent=n?`النتيجة: ${r} من ${n}`+(n===Q.length?(r===Q.length?" · ممتاز!":""):` · أُجيب عن ${n} من ${Q.length}`):`${Q.length} حالة تدريبية`;
+}
+$("q-grid").addEventListener("click",e=>{const b=e.target.closest(".opt");if(!b)return;qa[b.dataset.q]=+b.dataset.o;try{localStorage.setItem("glquiz",JSON.stringify(qa))}catch(_){ }qrender()});
+$("q-tools").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;qf=b.dataset.f;qonly=null;qrender()});
+$("q-reset").addEventListener("click",()=>{qa={};qonly=null;try{localStorage.removeItem("glquiz")}catch(_){ }qrender()});
+$("q-retry").addEventListener("click",()=>{const w=Object.entries(qa).filter(([i,a])=>Q[i][3]!==a).map(([i])=>+i);if(!w.length){$("q-score").textContent="لا توجد حالات خاطئة لإعادتها.";return}w.forEach(i=>delete qa[i]);qonly=w;try{localStorage.setItem("glquiz",JSON.stringify(qa))}catch(_){ }qrender()});
+$("q-copy").addEventListener("click",async()=>{const n=Object.keys(qa).length,r=Object.entries(qa).filter(([i,a])=>Q[i][3]===a).length,w=Object.entries(qa).filter(([i,a])=>Q[i][3]!==a).map(([i])=>+i+1);
+ const t=`نتيجتي في الحالات التدريبية (صياغة): ${r} من ${n}\nأجبت عن ${n} من ${Q.length} حالة`+(w.length?`\nالحالات الخاطئة: ${w.join("، ")}`:"")+`\nالتاريخ: ${new Date().toLocaleDateString("ar-SA-u-nu-latn")}`;
+ try{await navigator.clipboard.writeText(t);$("q-score").textContent="تم نسخ النتيجة. أرسلها لمدربك."}catch(_){$("q-score").textContent=t}});
+qrender();
+
+
+// ===== contract review =====
+const VS="عقد توريد\n\nإنه في يوم الأحد الموافق 1448/03/01هـ، تم الاتفاق بين كل من:\nالطرف الأول: شركة الأفق للمقاولات، سجل تجاري رقم [  ]، ويمثلها [  ].\nالطرف الثاني: مؤسسة الريادة للتجارة، سجل تجاري رقم [  ]، ويمثلها [  ].\n\nالبند الأول: موضوع العقد\nيلتزم الطرف الثاني بتوريد مواد البناء المبينة في الملحق رقم (1) إلى موقع مشروع الطرف الأول في جدة.\n\nالبند الثاني: قيمة العقد\nقيمة العقد 850,000 ريال شاملة ضريبة القيمة المضافة، تُدفع على ثلاث دفعات.\n\nالبند الثالث: مدة العقد\nمدة العقد سنة واحدة تبدأ من تاريخ توقيعه، ويتجدد تلقائيًا لمدة مماثلة.\n\nالبند الرابع: التأخير\nإذا تأخر الطرف الثاني في التوريد التزم بغرامة تأخير قدرها 2% من قيمة العقد عن كل أسبوع.\n\nالبند الخامس: الفسخ\nيحق للطرف الأول فسخ العقد دون إشعار في حال إخلال الطرف الثاني بأي من التزاماته.\n\nالبند السادس: النزاعات\nيُحال أي نزاع ينشأ عن هذا العقد إلى التحكيم.\n\nتوقيع الطرف الأول: ............        توقيع الطرف الثاني: ............";
+const VC=[["الأطراف وصفاتهم",/الطرف الأول|الطرف الثاني|بين كل من/],["محل العقد",/موضوع العقد|محل العقد|يلتزم الطرف\s*\S*\s*ب/],["الثمن وطريقة الدفع",/الثمن|قيمة العقد|المقابل|الدفع|السداد|تُدفع|يُدفع/],["مدة العقد",/مدة العقد|مدة هذا العقد|تاريخ السريان|يسري/],["الإنهاء أو الفسخ",/فسخ|إنهاء/],["التعويض الاتفاقي (الشرط الجزائي)",/شرط جزائي|الشرط الجزائي|تعويض\S* اتفاقي|غرامة تأخير|غرامة/],["القوة القاهرة",/القوة القاهرة|قوة قاهرة|الظروف القاهرة/],["السرية",/سرية|السرية|عدم الإفصاح|إفشاء/],["النظام الواجب التطبيق",/يخضع هذا العقد|الأنظمة (المعمول بها|السارية|المرعية)|النظام الواجب|القانون الواجب/],["تسوية النزاعات",/نزاع|المحكمة المختصة|التحكيم/],["الإخطارات",/إخطار|الإخطارات|المراسلات|الإشعارات/],["التوقيع",/توقيع|التوقيع|وقّع/]];
+let vlast={};
+function cAnalyze(t){
+ const it=VC.map(([n,r])=>[r.test(t),n]),rk=[],pen=VC[5][1].test(t);
+ if(/يتجدد تلقائي|تجدد تلقائي|التجديد التلقائي/.test(t))rk.push("تجديد تلقائي: حدّد مهلة للإشعار بعدم التجديد، وإلا قد يُلزم الطرف بعقد لم يعد يريده.");
+ if(/(فسخ|إنهاء)[^.\n]{0,60}(دون|بدون) (إشعار|إنذار|إخطار)/.test(t))rk.push("فسخ دون إشعار: امنح الطرف المخلّ مهلة لإصلاح الإخلال بعد إخطاره كتابيًا.");
+ if(pen&&!/حد أقصى|بحد أقصى|لا يتجاوز|لا تتجاوز/.test(t))rk.push("التعويض الاتفاقي بلا حد أقصى: للمحكمة إنقاصه إذا كان مبالغًا فيه، فضع له سقفًا معقولًا.");
+ if(pen&&/قرض|القرض/.test(t))rk.push("تعويض اتفاقي في عقد قرض: لا يجوز في الديون النقدية لأنه من الربا.");
+ if(/تحكيم/.test(t)&&!/مقر التحكيم|مكان التحكيم|المركز السعودي للتحكيم|قواعد/.test(t))rk.push("شرط تحكيم مبهم: حدّد المقر، والقواعد أو المركز، وعدد المحكّمين، واللغة.");
+ if(/غير محدود|دون حد|بلا حد/.test(t))rk.push("مسؤولية غير محدودة: ضع حدًا أقصى للمسؤولية، مع استثناء الغش والخطأ الجسيم.");
+ if(/يحق للطرف (الأول|الثاني) (تعديل|تغيير)/.test(t))rk.push("حق تعديل منفرد: التعديل يكون باتفاق كتابي من الطرفين.");
+ if(!/ضريبة|الضريبة/.test(t)&&VC[2][1].test(t))rk.push("لم يُذكر هل يشمل المبلغ ضريبة القيمة المضافة.");
+ if(/\[[^\]]*\]/.test(t))rk.push("في العقد فراغات [ ] لم تُعبّأ بعد.");
+ return {it,rk}}
+function cRender(el,res,title){const {it,rk}=res,ok=it.filter(i=>i[0]).length,pct=Math.round(ok/it.length*100);
+ $(el).innerHTML=`<h3><span>${title}</span><span class="pct">${ok}/${it.length}</span></h3><div class="cbar"><i style="width:${pct}%"></i></div><ul>${it.map(([o,n])=>`<li class="${o?"ok":"no"}">${esc(n)}${o?"":" (غير موجود)"}</li>`).join("")}</ul>${rk.length?`<h3 style="margin-top:12px"><span>بنود تحتاج انتباهًا</span><span class="pct" style="color:#c0392b">${rk.length}</span></h3><ul>${rk.map(r=>`<li class="rk">${esc(r)}</li>`).join("")}</ul>`:(ok===it.length?'<p style="margin:8px 0 0;color:var(--acc);font-weight:600">العقد مكتمل البنود الأساسية ولا توجد ملاحظات.</p>':"")}`}
+function vcheck(){
+ const t=$("v-text").value;
+ if(!t.trim()){$("v-check").innerHTML='<h3><span>فاحص العقد</span></h3><p style="margin:0;color:var(--mut)">الصق نص العقد لبدء الفحص.</p>';vlast={};return}
+ vlast=cAnalyze(t);cRender("v-check",vlast,"فاحص العقد");try{localStorage.setItem("glreview",t)}catch(e){}
+}
+{let v=null;try{v=localStorage.getItem("glreview")}catch(e){}$("v-text").value=v||VS}
+$("v-text").addEventListener("input",vcheck);vcheck();
+$("v-clear").addEventListener("click",()=>{$("v-text").value="";vcheck();$("v-msg").textContent="";$("v-text").focus()});
+$("v-sample").addEventListener("click",()=>{$("v-text").value=VS;vcheck();$("v-msg").textContent="تم تحميل العقد التجريبي."});
+$("v-copy").addEventListener("click",async()=>{if(!vlast.it){$("v-msg").textContent="الصق نص العقد أولًا.";return}
+ const t="تقرير مراجعة عقد (صياغة)\nالتاريخ: "+new Date().toLocaleDateString("ar-SA-u-nu-latn")+"\n\nالبنود الموجودة:\n"+vlast.it.filter(i=>i[0]).map(i=>"✓ "+i[1]).join("\n")+"\n\nالبنود الناقصة:\n"+(vlast.it.filter(i=>!i[0]).map(i=>"✗ "+i[1]).join("\n")||"لا يوجد")+"\n\nملاحظات:\n"+(vlast.rk.map((r,i)=>(i+1)+"- "+r).join("\n")||"لا يوجد")+"\n\nتنبيه: فحص آلي مساعد، ولا يغني عن مراجعة قانونية كاملة.";
+ try{await navigator.clipboard.writeText(t);$("v-msg").textContent="تم نسخ التقرير."}catch(e){$("v-msg").textContent="تعذّر النسخ."}});
+
+
+// ===== contract writing =====
+const OW=["الأول","الثاني","الثالث","الرابع","الخامس","السادس","السابع","الثامن","التاسع","العاشر","الحادي عشر","الثاني عشر","الثالث عشر","الرابع عشر","الخامس عشر","السادس عشر","السابع عشر","الثامن عشر"];
+const WF=["type","date","city","p1","p1id","p1rep","p1ad","p2","p2id","p2rep","p2ad","pre","subj","price","pw","pay","dur","start","ob1","ob2","penr","penp","penc","cure","confy","dcity","copies"];
+const WC=["vat","pen","fm","term","conf","notice","entire"];
+const WS={type:"عقد توريد",date:"1448/03/01هـ",city:"جدة",p1:"شركة الأفق للمقاولات",p1id:"سجل تجاري رقم 4030000000",p1rep:"خالد سعد المطيري، بصفته المدير العام",p1ad:"جدة، حي الحمراء، info@ofoq.example",p2:"مؤسسة الريادة للتجارة",p2id:"سجل تجاري رقم 4030000001",p2rep:"عبدالله فهد الزهراني، بصفته المالك",p2ad:"جدة، حي الصفا، sales@riyada.example",pre:"",
+subj:"توريد مواد البناء المبينة أنواعها وكمياتها ومواصفاتها في الملحق رقم (1) إلى موقع مشروع الطرف الأول في جدة",price:"850000",pw:"",pay:"دفعة مقدمة بنسبة 20٪ عند توقيع العقد.\nدفعة بنسبة 50٪ عند استلام نصف الكميات.\nالدفعة الأخيرة بنسبة 30٪ عند الاستلام النهائي ومطابقة المواصفات.",dur:"سنة واحدة",start:"تاريخ توقيع العقد",
+ob1:"سداد الدفعات في مواعيدها خلال 15 يومًا من استلام الفاتورة الضريبية.\nتجهيز الموقع لاستلام المواد وتعيين ممثل للاستلام.",ob2:"توريد المواد مطابقة للمواصفات الواردة في الملحق رقم (1).\nالتوريد وفق الجدول الزمني الوارد في الملحق رقم (2).\nاستبدال أي مواد غير مطابقة خلال 7 أيام من إخطاره.",
+penr:"0.5",penp:"أسبوع",penc:"10",cure:"15",confy:"3",dcity:"جدة",copies:"2",vat:true,pen:true,fm:true,term:true,conf:true,notice:true,entire:true,disp:"court"};
+const wv=k=>$("w-"+k).value.trim(),wc=k=>$("w-"+k).checked;
+function wdraft(){
+ let n=0,o="";const art=(t,b)=>{o+="البند "+OW[n++]+": "+t+"\n"+b+"\n\n"};
+ const P=(k,d)=>wv(k)||"["+d+"]";
+ o+=P("type","نوع العقد")+"\n\n";
+ o+="إنه في يوم "+P("date","التاريخ")+"، في مدينة "+P("city","المدينة")+"، تم الاتفاق بين كل من:\n\n";
+ o+="1- "+P("p1","اسم الطرف الأول")+"، "+P("p1id","رقم السجل أو الهوية")+"، ويمثله في التوقيع: "+P("p1rep","الممثل وصفته")+"، وعنوانه: "+P("p1ad","العنوان")+"، ويُشار إليه فيما بعد بـ«الطرف الأول».\n";
+ o+="2- "+P("p2","اسم الطرف الثاني")+"، "+P("p2id","رقم السجل أو الهوية")+"، ويمثله في التوقيع: "+P("p2rep","الممثل وصفته")+"، وعنوانه: "+P("p2ad","العنوان")+"، ويُشار إليه فيما بعد بـ«الطرف الثاني».\n\n";
+ o+="التمهيد:\n"+(wv("pre")||"حيث إن الطرف الأول يرغب في التعاقد على "+P("subj","محل العقد")+"، وحيث إن الطرف الثاني لديه القدرة والخبرة اللازمة لذلك، فقد اتفق الطرفان، وهما بكامل أهليتهما المعتبرة شرعًا ونظامًا، على ما يلي:")+"\n\n";
+ art("التمهيد","يُعد التمهيد السابق جزءًا لا يتجزأ من هذا العقد ومكمّلًا له.");
+ art("موضوع العقد","يلتزم الطرف الثاني بموجب هذا العقد بـ"+P("subj","محل العقد")+".");
+ const pr=wv("price")?Number(wv("price").replace(/[,٬\s]/g,"")).toLocaleString("en-US"):"[القيمة]";
+ const pay=lines($("w-pay").value);
+ art("قيمة العقد وطريقة الدفع","قيمة هذا العقد ("+pr+") ريال ("+P("pw","القيمة بالحروف")+")، "+(wc("vat")?"شاملة":"غير شاملة")+" ضريبة القيمة المضافة، وتُدفع على النحو الآتي:\n"+(pay.length?num(pay):"[طريقة الدفع]"));
+ art("مدة العقد","مدة هذا العقد "+P("dur","المدة")+"، تبدأ من "+P("start","تاريخ البدء")+"، ولا يُجدَّد إلا باتفاق كتابي بين الطرفين قبل انتهاء مدته.");
+ const o1=lines($("w-ob1").value),o2=lines($("w-ob2").value);
+ if(o1.length)art("التزامات الطرف الأول","يلتزم الطرف الأول بما يلي:\n"+num(o1));
+ if(o2.length)art("التزامات الطرف الثاني","يلتزم الطرف الثاني بما يلي:\n"+num(o2));
+ if(wc("pen"))art("التعويض الاتفاقي","إذا تأخر الطرف الثاني في تنفيذ التزاماته عن المواعيد المحددة في هذا العقد، التزم بأن يدفع للطرف الأول تعويضًا اتفاقيًا قدره ("+P("penr","النسبة")+"٪) من قيمة الجزء المتأخر عن كل "+P("penp","مدة")+" تأخير، بحد أقصى ("+P("penc","الحد الأقصى")+"٪) من قيمة العقد، دون إخلال بحق الطرف الأول في إنهاء العقد.");
+ if(wc("fm"))art("القوة القاهرة","لا يُعد أي من الطرفين مخلًّا بالتزاماته إذا كان عدم التنفيذ أو التأخير فيه ناتجًا عن قوة قاهرة خارجة عن إرادته لا يمكن توقعها ولا دفعها، على أن يُخطر الطرف الآخر كتابيًا خلال سبعة (7) أيام من وقوعها. وإذا استمرت القوة القاهرة أكثر من ستين (60) يومًا جاز لأي من الطرفين إنهاء العقد بإخطار كتابي.");
+ if(wc("term"))art("إنهاء العقد","يحق لأي من الطرفين إنهاء هذا العقد إذا أخلّ الطرف الآخر بأي من التزاماته الجوهرية، ولم يُصلح الإخلال خلال ("+P("cure","عدد")+") يومًا من تاريخ إخطاره كتابيًا بذلك، دون إخلال بحقه في المطالبة بالتعويض.");
+ if(wc("conf"))art("السرية","يلتزم كل طرف بالمحافظة على سرية جميع المعلومات التي يطّلع عليها بسبب هذا العقد، وعدم إفشائها للغير أو استخدامها لغير أغراض العقد، إلا بموافقة كتابية مسبقة من الطرف الآخر أو بطلب من جهة مختصة نظامًا. ويستمر هذا الالتزام مدة ("+P("confy","عدد")+") سنوات بعد انتهاء العقد.");
+ art("النظام الواجب التطبيق وتسوية النزاعات","يخضع هذا العقد ويُفسَّر وفقًا للأنظمة المعمول بها في المملكة العربية السعودية. وكل نزاع ينشأ عنه أو يتعلق به يسعى الطرفان إلى حلّه وديًا خلال ثلاثين (30) يومًا من إخطار أحدهما الآخر به، فإن تعذّر ذلك "+($("w-disp").value==="arb"?"أُحيل إلى التحكيم وفقًا لقواعد المركز السعودي للتحكيم التجاري، ويكون مقر التحكيم مدينة "+P("dcity","المدينة")+"، وعدد المحكّمين ثلاثة، ولغة التحكيم العربية، ويكون حكم التحكيم نهائيًا ملزمًا للطرفين.":"أُحيل إلى المحكمة المختصة في مدينة "+P("dcity","المدينة")+"."));
+ if(wc("notice"))art("الإخطارات","تكون جميع الإخطارات والمراسلات بين الطرفين كتابية، وتُرسل إلى العناوين المبينة في صدر هذا العقد، ويُعد الإخطار منتجًا لآثاره من تاريخ استلامه. وعلى كل طرف إخطار الآخر كتابيًا بأي تغيير في عنوانه.");
+ if(wc("entire"))art("أحكام ختامية","يمثل هذا العقد وملاحقه كامل الاتفاق بين الطرفين، ويلغي كل ما سبقه من تفاهمات أو مراسلات بشأن موضوعه، ولا يُعتد بأي تعديل عليه إلا إذا كان مكتوبًا وموقّعًا من الطرفين. وحُرّر هذا العقد من ("+P("copies","عدد")+") نسخ أصلية، بيد كل طرف نسخة للعمل بموجبها.");
+ o+="والله الموفق،،،\n\nالطرف الأول: "+P("p1","الاسم")+"\nالتوقيع: ..................\n\nالطرف الثاني: "+P("p2","الاسم")+"\nالتوقيع: ..................\n\n— نموذج تدريبي من أداة صياغة، يُراجع قانونيًا قبل أي استخدام فعلي —";
+ $("w-out").textContent=o;
+ const res=cAnalyze(o);
+ const w=[];
+ if(!o1.length||!o2.length)w.push("أضف التزامات لكل طرف في بنود مرقّمة.");
+ if(wc("pen")&&+wv("penc")>20)w.push("حد أقصى مرتفع للتعويض الاتفاقي قد تراه المحكمة مبالغًا فيه فتنقصه.");
+ if(!pay.length)w.push("بيّن طريقة الدفع ومواعيده.");
+ res.rk.push(...w);
+ cRender("w-check",res,"فاحص العقد");
+ try{localStorage.setItem("glwrite",JSON.stringify(wget()))}catch(e){}
+}
+const wget=()=>({...pick(WF,"w"),...Object.fromEntries(WC.map(k=>[k,$("w-"+k).checked])),disp:$("w-disp").value});
+function wfill(d){WF.forEach(k=>$("w-"+k).value=d[k]||"");WC.forEach(k=>$("w-"+k).checked=!!d[k]);$("w-disp").value=d.disp||"court";
+ if(!$("w-pw").value&&$("w-price").value)$("w-pw").value=words(Math.floor(+$("w-price").value.replace(/[,٬\s]/g,"")));wdraft()}
+let wd=null;try{wd=JSON.parse(localStorage.getItem("glwrite"))}catch(e){}
+wfill(wd||WS);
+$("w-out").closest(".builder").addEventListener("input",wdraft);$("w-out").closest(".builder").addEventListener("change",wdraft);
+{let last="";$("w-price").addEventListener("input",()=>{const w=words(Math.floor(+$("w-price").value.replace(/[,٬\s]/g,"")));if(!$("w-pw").value.trim()||$("w-pw").value===last){$("w-pw").value=w;last=w;wdraft()}})}
+tools("w",wget,wfill);
+$("w-clear").addEventListener("click",()=>{wfill({});$("w-msg").textContent=""});
+$("w-sample").addEventListener("click",()=>{wfill(WS);$("w-msg").textContent="تم تحميل النموذج."});
+$("w-copy").addEventListener("click",async()=>{try{await navigator.clipboard.writeText($("w-out").textContent);$("w-msg").textContent="تم نسخ المسودة."}catch(e){$("w-msg").textContent="تعذّر النسخ. حدّد نص المسودة وانسخه يدويًا."}});
+
+// ===== clause library =====
+const CL=[["التمهيد", "حيث إن الطرف الأول يعمل في مجال [النشاط]، وحيث إن الطرف الثاني يرغب في [الغرض]، فقد التقت إرادة الطرفين، وهما بكامل أهليتهما المعتبرة شرعًا ونظامًا، على إبرام هذا العقد وفق البنود الآتية. ويُعد هذا التمهيد جزءًا لا يتجزأ من العقد.", "في بداية كل عقد، لبيان خلفية التعاقد وغرضه، ويُستعان به في تفسير العقد عند الخلاف.", "لا تضع في التمهيد التزامات أو مبالغ، فمكانها بنود العقد."], ["التعريفات", "يكون للكلمات والعبارات الآتية، أينما وردت في هذا العقد، المعاني المبينة أمام كل منها، ما لم يقتضِ السياق غير ذلك:\n«الأعمال»: [تعريف].\n«تاريخ السريان»: [تعريف].", "في العقود الطويلة أو الفنية التي تتكرر فيها مصطلحات بعينها.", "استخدم المصطلح المعرَّف بالصيغة نفسها في كل العقد، ولا تعرّف ما لا يتكرر."], ["محل العقد", "يلتزم الطرف الثاني بموجب هذا العقد بـ[وصف دقيق للعمل أو السلعة]، وفقًا للمواصفات الواردة في الملحق رقم (1)، الذي يُعد جزءًا لا يتجزأ من هذا العقد.", "في كل عقد، فهو جوهر الالتزام.", "الوصف العام أو الغامض من أكثر أسباب النزاع. أرفق المواصفات والكميات في ملحق."], ["الثمن وطريقة الدفع", "يلتزم الطرف الأول بأن يدفع للطرف الثاني مبلغًا إجماليًا قدره ([المبلغ]) ريال ([المبلغ بالحروف])، شاملًا ضريبة القيمة المضافة، يُسدَّد على الدفعات الآتية: [الدفعات]. ويتم السداد بالتحويل إلى الحساب البنكي للطرف الثاني خلال ([عدد]) يومًا من تاريخ استلام الفاتورة الضريبية.", "في العقود التي فيها مقابل مالي.", "حدّد هل يشمل المبلغ ضريبة القيمة المضافة، واربط كل دفعة بمرحلة إنجاز يمكن التحقق منها."], ["مدة العقد والتجديد", "مدة هذا العقد ([المدة])، تبدأ من [تاريخ البدء] وتنتهي في [تاريخ الانتهاء]. ويجوز تجديده لمدة مماثلة باتفاق كتابي بين الطرفين قبل انتهائه بـ([عدد]) يومًا على الأقل.", "في العقود المستمرة، كالتوريد والخدمات والإيجار.", "التجديد التلقائي قد يُلزم الطرف بعقد لم يعد يريده. إن استُخدم فحدّد مهلة للإشعار بعدم التجديد."], ["التعويض الاتفاقي (الشرط الجزائي)", "إذا تأخر الطرف الثاني في تنفيذ التزاماته عن المواعيد المحددة في هذا العقد، التزم بأن يدفع للطرف الأول تعويضًا اتفاقيًا قدره ([النسبة]٪) من قيمة [الجزء المتأخر] عن كل [أسبوع] تأخير، بحد أقصى ([النسبة]٪) من قيمة العقد، دون إخلال بحق الطرف الأول في الفسخ.", "لضمان الالتزام بالمواعيد وتقدير التعويض مسبقًا.", "يسمّيه نظام المعاملات المدنية «التعويض الاتفاقي». للمحكمة إنقاصه إذا كان مبالغًا فيه أو نُفّذ الالتزام جزئيًا، فضع له حدًا أقصى معقولًا. ولا يجوز في الديون النقدية كالقروض."], ["القوة القاهرة", "لا يُعد أي من الطرفين مخلًّا بالتزاماته إذا كان عدم التنفيذ أو التأخير فيه ناتجًا عن قوة قاهرة خارجة عن إرادته لا يمكن توقعها ولا دفعها، على أن يُخطر الطرف الآخر كتابيًا خلال ([عدد]) أيام من وقوعها. وإذا استمرت القوة القاهرة أكثر من ([عدد]) يومًا جاز لأي من الطرفين إنهاء العقد بإخطار كتابي.", "في كل عقد يمتد تنفيذه زمنًا.", "فرّق بينها وبين الظروف الطارئة: القوة القاهرة تجعل التنفيذ مستحيلًا، والظروف الطارئة تجعله مرهقًا فقط."], ["الإنهاء للإخلال", "يحق لأي من الطرفين إنهاء هذا العقد إذا أخلّ الطرف الآخر بأي من التزاماته الجوهرية، ولم يُصلح الإخلال خلال ([عدد]) يومًا من تاريخ إخطاره كتابيًا بذلك، دون إخلال بحقه في المطالبة بالتعويض.", "في كل عقد مستمر.", "امنح مهلة لإصلاح الإخلال قبل الإنهاء، وبيّن آثار الإنهاء: مقابل ما أُنجز، وإعادة المستندات والمعدات."], ["السرية", "يلتزم كل طرف بالمحافظة على سرية جميع المعلومات التي يطّلع عليها بسبب هذا العقد، وعدم إفشائها للغير أو استخدامها لغير أغراض العقد، إلا بموافقة كتابية مسبقة من الطرف الآخر أو بطلب من جهة مختصة نظامًا. ويستمر هذا الالتزام مدة ([عدد]) سنوات بعد انتهاء العقد.", "عند تبادل معلومات تجارية أو فنية أو بيانات عملاء.", "استثنِ الإفصاح الذي تطلبه جهة مختصة، وحدّد مدة الالتزام. وإذا شمل بيانات شخصية فراعِ نظام حماية البيانات الشخصية."], ["عدم المنافسة", "يلتزم الطرف الثاني بألا يمارس، بنفسه أو بواسطة غيره، نشاطًا منافسًا للطرف الأول في [النطاق الجغرافي]، في مجال [النشاط]، مدة ([المدة]) من تاريخ انتهاء العقد.", "لحماية العملاء والأسرار التجارية بعد انتهاء العلاقة.", "يجب أن يكون محددًا زمانًا ومكانًا ونوع نشاط. وفي عقود العمل يشترط نظام العمل أن يكون مكتوبًا، وألا تزيد مدته على سنتين."], ["تحديد المسؤولية", "لا تتجاوز المسؤولية الإجمالية لأي من الطرفين عن أي مطالبة ناشئة عن هذا العقد قيمة العقد، ولا يُسأل أي طرف عن الأضرار غير المباشرة أو الكسب الفائت، وذلك كله في غير حالات الغش أو الخطأ الجسيم.", "في عقود الخدمات والتقنية والعقود عالية القيمة.", "استثنِ دائمًا الغش والخطأ الجسيم، فشرط الإعفاء منهما معرّض للبطلان."], ["النظام الواجب التطبيق وتسوية النزاعات", "يخضع هذا العقد ويُفسَّر وفقًا للأنظمة المعمول بها في المملكة العربية السعودية. وكل نزاع ينشأ عنه أو يتعلق به يسعى الطرفان إلى حلّه وديًا خلال ([عدد]) يومًا من إخطار أحدهما الآخر به، فإن تعذّر ذلك أُحيل إلى المحكمة المختصة في مدينة [المدينة].", "في كل عقد لا يُختار فيه التحكيم.", "تحديد المدينة يحسم الاختصاص المكاني ويقلل النزاع حوله."], ["شرط التحكيم", "كل نزاع ينشأ عن هذا العقد أو يتعلق به، بما في ذلك وجوده أو صحته أو إنهاؤه، يُحال إلى التحكيم وفقًا لقواعد [المركز السعودي للتحكيم التجاري]. ويكون مقر التحكيم مدينة [المدينة]، وعدد المحكّمين ([عدد])، ولغة التحكيم العربية، ويكون حكم التحكيم نهائيًا ملزمًا للطرفين.", "في النزاعات التجارية التي يفضّل أطرافها السرية والسرعة والتخصص.", "اتفاق التحكيم يجب أن يكون مكتوبًا. الشرط المبهم («يُحال إلى التحكيم» فقط) يفتح نزاعًا حول المقر والقواعد وعدد المحكّمين."], ["الإخطارات", "تكون جميع الإخطارات والمراسلات بين الطرفين كتابية، وتُرسل إلى العناوين والبريد الإلكتروني المبينة في صدر هذا العقد، ويُعد الإخطار منتجًا لآثاره من تاريخ استلامه. وعلى كل طرف إخطار الآخر كتابيًا بأي تغيير في عنوانه.", "في كل عقد تُشترط فيه إخطارات، كالإنهاء والقوة القاهرة.", "بدون هذا البند يصعب إثبات أن الطرف الآخر أُخطر فعلًا."], ["التنازل عن العقد", "لا يجوز لأي من الطرفين التنازل عن هذا العقد، أو عن أي من حقوقه أو التزاماته الناشئة عنه، للغير إلا بموافقة كتابية مسبقة من الطرف الآخر.", "عندما تكون شخصية المتعاقد محل اعتبار.", "يمكن استثناء التنازل للشركات التابعة إن كان ذلك مقصودًا."], ["كامل الاتفاق ونسخ العقد", "يمثل هذا العقد وملاحقه كامل الاتفاق بين الطرفين، ويلغي كل ما سبقه من تفاهمات أو مراسلات بشأن موضوعه، ولا يُعتد بأي تعديل عليه إلا إذا كان مكتوبًا وموقّعًا من الطرفين. وحُرّر هذا العقد من ([عدد]) نسخ أصلية، بيد كل طرف نسخة للعمل بموجبها.", "في ختام كل عقد.", "يمنع الاحتجاج بوعود شفهية سابقة، ويحمي العقد من التعديل غير الموثق."]];
+let bq="";
+function brender(){const L=CL.map((c,i)=>[c,i]).filter(([c])=>!bq||norm(c.join(" ")).includes(norm(bq)));
+ $("b-count").textContent=L.length+" من "+CL.length+" بندًا";
+ $("b-grid").innerHTML=L.map(([c,i])=>`<article class="cl"><h3><span>${esc(c[0])}</span><button type="button" class="cp" data-c="${i}" style="min-height:36px;font-size:13px;padding:0 12px">نسخ الصياغة</button></h3><div class="mt">${esc(c[1])}</div><dl><dt>متى يُستخدم</dt><dd>${esc(c[2])}</dd><dt>انتبه</dt><dd>${esc(c[3])}</dd></dl></article>`).join("")||'<p class="empty">لا توجد بنود تطابق البحث.</p>'}
+$("b-q").addEventListener("input",e=>{bq=e.target.value.trim();brender()});
+$("b-grid").addEventListener("click",async e=>{const b=e.target.closest(".cp");if(!b)return;try{await navigator.clipboard.writeText(CL[+b.dataset.c][1]);b.textContent="تم النسخ ✓"}catch(_){b.textContent="تعذّر النسخ"}setTimeout(()=>b.textContent="نسخ الصياغة",1500)});
+brender();
+
+$("wipe").addEventListener("click",()=>{let n=0;try{Object.keys(localStorage).filter(k=>k.startsWith("gl")).forEach(k=>{localStorage.removeItem(k);n++})}catch(e){}$("wipe-msg").textContent=n?"تم مسح بياناتك المحفوظة. أعد تحميل الصفحة.":"لا توجد بيانات محفوظة."});
+function gcTab(h){const el=$("t-"+h),title=el?el.textContent:h;const send=()=>{try{window.goatcounter.count({path:"tab-"+h,title:title,event:true})}catch(e){}};
+ if(window.goatcounter&&window.goatcounter.count)send();else window.addEventListener("load",()=>setTimeout(()=>{if(window.goatcounter&&window.goatcounter.count)send()},800),{once:true})}
+function route(){const m={"#write":"w","#review":"v","#clauses":"b","#glossary":"g","#claim":"c","#reply":"r","#defense":"d","#demand":"m","#appeal":"a","#deadline":"k","#cases":"q"},h=m[location.hash]||"h",S={w:"wr",v:"rv",b:"cb",h:"hm",g:"gl",c:"cl",r:"rp",d:"df",m:"dm",a:"ap",k:"dl",q:"qs"};for(const x in S){$(S[x]).style.display=x===h?"block":"none";$("t-"+x).classList.toggle("on",x===h)}gcTab(h);const t=$("t-"+h);if(t&&t.scrollIntoView&&location.hash)t.scrollIntoView({block:"nearest",inline:"nearest"})}
+window.addEventListener("hashchange",route);
+chips();render();route();
+}
+</script>
+<script data-goatcounter="https://siyagha.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
