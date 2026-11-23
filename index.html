@@ -268,7 +268,7 @@ footer{padding:0 max(5vw,16px) 36px;color:var(--mut);font-size:13px}
    <fieldset class="fs"><legend>المدعي</legend>
     <div class="g2"><div><label for="c-pn">الاسم الكامل</label><input id="c-pn" dir="auto"></div><div><label for="c-pid">رقم الهوية</label><input id="c-pid" dir="auto" inputmode="numeric"></div>
     <div><label for="c-pj">المهنة</label><input id="c-pj" dir="auto"></div><div><label for="c-pa">محل الإقامة</label><input id="c-pa" dir="auto"></div></div>
-    <label for="c-rep">ممثل المدعي (اختياري)</label><input id="c-rep" dir="auto">
+    <div class="g2"><div><label for="c-rep">ممثل المدعي (اختياري)</label><input id="c-rep" dir="auto"></div><div><label for="c-repc">صفة الممثل</label><input id="c-repc" dir="auto" placeholder="مثال: محامٍ مرخّص، أو وكيل بموجب وكالة"></div></div>
     <label for="c-addr">محل إقامة مختار في بلد المحكمة (اختياري)</label><input id="c-addr" dir="auto"></fieldset>
    <fieldset class="fs"><legend>المدعى عليه</legend>
     <div class="g2"><div><label for="c-dn">الاسم الكامل</label><input id="c-dn" dir="auto"></div><div><label for="c-did">رقم الهوية (إن وُجد)</label><input id="c-did" dir="auto"></div></div>
@@ -330,7 +330,7 @@ footer{padding:0 max(5vw,16px) 36px;color:var(--mut);font-size:13px}
     <label for="r-no">رقم القضية</label><input id="r-no" dir="auto"></fieldset>
    <fieldset class="fs"><legend>الأطراف</legend>
     <div class="g2"><div><label for="r-def">المدعى عليه (مقدّم المذكرة)</label><input id="r-def" dir="auto"></div><div><label for="r-cl">المدعي</label><input id="r-cl" dir="auto"></div></div>
-    <label for="r-agent">الوكيل أو المحامي (اختياري)</label><input id="r-agent" dir="auto">
+    <div class="g2"><div><label for="r-agent">الوكيل أو المحامي (اختياري)</label><input id="r-agent" dir="auto"></div><div><label for="r-agentc">صفة الوكيل</label><input id="r-agentc" dir="auto" placeholder="مثال: محامٍ مرخّص، أو وكيل بموجب وكالة"></div></div>
     <label for="r-sub">موضوع الدعوى المردود عليها</label><input id="r-sub" dir="auto"></fieldset>
    <fieldset class="fs"><legend>الدفوع الشكلية (اختياري)</legend>
     <div class="grp">المادة 75 من نظام المرافعات الشرعية: تُبدى أولًا وإلا سقطت</div><div id="r-d75"></div>
@@ -393,7 +393,7 @@ footer{padding:0 max(5vw,16px) 36px;color:var(--mut);font-size:13px}
     <div class="g2"><div><label for="d-court">المحكمة</label><input id="d-court" dir="auto"></div><div><label for="d-circ">الدائرة</label><input id="d-circ" dir="auto"></div></div>
     <label for="d-no">رقم القضية</label><input id="d-no" dir="auto"></fieldset>
    <fieldset class="fs"><legend>الأطراف والاتهام</legend>
-    <div class="g2"><div><label for="d-acc">المتهم</label><input id="d-acc" dir="auto"></div><div><label for="d-agent">الوكيل أو المحامي (اختياري)</label><input id="d-agent" dir="auto"></div></div>
+    <div class="g2"><div><label for="d-acc">المتهم</label><input id="d-acc" dir="auto"></div><div><label for="d-agent">الوكيل أو المحامي (اختياري)</label><input id="d-agent" dir="auto"></div><div><label for="d-agentc">صفة الوكيل</label><input id="d-agentc" dir="auto" placeholder="مثال: محامٍ مرخّص، أو وكيل بموجب وكالة"></div></div>
     <label for="d-priv">المدعي بالحق الخاص (اختياري)</label><input id="d-priv" dir="auto">
     <label for="d-ch">التهمة المنسوبة</label><input id="d-ch" dir="auto">
     <label for="d-sum">ملخص ما ورد في لائحة الدعوى</label><textarea id="d-sum" dir="auto" style="min-height:70px"></textarea></fieldset>
@@ -505,7 +505,7 @@ footer{padding:0 max(5vw,16px) 36px;color:var(--mut);font-size:13px}
     <button type="button" id="a-calc" style="margin-top:6px">احسب الموعد ←</button></fieldset>
    <fieldset class="fs"><legend>الأطراف</legend>
     <div class="g2"><div><label for="a-ap">المعترض</label><input id="a-ap" dir="auto"></div><div><label for="a-res">المعترض ضده</label><input id="a-res" dir="auto"></div></div>
-    <label for="a-agent">الوكيل أو المحامي (اختياري)</label><input id="a-agent" dir="auto"></fieldset>
+    <div class="g2"><div><label for="a-agent">الوكيل أو المحامي (اختياري)</label><input id="a-agent" dir="auto"></div><div><label for="a-agentc">صفة الوكيل</label><input id="a-agentc" dir="auto" placeholder="مثال: محامٍ مرخّص، أو وكيل بموجب وكالة"></div></div></fieldset>
    <fieldset class="fs"><legend>أسباب الاعتراض</legend>
     <div id="a-rs"></div>
     <label for="a-det">تفصيل الأسباب</label><textarea id="a-det" dir="auto"></textarea></fieldset>
@@ -583,9 +583,9 @@ footer{padding:0 max(5vw,16px) 36px;color:var(--mut);font-size:13px}
     <div class="g2"><div><label for="w-type">نوع العقد</label><input id="w-type" dir="auto" list="w-types"></div><div><label for="w-date">تاريخ الإبرام</label><input id="w-date" dir="auto"></div><div><label for="w-city">مدينة الإبرام</label><input id="w-city" dir="auto"></div></div>
     <datalist id="w-types"><option value="عقد توريد"><option value="عقد تقديم خدمات"><option value="عقد مقاولة"><option value="عقد إيجار"><option value="عقد شراكة"></datalist></fieldset>
    <fieldset class="fs"><legend>الطرف الأول</legend>
-    <div class="g2"><div><label for="w-p1">الاسم</label><input id="w-p1" dir="auto"></div><div><label for="w-p1id">السجل التجاري أو الهوية</label><input id="w-p1id" dir="auto"></div><div><label for="w-p1rep">الممثل في التوقيع وصفته</label><input id="w-p1rep" dir="auto"></div><div><label for="w-p1ad">العنوان أو البريد الإلكتروني</label><input id="w-p1ad" dir="auto"></div></div></fieldset>
+    <div class="g2"><div><label for="w-p1">الاسم</label><input id="w-p1" dir="auto"></div><div><label for="w-p1id">السجل التجاري أو الهوية</label><input id="w-p1id" dir="auto"></div><div><label for="w-p1rep">الممثل في التوقيع</label><input id="w-p1rep" dir="auto"></div><div><label for="w-p1cap">صفة الممثل</label><input id="w-p1cap" dir="auto" placeholder="مثال: المدير العام"></div><div><label for="w-p1ad">العنوان</label><input id="w-p1ad" dir="auto"></div><div><label for="w-p1em">البريد الإلكتروني (اختياري)</label><input id="w-p1em" type="email" dir="ltr" inputmode="email"></div></div></fieldset>
    <fieldset class="fs"><legend>الطرف الثاني</legend>
-    <div class="g2"><div><label for="w-p2">الاسم</label><input id="w-p2" dir="auto"></div><div><label for="w-p2id">السجل التجاري أو الهوية</label><input id="w-p2id" dir="auto"></div><div><label for="w-p2rep">الممثل في التوقيع وصفته</label><input id="w-p2rep" dir="auto"></div><div><label for="w-p2ad">العنوان أو البريد الإلكتروني</label><input id="w-p2ad" dir="auto"></div></div></fieldset>
+    <div class="g2"><div><label for="w-p2">الاسم</label><input id="w-p2" dir="auto"></div><div><label for="w-p2id">السجل التجاري أو الهوية</label><input id="w-p2id" dir="auto"></div><div><label for="w-p2rep">الممثل في التوقيع</label><input id="w-p2rep" dir="auto"></div><div><label for="w-p2cap">صفة الممثل</label><input id="w-p2cap" dir="auto" placeholder="مثال: المالك"></div><div><label for="w-p2ad">العنوان</label><input id="w-p2ad" dir="auto"></div><div><label for="w-p2em">البريد الإلكتروني (اختياري)</label><input id="w-p2em" type="email" dir="ltr" inputmode="email"></div></div></fieldset>
    <fieldset class="fs"><legend>البنود الموضوعية</legend>
     <label for="w-pre">التمهيد (اختياري، ويُكتب تلقائيًا إن تُرك)</label><textarea id="w-pre" dir="auto" style="min-height:60px"></textarea>
     <label for="w-subj">محل العقد</label><input id="w-subj" dir="auto">
@@ -668,7 +668,7 @@ $("grid").addEventListener("click",async e=>{const b=e.target.closest(".cp");if(
  $("tod").innerHTML=`<small>مصطلح اليوم · ${esc(CAR[t[0]]||t[0])}</small><b lang="ar">${esc(t[1])}</b><span class="en" style="direction:ltr;font-weight:600">${esc(t[2])}</span><p class="d">${esc(t[3])}</p>`}
 
 // statement of claim
-const CF=["court","type","pn","pid","pj","pa","rep","addr","dn","did","da","sub","facts","grounds","req","att"];
+const CF=["court","type","pn","pid","pj","pa","rep","repc","addr","dn","did","da","sub","facts","grounds","req","att"];
 const CS={court:"المحكمة العامة بجدة",type:"دعوى مطالبة مالية",pn:"خالد محمد العتيبي",pid:"1000000000",pj:"موظف",pa:"جدة، حي الروضة",rep:"",addr:"",dn:"فهد عبدالله القحطاني",did:"",da:"جدة، حي الصفا",sub:"مطالبة بسداد مبلغ قرض قدره خمسون ألف ريال",
 facts:"بتاريخ 1446/03/10هـ أقرضت المدعى عليه مبلغ 50,000 ريال بموجب سند قرض موقع منه (مرفق 1).\nاتفقنا على السداد في موعد أقصاه 1446/09/10هـ.\nحل موعد السداد ولم يسدد المدعى عليه أي مبلغ رغم مطالبتي له ودياً عدة مرات (مرفق 2).",
 grounds:"سند القرض الموقع من المدعى عليه والمتضمن إقراره بالمبلغ وموعد السداد.\nوجوب الوفاء بالدين عند حلول أجله شرعاً ونظاماً.",
@@ -686,7 +686,7 @@ function draft(){
  o+="نوع الدعوى: "+(cv("type")||"[نوع الدعوى]")+"\n";
  o+="تاريخ تقديم الصحيفة: "+today+"م\n\n";
  o+="المدعي: "+(cv("pn")||"[الاسم الكامل]")+"، هوية رقم: "+(cv("pid")||"[رقم الهوية]")+"، المهنة: "+(cv("pj")||"[المهنة]")+"، محل الإقامة: "+(cv("pa")||"[العنوان]")+".\n";
- if(cv("rep"))o+="ممثل المدعي: "+cv("rep")+".\n";
+ if(cv("rep"))o+="ممثل المدعي: "+cv("rep")+(cv("repc")?"، بصفته "+cv("repc"):"")+".\n";
  if(cv("addr"))o+="محل الإقامة المختار للمدعي: "+cv("addr")+".\n";
  o+="المدعى عليه: "+(cv("dn")||"[الاسم الكامل]")+(cv("did")?"، هوية رقم: "+cv("did"):"")+(cv("da")?"، محل الإقامة/العمل: "+cv("da"):"")+".\n\n";
  o+="موضوع الدعوى: "+(cv("sub")||"[موضوع الدعوى]")+".\n\n";
@@ -721,7 +721,7 @@ const D76=[["subj","الدفع بعدم اختصاص المحكمة نوعياً
 ["res","الدفع بعدم جواز نظر الدعوى لسبق الفصل فيها بحكم نهائي."]];
 const ck=([k,t])=>`<label class="chk"><input type="checkbox" id="rd-${k}"><span class="ar" lang="ar">${t}</span></label>`;
 $("r-d75").innerHTML=D75.map(ck).join("");$("r-d76").innerHTML=D76.map(ck).join("");
-const RF=["court","circ","no","def","cl","agent","sub","dx","resp","gr","req","att"];
+const RF=["court","circ","no","def","cl","agent","agentc","sub","dx","resp","gr","req","att"];
 const RS={court:"المحكمة العامة بجدة",circ:"الدائرة الثالثة",no:"[رقم القضية]",def:"فهد عبدالله القحطاني",cl:"خالد محمد العتيبي",agent:"",sub:"المطالبة بمبلغ قرض قدره خمسون ألف ريال",dx:"",
 resp:"يقر المدعى عليه بأنه اقترض من المدعي مبلغ 50,000 ريال بموجب السند المرفق بصحيفة الدعوى.\nغير أن ما ذكره المدعي من عدم سداد أي مبلغ غير صحيح، إذ سدد المدعى عليه مبلغ 30,000 ريال على ثلاث دفعات بتحويلات بنكية إلى حساب المدعي (مرفق 1).\nوبذلك يكون المتبقي في ذمة المدعى عليه مبلغ 20,000 ريال فقط، وهو مستعد لسداده وفق جدول يتفق عليه.",
 gr:"كشف الحساب البنكي الذي يثبت التحويلات الثلاث إلى حساب المدعي.\nأن الدين يسقط بقدر ما سُدّد منه شرعاً ونظاماً.",
@@ -736,7 +736,7 @@ function rdraft(){
  o+="فضيلة رئيس "+(rv("circ")||"[الدائرة]")+" في "+(rv("court")||"[المحكمة]")+"                حفظه الله\n";
  o+="السلام عليكم ورحمة الله وبركاته، وبعد:\n\n";
  o+="مذكرة جوابية في القضية رقم: "+(rv("no")||"[رقم القضية]")+"\n";
- o+="مقدمة من: "+(rv("def")||"[اسم المدعى عليه]")+" (المدعى عليه)"+(rv("agent")?"، بواسطة وكيله: "+rv("agent"):"")+"\n";
+ o+="مقدمة من: "+(rv("def")||"[اسم المدعى عليه]")+" (المدعى عليه)"+(rv("agent")?"، بواسطة وكيله: "+rv("agent")+(rv("agentc")?" ("+rv("agentc")+")":""):"")+"\n";
  o+="ضد: "+(rv("cl")||"[اسم المدعي]")+" (المدعي)\n";
  o+="الموضوع: الرد على صحيفة الدعوى المقدمة من المدعي بشأن "+(rv("sub")||"[موضوع الدعوى]")+".\n\n";
  let n=0;
@@ -771,7 +771,7 @@ const DS=[["elem","انتفاء أركان الجريمة المنسوبة إل�
 ["int","انتفاء القصد الجنائي لدى المتهم."]];
 const dck=([k,t])=>`<label class="chk"><input type="checkbox" id="dd-${k}"><span class="ar" lang="ar">${t}</span></label>`;
 $("d-pp").innerHTML=DP.map(dck).join("");$("d-ss").innerHTML=DS.map(dck).join("");
-const DF=["court","circ","no","acc","agent","priv","ch","sum","px","resp","gr","req","mr","att"];
+const DF=["court","circ","no","acc","agent","agentc","priv","ch","sum","px","resp","gr","req","mr","att"];
 const DX=[...DP,...DS];
 const DSAMP={court:"المحكمة الجزائية بجدة",circ:"الدائرة الجزائية الثانية",no:"[رقم القضية]",acc:"سعد علي الحربي",agent:"",priv:"ماجد سالم الغامدي",ch:"الاعتداء على المدعي بالحق الخاص بالضرب",
 sum:"تتهم النيابة العامة المتهم بالاعتداء على المدعي بالحق الخاص بالضرب أمام محل تجاري، استنادًا إلى أقوال شاهدين وتقرير طبي.",
@@ -788,7 +788,7 @@ function ddraft(){
  o+="فضيلة رئيس "+(dv("circ")||"[الدائرة]")+" في "+(dv("court")||"[المحكمة]")+"                حفظه الله\n";
  o+="السلام عليكم ورحمة الله وبركاته، وبعد:\n\n";
  o+="مذكرة دفاع في القضية رقم: "+(dv("no")||"[رقم القضية]")+"\n";
- o+="مقدمة من: المتهم/ "+(dv("acc")||"[اسم المتهم]")+(dv("agent")?"، بواسطة وكيله: "+dv("agent"):"")+"\n";
+ o+="مقدمة من: المتهم/ "+(dv("acc")||"[اسم المتهم]")+(dv("agent")?"، بواسطة وكيله: "+dv("agent")+(dv("agentc")?" ("+dv("agentc")+")":""):"")+"\n";
  o+="في الدعوى العامة المقامة من: النيابة العامة"+(dv("priv")?"، ودعوى الحق الخاص المقامة من: "+dv("priv"):"")+"\n";
  o+="بشأن: اتهامه بـ"+(dv("ch")||"[التهمة]")+".\n\n";
  let n=0;
@@ -905,7 +905,7 @@ const AR=[["shr","مخالفة الحكم لأحكام الشريعة الإسل
 ["def","الإخلال بحق الدفاع."],
 ["ign","إغفال الحكم دفوعًا أو أدلة جوهرية قدّمها المعترض، لو بُحثت لتغيّر بها وجه الحكم."]];
 $("a-rs").innerHTML=AR.map(([k,t])=>`<label class="chk"><input type="checkbox" id="ar-${k}"><span class="ar" lang="ar">${t}</span></label>`).join("");
-const AF=["acourt","court","circ","no","date","recv","op","ap","res","agent","det","req","att"];
+const AF=["acourt","court","circ","no","date","recv","op","ap","res","agent","agentc","det","req","att"];
 const AS={acourt:"محكمة الاستئناف بمنطقة مكة المكرمة",court:"المحكمة العامة بجدة",circ:"الدائرة الثالثة",no:"[رقم الحكم]",date:"1447/04/20هـ",recv:"1447/04/25هـ",
 op:"حكمت الدائرة بإلزام المدعى عليه فهد عبدالله القحطاني بأن يدفع للمدعي خالد محمد العتيبي مبلغ 50,000 ريال.",ap:"فهد عبدالله القحطاني",res:"خالد محمد العتيبي",agent:"",
 det:"قدّم المعترض أمام الدائرة كشف حساب بنكي يثبت تحويل مبلغ 30,000 ريال إلى حساب المعترض ضده (مرفق 1)، ولم يتعرض الحكم لهذا الدليل إيرادًا أو ردًّا.\nأن المعترض ضده لم ينكر استلام التحويلات، واكتفى بالقول إنها عن تعاملات أخرى دون أن يقدّم ما يثبت ذلك.\nأن الحكم ألزم المعترض بكامل مبلغ القرض دون خصم ما ثبت سداده، وهو ما يخالف قاعدة سقوط الدين بقدر ما سُدّد منه.",
@@ -917,7 +917,7 @@ function adraft(){
  o+="أصحاب الفضيلة رئيس وأعضاء الدائرة المختصة في "+(av("acourt")||"[محكمة الاستئناف]")+"                حفظهم الله\n";
  o+="السلام عليكم ورحمة الله وبركاته، وبعد:\n\n";
  o+="لائحة اعتراضية على الحكم رقم: "+(av("no")||"[رقم الحكم]")+" وتاريخ: "+(av("date")||"[التاريخ]")+"، الصادر من "+(av("circ")||"[الدائرة]")+" في "+(av("court")||"[المحكمة]")+".\n\n";
- o+="المعترض: "+(av("ap")||"[اسم المعترض]")+(av("agent")?"، بواسطة وكيله: "+av("agent"):"")+"\nالمعترض ضده: "+(av("res")||"[اسم المعترض ضده]")+"\n\n";
+ o+="المعترض: "+(av("ap")||"[اسم المعترض]")+(av("agent")?"، بواسطة وكيله: "+av("agent")+(av("agentc")?" ("+av("agentc")+")":""):"")+"\nالمعترض ضده: "+(av("res")||"[اسم المعترض ضده]")+"\n\n";
  o+="منطوق الحكم المعترض عليه:\n«"+(av("op")||"[منطوق الحكم]")+"»\n\n";
  o+="أولاً: قبول الاعتراض شكلاً:\nتسلّم المعترض صورة صك الحكم بتاريخ "+(av("recv")||"[التاريخ]")+"، وقد قُدّم هذا الاعتراض خلال المدة النظامية البالغة "+(urg?"عشرة أيام للأحكام الصادرة في المسائل المستعجلة":"ثلاثين يومًا")+" المنصوص عليها في المادة السابعة والثمانين بعد المائة من نظام المرافعات الشرعية، فيكون مقبولًا شكلًا.\n\n";
  o+="ثانياً: أسباب الاعتراض:\n"+(rs.length?num(rs):"[أضف أسباب الاعتراض]")+"\n\n";
@@ -1155,9 +1155,9 @@ $("v-copy").addEventListener("click",async()=>{if(!vlast.it){$("v-msg").textCont
 
 // ===== contract writing =====
 const OW=["الأول","الثاني","الثالث","الرابع","الخامس","السادس","السابع","الثامن","التاسع","العاشر","الحادي عشر","الثاني عشر","الثالث عشر","الرابع عشر","الخامس عشر","السادس عشر","السابع عشر","الثامن عشر"];
-const WF=["type","date","city","p1","p1id","p1rep","p1ad","p2","p2id","p2rep","p2ad","pre","subj","price","pw","pay","dur","start","ob1","ob2","penr","penp","penc","cure","confy","dcity","copies"];
+const WF=["type","date","city","p1","p1id","p1rep","p1cap","p1ad","p1em","p2","p2id","p2rep","p2cap","p2ad","p2em","pre","subj","price","pw","pay","dur","start","ob1","ob2","penr","penp","penc","cure","confy","dcity","copies"];
 const WC=["vat","pen","fm","term","conf","notice","entire"];
-const WS={type:"عقد توريد",date:"1448/03/01هـ",city:"جدة",p1:"شركة الأفق للمقاولات",p1id:"سجل تجاري رقم 4030000000",p1rep:"خالد سعد المطيري، بصفته المدير العام",p1ad:"جدة، حي الحمراء، info@ofoq.example",p2:"مؤسسة الريادة للتجارة",p2id:"سجل تجاري رقم 4030000001",p2rep:"عبدالله فهد الزهراني، بصفته المالك",p2ad:"جدة، حي الصفا، sales@riyada.example",pre:"",
+const WS={type:"عقد توريد",date:"1448/03/01هـ",city:"جدة",p1:"شركة الأفق للمقاولات",p1id:"سجل تجاري رقم 4030000000",p1rep:"خالد سعد المطيري",p1cap:"المدير العام",p1ad:"جدة، حي الحمراء",p1em:"info@ofoq.example",p2:"مؤسسة الريادة للتجارة",p2id:"سجل تجاري رقم 4030000001",p2rep:"عبدالله فهد الزهراني",p2cap:"المالك",p2ad:"جدة، حي الصفا",p2em:"sales@riyada.example",pre:"",
 subj:"توريد مواد البناء المبينة أنواعها وكمياتها ومواصفاتها في الملحق رقم (1) إلى موقع مشروع الطرف الأول في جدة",price:"850000",pw:"",pay:"دفعة مقدمة بنسبة 20٪ عند توقيع العقد.\nدفعة بنسبة 50٪ عند استلام نصف الكميات.\nالدفعة الأخيرة بنسبة 30٪ عند الاستلام النهائي ومطابقة المواصفات.",dur:"سنة واحدة",start:"تاريخ توقيع العقد",
 ob1:"سداد الدفعات في مواعيدها خلال 15 يومًا من استلام الفاتورة الضريبية.\nتجهيز الموقع لاستلام المواد وتعيين ممثل للاستلام.",ob2:"توريد المواد مطابقة للمواصفات الواردة في الملحق رقم (1).\nالتوريد وفق الجدول الزمني الوارد في الملحق رقم (2).\nاستبدال أي مواد غير مطابقة خلال 7 أيام من إخطاره.",
 penr:"0.5",penp:"أسبوع",penc:"10",cure:"15",confy:"3",dcity:"جدة",copies:"2",vat:true,pen:true,fm:true,term:true,conf:true,notice:true,entire:true,disp:"court"};
@@ -1167,8 +1167,8 @@ function wdraft(){
  const P=(k,d)=>wv(k)||"["+d+"]";
  o+=P("type","نوع العقد")+"\n\n";
  o+="إنه في يوم "+P("date","التاريخ")+"، في مدينة "+P("city","المدينة")+"، تم الاتفاق بين كل من:\n\n";
- o+="1- "+P("p1","اسم الطرف الأول")+"، "+P("p1id","رقم السجل أو الهوية")+"، ويمثله في التوقيع: "+P("p1rep","الممثل وصفته")+"، وعنوانه: "+P("p1ad","العنوان")+"، ويُشار إليه فيما بعد بـ«الطرف الأول».\n";
- o+="2- "+P("p2","اسم الطرف الثاني")+"، "+P("p2id","رقم السجل أو الهوية")+"، ويمثله في التوقيع: "+P("p2rep","الممثل وصفته")+"، وعنوانه: "+P("p2ad","العنوان")+"، ويُشار إليه فيما بعد بـ«الطرف الثاني».\n\n";
+ o+="1- "+P("p1","اسم الطرف الأول")+"، "+P("p1id","رقم السجل أو الهوية")+"، ويمثله في التوقيع: "+P("p1rep","اسم الممثل")+" بصفته "+P("p1cap","صفة الممثل")+"، وعنوانه: "+P("p1ad","العنوان")+(wv("p1em")?"، وبريده الإلكتروني: "+wv("p1em"):"")+"، ويُشار إليه فيما بعد بـ«الطرف الأول».\n";
+ o+="2- "+P("p2","اسم الطرف الثاني")+"، "+P("p2id","رقم السجل أو الهوية")+"، ويمثله في التوقيع: "+P("p2rep","اسم الممثل")+" بصفته "+P("p2cap","صفة الممثل")+"، وعنوانه: "+P("p2ad","العنوان")+(wv("p2em")?"، وبريده الإلكتروني: "+wv("p2em"):"")+"، ويُشار إليه فيما بعد بـ«الطرف الثاني».\n\n";
  o+="التمهيد:\n"+(wv("pre")||"حيث إن الطرف الأول يرغب في التعاقد على "+P("subj","محل العقد")+"، وحيث إن الطرف الثاني لديه القدرة والخبرة اللازمة لذلك، فقد اتفق الطرفان، وهما بكامل أهليتهما المعتبرة شرعًا ونظامًا، على ما يلي:")+"\n\n";
  art("التمهيد","يُعد التمهيد السابق جزءًا لا يتجزأ من هذا العقد ومكمّلًا له.");
  art("موضوع العقد","يلتزم الطرف الثاني بموجب هذا العقد بـ"+P("subj","محل العقد")+".");
@@ -1186,7 +1186,7 @@ function wdraft(){
  art("النظام الواجب التطبيق وتسوية النزاعات","يخضع هذا العقد ويُفسَّر وفقًا للأنظمة المعمول بها في المملكة العربية السعودية. وكل نزاع ينشأ عنه أو يتعلق به يسعى الطرفان إلى حلّه وديًا خلال ثلاثين (30) يومًا من إخطار أحدهما الآخر به، فإن تعذّر ذلك "+($("w-disp").value==="arb"?"أُحيل إلى التحكيم وفقًا لقواعد المركز السعودي للتحكيم التجاري، ويكون مقر التحكيم مدينة "+P("dcity","المدينة")+"، وعدد المحكّمين ثلاثة، ولغة التحكيم العربية، ويكون حكم التحكيم نهائيًا ملزمًا للطرفين.":"أُحيل إلى المحكمة المختصة في مدينة "+P("dcity","المدينة")+"."));
  if(wc("notice"))art("الإخطارات","تكون جميع الإخطارات والمراسلات بين الطرفين كتابية، وتُرسل إلى العناوين المبينة في صدر هذا العقد، ويُعد الإخطار منتجًا لآثاره من تاريخ استلامه. وعلى كل طرف إخطار الآخر كتابيًا بأي تغيير في عنوانه.");
  if(wc("entire"))art("أحكام ختامية","يمثل هذا العقد وملاحقه كامل الاتفاق بين الطرفين، ويلغي كل ما سبقه من تفاهمات أو مراسلات بشأن موضوعه، ولا يُعتد بأي تعديل عليه إلا إذا كان مكتوبًا وموقّعًا من الطرفين. وحُرّر هذا العقد من ("+P("copies","عدد")+") نسخ أصلية، بيد كل طرف نسخة للعمل بموجبها.");
- o+="والله الموفق،،،\n\nالطرف الأول: "+P("p1","الاسم")+"\nالتوقيع: ..................\n\nالطرف الثاني: "+P("p2","الاسم")+"\nالتوقيع: ..................\n\n— نموذج تدريبي من أداة صياغة، يُراجع قانونيًا قبل أي استخدام فعلي —";
+ o+="والله الموفق،،،\n\nالطرف الأول: "+P("p1","الاسم")+"\nويمثله: "+P("p1rep","اسم الممثل")+" ("+P("p1cap","الصفة")+")\nالتوقيع: ..................\n\nالطرف الثاني: "+P("p2","الاسم")+"\nويمثله: "+P("p2rep","اسم الممثل")+" ("+P("p2cap","الصفة")+")\nالتوقيع: ..................\n\n— نموذج تدريبي من أداة صياغة، يُراجع قانونيًا قبل أي استخدام فعلي —";
  $("w-out").textContent=o;
  const res=cAnalyze(o);
  const w=[];
